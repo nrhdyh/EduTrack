@@ -20,7 +20,7 @@ st.markdown("Real-time Google Form data — **NO API NEEDED**.")
 # ---------------------------------------------------
 # GOOGLE SHEET CSV LINK (YOUR SHEET)
 # ---------------------------------------------------
-CSV_URL = "https://docs.google.com/spreadsheets/d/1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw/gviz/tq?tqx=out:csv&gid=1949660483"
+CSV_URL = "https://docs.google.com/spreadsheets/d/1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw/edit?resourcekey=&gid=1949660483#gid=1949660483"
 
 # ---------------------------------------------------
 # LOAD DATA REAL-TIME
