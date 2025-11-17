@@ -24,7 +24,7 @@ with tab1:
 
     st.components.v1.iframe(
         "https://docs.google.com/forms/d/e/1FAIpQLSd9hFZX8_o6kSXONBgvT2O0xkzD8Vitltf3Hg3Q8nzguKs5YA/viewform?embedded=true",
-        height=800
+        height=1000
     )
 
 # ---------------------------------------
