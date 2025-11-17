@@ -45,16 +45,18 @@ with tab2:
 
     # Custom metric-style cards using only HTML (compatible with Streamlit Cloud)
     card_html = """
-        <div style="
-            background-color: #F1F8E9;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            box-shadow: 0px 2px 8px rgba(0,0,0,0.1);
-        ">
-            <h3 style="color:#33691E;">{title}</h3>
-            <p style="font-size:30px; font-weight:bold; margin-top:-10px;">{value}</p>
-        </div>
+       <div style="
+    background-color: #2E7D32;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    color: white;
+    box-shadow: 0px 2px 8px rgba(0,0,0,0.3);
+">
+    <h3>{title}</h3>
+    <p style="font-size:30px; font-weight:bold; margin-top:-10px;">{value}</p>
+</div>
+
     """
 
     col1, col2, col3 = st.columns(3)
