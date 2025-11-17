@@ -1,117 +1,74 @@
+# app.py
 import streamlit as st
 import pandas as pd
-import plotly.express as px
-from streamlit_autorefresh import st_autorefresh
+import gspread
+from oauth2client.service_account import ServiceAccountCredentials
+from datetime import datetime
 
-# ---------------------------------------------------
-# AUTO REFRESH (every 10 seconds)
-# ---------------------------------------------------
-st_autorefresh(interval=10000, key="auto_refresh")
+st.set_page_config(page_title="Survey Dashboard", layout="wide")
 
-# ---------------------------------------------------
-# STREAMLIT PAGE SETTINGS
-# ---------------------------------------------------
-st.set_page_config(page_title="UMK Student Performance Dashboard",
-                   layout="wide")
+# --- Authentication to Google Sheets ---
+scope = [
+    "https://spreadsheets.google.com/feeds",
+    "https://www.googleapis.com/auth/drive"
+]
+# Use secrets from .streamlit/secrets.toml for service_account json
+creds = ServiceAccountCredentials.from_json_keyfile_dict(
+    st.secrets["gcp_service_account"],
+    scopes=scope
+)
+client = gspread.authorize(creds)
 
-st.title("📊 UMK Student Performance Dashboard")
-st.markdown("Real-time Google Form data — **NO API NEEDED**.")
+# Sheet info
+SHEET_ID = "1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw"
+WORKSHEET_NAME = "Form Responses 1"  # adjust if different
 
-# ---------------------------------------------------
-# GOOGLE SHEET CSV LINK (YOUR SHEET)
-# ---------------------------------------------------
-CSV_URL = "https://docs.google.com/spreadsheets/d/1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw/edit?resourcekey=&gid=1949660483#gid=1949660483"
+sheet = client.open_by_key(SHEET_ID)
+worksheet = sheet.worksheet(WORKSHEET_NAME)
 
-# ---------------------------------------------------
-# LOAD DATA REAL-TIME
-# ---------------------------------------------------
-@st.cache_data(ttl=5)
-def load_data():
-    df = pd.read_csv(CSV_URL)
-    return df
+# --- Read existing data ---
+data = worksheet.get_all_values()
+headers = data[0]
+rows = data[1:]
+df = pd.DataFrame(rows, columns=headers)
 
-try:
-    df = load_data()
-    st.success("✔ Successfully connected to Google Sheet (Live Data)")
-except Exception as e:
-    st.error("❌ Failed to load Google Sheet. Check sharing settings: Anyone with link → Viewer")
-    st.write(e)
-    st.stop()
+st.title("📊 Student Performance Survey Dashboard")
 
-# ---------------------------------------------------
-# SHOW RAW DATA
-# ---------------------------------------------------
-st.header("📌 Google Form Responses (Live Table)")
-st.dataframe(df, use_container_width=True)
+st.markdown("### Current responses")
+st.dataframe(df)
 
-# ---------------------------------------------------
-# SUMMARY METRICS
-# ---------------------------------------------------
-st.header("📊 Summary Overview")
-
-col1, col2, col3 = st.columns(3)
-
-with col1:
-    st.metric("Total Submissions", len(df))
-
-with col2:
-    if "Gender" in df.columns:
-        st.metric("Male Students", sum(df["Gender"] == "Male"))
-    else:
-        st.metric("Male Students", "-")
-
-with col3:
-    if "Gender" in df.columns:
-        st.metric("Female Students", sum(df["Gender"] == "Female"))
-    else:
-        st.metric("Female Students", "-")
-
-# ---------------------------------------------------
-# VISUALIZATIONS
-# ---------------------------------------------------
-st.header("📈 Visual Analytics")
-
-# Pie Chart: Performance
-if "Performance" in df.columns:
-    fig1 = px.pie(df, names="Performance", title="Student Performance Breakdown")
-    st.plotly_chart(fig1, use_container_width=True)
-
-# Histogram: Program
-if "Program" in df.columns:
-    fig2 = px.histogram(df, x="Program", title="Students by Program")
-    st.plotly_chart(fig2, use_container_width=True)
-
-# Gender vs Performance
-if "Gender" in df.columns and "Performance" in df.columns:
-    fig3 = px.histogram(
-        df,
-        x="Performance",
-        color="Gender",
-        barmode="group",
-        title="Performance by Gender"
-    )
-    st.plotly_chart(fig3, use_container_width=True)
-
-# ---------------------------------------------------
-# FILTER SECTION
-# ---------------------------------------------------
-st.header("🔍 Filter Data")
-
-if "Program" in df.columns:
-    program_list = ["All"] + sorted(df["Program"].unique().tolist())
-    selected_program = st.selectbox("Select Program", program_list)
-else:
-    selected_program = "All"
-
-filtered_df = df.copy()
-
-if selected_program != "All":
-    filtered_df = filtered_df[filtered_df["Program"] == selected_program]
-
-st.dataframe(filtered_df, use_container_width=True)
-
-# ---------------------------------------------------
-# FOOTER
-# ---------------------------------------------------
 st.markdown("---")
-st.caption("Built for **UMK** • Google Forms → Google Sheets → Streamlit • Real-time Dashboard (No API)")
+
+st.markdown("### Submit your response")
+
+# --- Build a form for user submission ---
+with st.form("survey_form", clear_on_submit=True):
+    gender = st.selectbox("Gender", ["Male", "Female", "Other"])
+    age = st.selectbox("Age (Years)", ["19-20", "21-22", "23-25", "26-28", "29+"])
+    # … add more fields matching your Google Form/Sheet  
+    previous_gpa = st.text_input("What was your previous GPA?")
+    hours_study_daily = st.selectbox("How many hours do you study daily?", ["<1", "1-2", "3-4", "5-6", ">6"])
+    # … continue with remaining fields
+    
+    submitted = st.form_submit_button("Submit")
+    if submitted:
+        timestamp = datetime.now().strftime("%Y/%m/%d %H:%M:%S")
+        new_row = [
+            timestamp,
+            gender,
+            age,
+            previous_gpa,
+            hours_study_daily,
+            # … include other fields in correct order
+        ]
+        worksheet.append_row(new_row, value_input_option="USER_ENTERED")
+        st.success("Thank you! Your response has been recorded.")
+        # optionally reload data
+        data = worksheet.get_all_values()
+        df = pd.DataFrame(data[1:], columns=data[0])
+        st.dataframe(df)
+
+# --- Optional: Some simple stats or charts ---
+st.markdown("### Some stats")
+if "Age (Years)" in df.columns:
+    st.bar_chart(df["Age (Years)"].value_counts())
