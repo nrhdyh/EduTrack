@@ -30,17 +30,24 @@ fig = px.pie(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-# ---------------------------
-# Population Pyramid (Age by Gender)
-# ---------------------------
-st.subheader("2️⃣ Population Pyramid – Age by Gender")
+# =============================
+# 2️⃣ Age Distribution by Gender (Bar Chart)
+# =============================
+st.subheader("2️⃣ Age Distribution by Gender")
 
-pop = df.groupby(["Age","Gender"]).size().unstack(fill_value=0).reset_index()
-fig = go.Figure()
-fig.add_bar(y=pop["Age"], x=pop[0], name="Female", orientation="h")
-fig.add_bar(y=pop["Age"], x=-pop[1], name="Male", orientation="h")
-fig.update_layout(barmode='relative', title="Population Pyramid", xaxis_title="Count")
+pop = df.groupby(["Age","Gender"]).size().reset_index(name="Count")
+pop['Gender'] = pop['Gender'].map({0:'Female',1:'Male'})
+
+fig = px.bar(
+    pop,
+    x="Age",
+    y="Count",
+    color="Gender",
+    barmode="group"
+)
+
 st.plotly_chart(fig, use_container_width=True)
+
 
 # ---------------------------
 # Histogram – GPA
