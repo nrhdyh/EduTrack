@@ -151,18 +151,54 @@ fig.update_layout(polar=dict(radialaxis=dict(visible=True)), showlegend=True)
 st.plotly_chart(fig, use_container_width=True)
 
 # ---------------------------
-# WordCloud Replacement – Text Frequency List
+# 🔟 Skills Distribution by Gender (Enhanced)
 # ---------------------------
-st.subheader("🔟 Skills WordCloud (Simple Text-Cloud Replacement)")
+st.subheader("🔟 Skills Distribution by Gender")
+
+# Clean & explode skills
+skills_df = df[['Gender','Skills']].dropna()
+skills_df['Skills'] = skills_df['Skills'].str.split(',')
+skills_df = skills_df.explode('Skills')
+skills_df['Skills'] = skills_df['Skills'].str.strip()
+
+# Map gender
+skills_df['Gender'] = skills_df['Gender'].map({0:'Female', 1:'Male'})
+
+# Count frequency
+skill_count = (
+    skills_df
+    .groupby(['Gender','Skills'])
+    .size()
+    .reset_index(name='Count')
+)
+
+# Select top 10 skills per gender
+top_skills = (
+    skill_count
+    .sort_values(['Gender','Count'], ascending=False)
+    .groupby('Gender')
+    .head(10)
+)
 
 col1, col2 = st.columns(2)
-female_skills = " ".join(df[df["Gender"]==0]["Skills"].dropna().astype(str)).split()
-male_skills   = " ".join(df[df["Gender"]==1]["Skills"].dropna().astype(str)).split()
 
 with col1:
-    st.write("👩 Female Skills")
-    st.write(pd.Series(female_skills).value_counts())
+    st.write("👩 Female – Top 10 Skills")
+    fig_f = px.bar(
+        top_skills[top_skills['Gender']=='Female'],
+        x='Count',
+        y='Skills',
+        orientation='h'
+    )
+    st.plotly_chart(fig_f, use_container_width=True)
 
 with col2:
-    st.write("👨 Male Skills")
-    st.write(pd.Series(male_skills).value_counts())
+    st.write("👨 Male – Top 10 Skills")
+    fig_m = px.bar(
+        top_skills[top_skills['Gender']=='Male'],
+        x='Count',
+        y='Skills',
+        orientation='h'
+    )
+    st.plotly_chart(fig_m, use_container_width=True)
+
