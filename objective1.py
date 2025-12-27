@@ -12,7 +12,7 @@ st.set_page_config(page_title="Student Dashboard", layout="wide")
 url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTfh2K4-xu0yFkoRoOHxcEA4-CrRxZMNfe5EiflGI0OTLJUraozJV3Gp5sijGN8dVYyNOP29T5Fm39F/pub?gid=680023838&single=true&output=csv'
 df = pd.read_csv(url)
 
-st.title("📊 Student Demographic & Academic Dashboard (Plotly Version)")
+st.title("📊 Student Demographic  Academic Dashboard (Plotly Version)")
 
 # ---------------------------
 # Gender Donut Chart
