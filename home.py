@@ -7,7 +7,7 @@ import pandas as pd
 st.markdown("""
 <style>
 body {
-    backgrou
+    background-color: #F6F4FA;
 }
 
 .hero {
