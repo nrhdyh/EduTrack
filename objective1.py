@@ -130,100 +130,39 @@ fig = px.imshow(
 st.plotly_chart(fig, use_container_width=True)
 
 # ---------------------------
-# 9️⃣ Radar Chart – Academic Performance by Gender (Normalized)
+# Radar – Academic Metric
 # ---------------------------
 st.subheader("9️⃣ Radar Chart – Academic Performance by Gender")
 
-metrics = [
-    'GPA',
-    'CGPA',
-    'Attendance_Percentage',
-    'StudyHours',
-    'SocialMediaH',
-    'SkillHours'
-]
-
-# Calculate mean values
+metrics = ['GPA','CGPA','Attendance_Percentage','StudyHours','SocialMediaH','SkillHours']
 mean_vals = df.groupby("Gender")[metrics].mean()
-
-# Normalize values (0–1)
-norm_vals = mean_vals.copy()
-for col in metrics:
-    min_v = df[col].min()
-    max_v = df[col].max()
-    norm_vals[col] = (mean_vals[col] - min_v) / (max_v - min_v)
 
 categories = metrics + [metrics[0]]
 fig = go.Figure()
 
-for g in norm_vals.index:
-    values = norm_vals.loc[g].tolist()
+for g in mean_vals.index:
+    values = mean_vals.loc[g].tolist()
     values.append(values[0])
-
     fig.add_trace(go.Scatterpolar(
-        r=values,
-        theta=categories,
-        fill='toself',
-        name="Female" if g == 0 else "Male"
+        r=values, theta=categories, fill='toself', name="Female" if g==0 else "Male"
     ))
 
-fig.update_layout(
-    polar=dict(radialaxis=dict(visible=True, range=[0, 1])),
-    showlegend=True
-)
-
+fig.update_layout(polar=dict(radialaxis=dict(visible=True)), showlegend=True)
 st.plotly_chart(fig, use_container_width=True)
-True)
 
 # ---------------------------
-# 🔟 Skills Distribution by Gender (Enhanced)
+# WordCloud Replacement – Text Frequency List
 # ---------------------------
-st.subheader("🔟 Skills Distribution by Gender")
-
-# Clean & explode skills
-skills_df = df[['Gender','Skills']].dropna()
-skills_df['Skills'] = skills_df['Skills'].str.split(',')
-skills_df = skills_df.explode('Skills')
-skills_df['Skills'] = skills_df['Skills'].str.strip()
-
-# Map gender
-skills_df['Gender'] = skills_df['Gender'].map({1:'Female', 0:'Male'})
-
-# Count frequency
-skill_count = (
-    skills_df
-    .groupby(['Gender','Skills'])
-    .size()
-    .reset_index(name='Count')
-)
-
-# Select top 10 skills per gender
-top_skills = (
-    skill_count
-    .sort_values(['Gender','Count'], ascending=False)
-    .groupby('Gender')
-    .head(10)
-)
+st.subheader("🔟 Skills WordCloud (Simple Text-Cloud Replacement)")
 
 col1, col2 = st.columns(2)
+female_skills = " ".join(df[df["Gender"]==0]["Skills"].dropna().astype(str)).split()
+male_skills   = " ".join(df[df["Gender"]==1]["Skills"].dropna().astype(str)).split()
 
 with col1:
-    st.write("👩 Female – Top 10 Skills")
-    fig_f = px.bar(
-        top_skills[top_skills['Gender']=='Female'],
-        x='Count',
-        y='Skills',
-        orientation='h'
-    )
-    st.plotly_chart(fig_f, use_container_width=True)
+    st.write("👩 Female Skills")
+    st.write(pd.Series(female_skills).value_counts())
 
 with col2:
-    st.write("👨 Male – Top 10 Skills")
-    fig_m = px.bar(
-        top_skills[top_skills['Gender']=='Male'],
-        x='Count',
-        y='Skills',
-        orientation='h'
-    )
-    st.plotly_chart(fig_m, use_container_width=True)
-
+    st.write("👨 Male Skills")
+    st.write(pd.Series(male_skills).value_counts())
