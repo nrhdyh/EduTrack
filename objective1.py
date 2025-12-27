@@ -49,12 +49,26 @@ fig = px.bar(
 st.plotly_chart(fig, use_container_width=True)
 
 
-# ---------------------------
-# Histogram – GPA
-# ---------------------------
-st.subheader("3️⃣ GPA Distribution Histogram")
-fig = px.histogram(df, x="GPA", nbins=10, color="Gender", barmode="overlay", opacity=0.7)
+# =============================
+# GPA Distribution (Histogram)
+# =============================
+st.subheader("3️⃣ Distribution of GPA")
+
+fig = px.histogram(
+    df,
+    x="GPA",
+    nbins=10,
+    marginal="box",   # replaces KDE insight
+    title="Distribution of GPA"
+)
+
+fig.update_layout(
+    xaxis_title="GPA",
+    yaxis_title="Number of Students"
+)
+
 st.plotly_chart(fig, use_container_width=True)
+
 
 # ---------------------------
 # Avg GPA by Faculty
