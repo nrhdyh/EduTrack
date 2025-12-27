@@ -9,7 +9,7 @@ import seaborn as sns
 # 2. LOAD DATA FROM GOOGLE SHEET
 # ==========================================
 sheet_id = "1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw"
-sheet_name = "cleaned_data"
+sheet_name = "Cleaned_data"
 
 url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
 
