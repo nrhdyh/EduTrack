@@ -1,29 +1,47 @@
 import streamlit as st
 
 st.set_page_config(
-    page_title="Climate Smart Agriculture Dashboard",
+    page_title="EduTrack Dashboard",
     layout="wide"
 )
 
-objective1 = st.Page(
+# Pages
+home = st.Page(
     "home.py",
-    title="🎓 Objective 1: Education & Demographics",
+    title="🏠 Home",
     default=True
+)
+
+objective1 = st.Page(
+    "objective1.py",
+    title="👤 Demographics"
 )
 
 objective2 = st.Page(
     "objective2.py",
-    title="🌾 Objective 2: Land & Perception"
+    title="📚 Study & Lifestyle"
 )
 
 objective3 = st.Page(
     "objective3.py",
-    title="🌱 Objective 3: Practices & Correlation"
+    title="💻 Learning Mode"
 )
 
+objective4 = st.Page(
+    "objective4.py",
+    title="🛠️ Skills & Activities"
+)
+
+# Navigation
 pg = st.navigation(
     {
-        "Main Menu": [objective1, objective2, objective3]
+        "📌 Dashboard Sections": [
+            home,
+            objective1,
+            objective2,
+            objective3,
+            objective4
+        ]
     }
 )
 
