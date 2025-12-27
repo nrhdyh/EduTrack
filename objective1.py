@@ -1,110 +1,148 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 import plotly.express as px
+import plotly.graph_objects as go
 
-# ==================================================
-# PAGE CONFIG
-# ==================================================
-st.set_page_config(
-    page_title="Objective 1 – Demographics Analysis",
-    layout="wide"
+st.set_page_config(page_title="Student Dashboard", layout="wide")
+
+# ---------------------------
+# Load Dataset
+# ---------------------------
+url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTfh2K4-xu0yFkoRoOHxcEA4-CrRxZMNfe5EiflGI0OTLJUraozJV3Gp5sijGN8dVYyNOP29T5Fm39F/pub?gid=680023838&single=true&output=csv'
+df = pd.read_csv(url)
+
+st.title("📊 Student Demographic & Academic Dashboard (Plotly Version)")
+
+# ---------------------------
+# Gender Donut Chart
+# ---------------------------
+st.subheader("1️⃣ Gender Distribution Donut")
+
+gender_counts = df["Gender"].value_counts()
+labels = ["Female", "Male"]
+fig = px.pie(
+    values=gender_counts.values, 
+    names=labels, 
+    hole=0.6,
+    color=labels,
+    color_discrete_map={'Female':'pink','Male':'blue'}
 )
+st.plotly_chart(fig, use_container_width=True)
 
-st.title("Objective 1: Demographic & Academic Factors Influencing GPA")
+# ---------------------------
+# Population Pyramid (Age by Gender)
+# ---------------------------
+st.subheader("2️⃣ Population Pyramid – Age by Gender")
 
-# ==================================================
-# LOAD DATA FROM PUBLISHED CSV
-# ==================================================
-@st.cache_data
-def load_data():
-    url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTfh2K4-xu0yFkoRoOHxcEA4-CrRxZMNfe5EiflGI0OTLJUraozJV3Gp5sijGN8dVYyNOP29T5Fm39F/pub?gid=680023838&single=true&output=csv"
-    return pd.read_csv(url)
+pop = df.groupby(["Age","Gender"]).size().unstack(fill_value=0).reset_index()
+fig = go.Figure()
+fig.add_bar(y=pop["Age"], x=pop[0], name="Female", orientation="h")
+fig.add_bar(y=pop["Age"], x=-pop[1], name="Male", orientation="h")
+fig.update_layout(barmode='relative', title="Population Pyramid", xaxis_title="Count")
+st.plotly_chart(fig, use_container_width=True)
 
-try:
-    df = load_data()
-    st.success("✅ Data loaded successfully")
-except Exception as e:
-    st.error("❌ Failed to load data")
-    st.exception(e)
-    st.stop()
+# ---------------------------
+# Histogram – GPA
+# ---------------------------
+st.subheader("3️⃣ GPA Distribution Histogram")
+fig = px.histogram(df, x="GPA", nbins=10, color="Gender", barmode="overlay", opacity=0.7)
+st.plotly_chart(fig, use_container_width=True)
 
+# ---------------------------
+# Avg GPA by Faculty
+# ---------------------------
+st.subheader("4️⃣ Average GPA by Faculty")
+avg = df.groupby("Faculty")["GPA"].mean().reset_index()
+fig = px.bar(avg, x="Faculty", y="GPA")
+fig.update_layout(xaxis={'categoryorder':'total descending'})
+st.plotly_chart(fig, use_container_width=True)
 
-# ==================================================
-# SIDEBAR FILTERS
-# ==================================================
-st.sidebar.header("Filters")
-selected_years = st.sidebar.multiselect("Year of Study", sorted(df["YearStudy"].unique()), default=sorted(df["YearStudy"].unique()))
-selected_faculties = st.sidebar.multiselect("Faculty", sorted(df["Faculty"].unique()), default=sorted(df["Faculty"].unique()))
-df = df[(df["YearStudy"].isin(selected_years)) & (df["Faculty"].isin(selected_faculties))]
+# ---------------------------
+# Avg GPA by Study Times
+# ---------------------------
+st.subheader("5️⃣ Average GPA by Study Time")
+avgStudy = df.groupby("StudyTimes")["GPA"].mean().reset_index()
+fig = px.bar(avgStudy, x="StudyTimes", y="GPA")
+st.plotly_chart(fig, use_container_width=True)
 
-# ==================================================
-# 1. AVG GPA BY GENDER
-# ==================================================
-st.subheader("1. Average GPA by Gender")
-gender_mean = df.groupby("Gender")["GPA"].mean().reset_index()
-fig1 = px.bar(gender_mean, x="Gender", y="GPA", text="GPA", title="Average GPA by Gender")
-st.plotly_chart(fig1, use_container_width=True)
+# ---------------------------
+# GPA Category by Faculty × Gender
+# ---------------------------
+st.subheader("6️⃣ GPA Category – Stacked by Gender")
 
-# # ==================================================
-# # 2. BOX PLOT – GPA BY YEAR OF STUDY
-# # ==================================================
-# st.subheader("2. GPA Distribution by Year of Study")
-# fig2 = px.box(df, x="YearStudy", y="GPA", title="GPA Distribution by Year of Study")
-# st.plotly_chart(fig2, use_container_width=True)
+def categorize_gpa(x):
+    if x < 2.5: return "Low"
+    elif x <= 3.5: return "Medium"
+    return "High"
 
-# # ==================================================
-# # 3. AVG GPA BY FACULTY
-# # ==================================================
-# st.subheader("3. Average GPA by Faculty")
-# faculty_mean = df.groupby("Faculty")["GPA"].mean().reset_index().sort_values(by="GPA", ascending=False)
-# fig3 = px.bar(faculty_mean, x="Faculty", y="GPA", text="GPA", title="Average GPA by Faculty")
-# fig3.update_layout(xaxis_tickangle=-45)
-# st.plotly_chart(fig3, use_container_width=True)
+df["GPA_Cat"] = df["GPA"].apply(categorize_gpa)
+grouped = df.groupby(["Faculty","Gender","GPA_Cat"]).size().reset_index(name="Count")
 
-# # ==================================================
-# # 4. SCATTER – ATTENDANCE VS GPA
-# # ==================================================
-# st.subheader("4. Attendance Percentage vs GPA")
-# fig4 = px.scatter(df, x="Attendance", y="GPA", color="YearStudy", title="Attendance Percentage vs GPA")
-# st.plotly_chart(fig4, use_container_width=True)
+fig = px.bar(
+    grouped, 
+    x="Faculty", y="Count",
+    color="GPA_Cat", 
+    barmode="stack", facet_col="Gender"
+)
+st.plotly_chart(fig, use_container_width=True)
 
-# # ==================================================
-# # 5. BOX PLOT – SCHOLARSHIP VS GPA
-# # ==================================================
-# st.subheader("5. Scholarship Status vs GPA")
-# fig5 = px.box(df, x="Scholarship", y="GPA", title="Scholarship Status vs GPA")
-# st.plotly_chart(fig5, use_container_width=True)
+# ---------------------------
+# Bubble Chart – Age vs GPA
+# ---------------------------
+st.subheader("7️⃣ Age vs GPA Bubble (bubble = Study Hours)")
+fig = px.scatter(df, x="Age", y="GPA", size="StudyHours", color="Gender", hover_data=["StudyHours"])
+st.plotly_chart(fig, use_container_width=True)
 
-# # ==================================================
-# # 6. HEATMAP – YEAR × FACULTY VS GPA
-# # ==================================================
-# st.subheader("6. Heatmap: Year × Faculty vs Average GPA")
-# pivot = df.pivot_table(values="GPA", index="YearStudy", columns="Faculty", aggfunc="mean").reset_index()
-# heatmap_df = pivot.melt(id_vars="YearStudy", var_name="Faculty", value_name="GPA")
-# fig6 = px.density_heatmap(
-#     heatmap_df,
-#     x="Faculty",
-#     y="YearStudy",
-#     z="GPA",
-#     color_continuous_scale="YlGnBu",
-#     text_auto=".2f",
-#     title="Year × Faculty vs Average GPA"
-# )
-# st.plotly_chart(fig6, use_container_width=True)
+# ---------------------------
+# Heatmap – Age Group × Study Hours
+# ---------------------------
+st.subheader("8️⃣ GPA Heatmap by Age Group × Study Hours")
 
-# # ==================================================
-# # 7. LINE CHART – GPA TREND ACROSS YEARS
-# # ==================================================
-# st.subheader("7. GPA Trend Across Years of Study")
-# yearly_gpa = df.groupby("YearStudy")["GPA"].mean().reset_index()
-# fig7 = px.line(yearly_gpa, x="YearStudy", y="GPA", markers=True, title="GPA Trend Across Years of Study")
-# st.plotly_chart(fig7, use_container_width=True)
+df['Age_Group'] = pd.cut(df["Age"], bins=[18,20,22,24,26,28,30], labels=["18-19","20-21","22-23","24-25","26-27","28-29"])
+df['SH_Group'] = pd.cut(df["StudyHours"], bins=[0,1,2,3,4,5,6,7], labels=["<1","1-2","2-3","3-4","4-5","5-6","6+"])
+heat = df.groupby(["Age_Group","SH_Group"])["GPA"].mean().reset_index()
 
-# ==================================================
-# DATA PREVIEW
-# ==================================================
-with st.expander("View Cleaned Data"):
-    st.dataframe(df)
+fig = px.imshow(
+    heat.pivot(index="Age_Group", columns="SH_Group", values="GPA"),
+    text_auto=True, aspect="auto", color_continuous_scale="RdBu"
+)
+st.plotly_chart(fig, use_container_width=True)
 
-st.metric("Total Responses", len(df))
+# ---------------------------
+# Radar – Academic Metric
+# ---------------------------
+st.subheader("9️⃣ Radar Chart – Academic Performance by Gender")
 
+metrics = ['GPA','CGPA','Attendance_Percentage','StudyHours','SocialMediaH','SkillHours']
+mean_vals = df.groupby("Gender")[metrics].mean()
+
+categories = metrics + [metrics[0]]
+fig = go.Figure()
+
+for g in mean_vals.index:
+    values = mean_vals.loc[g].tolist()
+    values.append(values[0])
+    fig.add_trace(go.Scatterpolar(
+        r=values, theta=categories, fill='toself', name="Female" if g==0 else "Male"
+    ))
+
+fig.update_layout(polar=dict(radialaxis=dict(visible=True)), showlegend=True)
+st.plotly_chart(fig, use_container_width=True)
+
+# ---------------------------
+# WordCloud Replacement – Text Frequency List
+# ---------------------------
+st.subheader("🔟 Skills WordCloud (Simple Text-Cloud Replacement)")
+
+col1, col2 = st.columns(2)
+female_skills = " ".join(df[df["Gender"]==0]["Skills"].dropna().astype(str)).split()
+male_skills   = " ".join(df[df["Gender"]==1]["Skills"].dropna().astype(str)).split()
+
+with col1:
+    st.write("👩 Female Skills")
+    st.write(pd.Series(female_skills).value_counts())
+
+with col2:
+    st.write("👨 Male Skills")
+    st.write(pd.Series(male_skills).value_counts())
