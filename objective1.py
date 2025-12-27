@@ -114,24 +114,24 @@ fig = px.scatter(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-# =============================
-# 8️⃣ Heatmap – Age Group x Study Hours
-# =============================
-st.subheader("8️⃣ GPA Heatmap – Age Group x Study Hours")
+# # =============================
+# # 8️⃣ Heatmap – Age Group x Study Hours
+# # =============================
+# st.subheader("8️⃣ GPA Heatmap – Age Group x Study Hours")
 
-df['Age_Group'] = pd.cut(df['Age'], [18,20,22,24,26,28,30])
-df['Study_Group'] = pd.cut(df['StudyHours'], [0,1,2,3,4,5,6,7])
+# df['Age_Group'] = pd.cut(df['Age'], [18,20,22,24,26,28,30])
+# df['Study_Group'] = pd.cut(df['StudyHours'], [0,1,2,3,4,5,6,7])
 
-heat = df.groupby(['Age_Group','Study_Group'])['GPA'].mean().reset_index()
+# heat = df.groupby(['Age_Group','Study_Group'])['GPA'].mean().reset_index()
 
-fig = px.density_heatmap(
-    heat,
-    x="Age_Group",
-    y="Study_Group",
-    z="GPA",
-    color_continuous_scale="RdBu"
-)
-st.plotly_chart(fig, use_container_width=True)
+# fig = px.density_heatmap(
+#     heat,
+#     x="Age_Group",
+#     y="Study_Group",
+#     z="GPA",
+#     color_continuous_scale="RdBu"
+# )
+# st.plotly_chart(fig, use_container_width=True)
 
 # =============================
 # 9️⃣ Radar Chart – Gender Metrics
