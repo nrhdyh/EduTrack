@@ -89,7 +89,7 @@ def categorize_gpa(g):
     return "High GPA"
 
 df["GPA_Category"] = df["GPA"].apply(categorize_gpa)
-df["Gender"] = df["Gender"].map({0:'Female',1:'Male'})
+df["Gender"] = df["Gender"].map({1:'Female',0:'Male'})
 
 fig = px.histogram(
     df,
