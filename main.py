@@ -14,7 +14,7 @@ home = st.Page(
 
 objective1 = st.Page(
     "objective1.py",
-    title="👤 Demographcs"
+    title="👤 Demographics"
 )
 
 objective2 = st.Page(
