@@ -130,25 +130,50 @@ fig = px.imshow(
 st.plotly_chart(fig, use_container_width=True)
 
 # ---------------------------
-# Radar – Academic Metric
+# 9️⃣ Radar Chart – Academic Performance by Gender (Normalized)
 # ---------------------------
 st.subheader("9️⃣ Radar Chart – Academic Performance by Gender")
 
-metrics = ['GPA','CGPA','Attendance_Percentage','StudyHours','SocialMediaH','SkillHours']
+metrics = [
+    'GPA',
+    'CGPA',
+    'Attendance_Percentage',
+    'StudyHours',
+    'SocialMediaH',
+    'SkillHours'
+]
+
+# Calculate mean values
 mean_vals = df.groupby("Gender")[metrics].mean()
+
+# Normalize values (0–1)
+norm_vals = mean_vals.copy()
+for col in metrics:
+    min_v = df[col].min()
+    max_v = df[col].max()
+    norm_vals[col] = (mean_vals[col] - min_v) / (max_v - min_v)
 
 categories = metrics + [metrics[0]]
 fig = go.Figure()
 
-for g in mean_vals.index:
-    values = mean_vals.loc[g].tolist()
+for g in norm_vals.index:
+    values = norm_vals.loc[g].tolist()
     values.append(values[0])
+
     fig.add_trace(go.Scatterpolar(
-        r=values, theta=categories, fill='toself', name="Female" if g==0 else "Male"
+        r=values,
+        theta=categories,
+        fill='toself',
+        name="Female" if g == 0 else "Male"
     ))
 
-fig.update_layout(polar=dict(radialaxis=dict(visible=True)), showlegend=True)
+fig.update_layout(
+    polar=dict(radialaxis=dict(visible=True, range=[0, 1])),
+    showlegend=True
+)
+
 st.plotly_chart(fig, use_container_width=True)
+True)
 
 # ---------------------------
 # 🔟 Skills Distribution by Gender (Enhanced)
