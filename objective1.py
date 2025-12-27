@@ -187,7 +187,7 @@ skills_df = skills_df.explode('Skills')
 skills_df['Skills'] = skills_df['Skills'].str.strip()
 
 # Map gender
-skills_df['Gender'] = skills_df['Gender'].map({0:'Female', 1:'Male'})
+skills_df['Gender'] = skills_df['Gender'].map({1:'Female', 0:'Male'})
 
 # Count frequency
 skill_count = (
