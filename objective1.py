@@ -1,117 +1,159 @@
-# ==========================================
-# 1. IMPORT LIBRARIES
-# ==========================================
+import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# ==========================================
-# 2. LOAD DATA FROM GOOGLE SHEET
-# ==========================================
-sheet_id = "1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw"
-sheet_name = "Cleaned_data"
-
-url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
-
-df = pd.read_csv(url)
-
-print("Data Loaded Successfully")
-print(df.head())
-
-# ==========================================
-# 3. DATA CLEANING
-# ==========================================
-# Convert relevant columns to numeric
-df['GPA'] = pd.to_numeric(df['GPA'], errors='coerce')
-df['Attendance'] = pd.to_numeric(df['Attendance'], errors='coerce')
-df['YearStudy'] = pd.to_numeric(df['YearStudy'], errors='coerce')
-
-# Drop rows with missing GPA
-df = df.dropna(subset=['GPA'])
-
-# ==========================================
-# 4. VISUALIZATION SETTINGS
-# ==========================================
-sns.set(style="whitegrid")
-plt.rcParams["figure.figsize"] = (8,5)
-
-# ==========================================
-# 5. VISUALIZATIONS
-# ==========================================
-
-# 1️⃣ Bar Chart – Average GPA by Gender
-plt.figure()
-sns.barplot(x='Gender', y='GPA', data=df, ci=None)
-plt.title("Average GPA by Gender")
-plt.ylabel("Average GPA")
-plt.xlabel("Gender")
-plt.show()
-
-
-# 2️⃣ Box Plot – GPA Distribution by Year of Study
-plt.figure()
-sns.boxplot(x='YearStudy', y='GPA', data=df)
-plt.title("GPA Distribution by Year of Study")
-plt.xlabel("Year of Study")
-plt.ylabel("GPA")
-plt.show()
-
-
-# 3️⃣ Grouped Bar Chart – Average GPA by Faculty
-plt.figure(figsize=(10,5))
-faculty_order = df.groupby('Faculty')['GPA'].mean().sort_values(ascending=False).index
-sns.barplot(x='Faculty', y='GPA', data=df, order=faculty_order, ci=None)
-plt.title("Average GPA by Faculty")
-plt.xlabel("Faculty")
-plt.ylabel("Average GPA")
-plt.xticks(rotation=45, ha='right')
-plt.show()
-
-
-# 4️⃣ Scatter Plot – Attendance Percentage vs GPA
-plt.figure()
-sns.scatterplot(x='Attendance', y='GPA', hue='YearStudy', data=df)
-plt.title("Attendance Percentage vs GPA")
-plt.xlabel("Attendance (%)")
-plt.ylabel("GPA")
-plt.show()
-
-
-# 5️⃣ Box Plot – Scholarship Status vs GPA
-plt.figure()
-sns.boxplot(x='Scholarship', y='GPA', data=df)
-plt.title("Scholarship Status vs GPA")
-plt.xlabel("Scholarship Status")
-plt.ylabel("GPA")
-plt.show()
-
-
-# 6️⃣ Heatmap – Year of Study × Faculty vs GPA
-pivot_table = df.pivot_table(
-    values='GPA',
-    index='YearStudy',
-    columns='Faculty',
-    aggfunc='mean'
+# =====================================
+# PAGE CONFIG
+# =====================================
+st.set_page_config(
+    page_title="Objective 1: Demographics & Academic Factors",
+    layout="wide"
 )
 
-plt.figure(figsize=(12,6))
-sns.heatmap(pivot_table, annot=True, fmt=".2f", cmap="YlGnBu")
-plt.title("Heatmap: Year of Study × Faculty vs Average GPA")
-plt.xlabel("Faculty")
-plt.ylabel("Year of Study")
-plt.show()
+st.title("Objective 1: Demographic & Academic Factors Influencing GPA")
 
+# =====================================
+# LOAD DATA FROM GOOGLE SHEET (CACHED)
+# =====================================
+@st.cache_data
+def load_data():
+    sheet_id = "1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw"
+    sheet_name = "Cleaned_data"
+    url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+    return pd.read_csv(url)
 
-# 7️⃣ Line Chart – GPA Trend Across Years of Study
-yearly_gpa = df.groupby('YearStudy')['GPA'].mean().reset_index()
+df = load_data()
 
-plt.figure()
-sns.lineplot(x='YearStudy', y='GPA', data=yearly_gpa, marker='o')
-plt.title("GPA Trend Across Years of Study")
-plt.xlabel("Year of Study")
-plt.ylabel("Average GPA")
-plt.show()
+# =====================================
+# DATA CLEANING (STREAMLIT-SAFE)
+# =====================================
+df["GPA"] = pd.to_numeric(df["GPA"], errors="coerce")
+df["YearStudy"] = pd.to_numeric(df["YearStudy"], errors="coerce")
 
-# ==========================================
-# END OF SCRIPT
-# ==========================================
+df["Attendance"] = pd.to_numeric(
+    df["Attendance"].astype(str).str.replace("%", "", regex=False),
+    errors="coerce"
+)
+
+df = df.dropna(subset=["GPA"])
+
+# =====================================
+# SIDEBAR FILTERS
+# =====================================
+st.sidebar.header("Filters")
+
+year_filter = st.sidebar.multiselect(
+    "Select Year of Study",
+    sorted(df["YearStudy"].dropna().unique()),
+    default=sorted(df["YearStudy"].dropna().unique())
+)
+
+faculty_filter = st.sidebar.multiselect(
+    "Select Faculty",
+    sorted(df["Faculty"].dropna().unique()),
+    default=sorted(df["Faculty"].dropna().unique())
+)
+
+df = df[
+    (df["YearStudy"].isin(year_filter)) &
+    (df["Faculty"].isin(faculty_filter))
+]
+
+# =====================================
+# VISUAL SETTINGS
+# =====================================
+sns.set(style="whitegrid")
+
+# =====================================
+# 1. BAR CHART – AVG GPA BY GENDER
+# =====================================
+st.subheader("1. Average GPA by Gender")
+
+fig, ax = plt.subplots()
+sns.barplot(data=df, x="Gender", y="GPA", ci=None, ax=ax)
+ax.set_title("Average GPA by Gender")
+st.pyplot(fig)
+
+# =====================================
+# 2. BOX PLOT – GPA BY YEAR OF STUDY
+# =====================================
+st.subheader("2. GPA Distribution by Year of Study")
+
+fig, ax = plt.subplots()
+sns.boxplot(data=df, x="YearStudy", y="GPA", ax=ax)
+ax.set_title("GPA Distribution by Year of Study")
+st.pyplot(fig)
+
+# =====================================
+# 3. BAR CHART – AVG GPA BY FACULTY
+# =====================================
+st.subheader("3. Average GPA by Faculty")
+
+fig, ax = plt.subplots(figsize=(10,5))
+faculty_order = df.groupby("Faculty")["GPA"].mean().sort_values(ascending=False).index
+sns.barplot(data=df, x="Faculty", y="GPA", order=faculty_order, ci=None, ax=ax)
+ax.set_title("Average GPA by Faculty")
+ax.set_xticklabels(ax.get_xticklabels(), rotation=45, ha="right")
+st.pyplot(fig)
+
+# =====================================
+# 4. SCATTER – ATTENDANCE VS GPA
+# =====================================
+st.subheader("4. Attendance Percentage vs GPA")
+
+fig, ax = plt.subplots()
+sns.scatterplot(
+    data=df,
+    x="Attendance",
+    y="GPA",
+    hue="YearStudy",
+    ax=ax
+)
+ax.set_title("Attendance Percentage vs GPA")
+st.pyplot(fig)
+
+# =====================================
+# 5. BOX PLOT – SCHOLARSHIP VS GPA
+# =====================================
+st.subheader("5. Scholarship Status vs GPA")
+
+fig, ax = plt.subplots()
+sns.boxplot(data=df, x="Scholarship", y="GPA", ax=ax)
+ax.set_title("Scholarship Status vs GPA")
+st.pyplot(fig)
+
+# =====================================
+# 6. HEATMAP – YEAR × FACULTY VS GPA
+# =====================================
+st.subheader("6. Heatmap: Year of Study × Faculty vs Average GPA")
+
+pivot = df.pivot_table(
+    values="GPA",
+    index="YearStudy",
+    columns="Faculty",
+    aggfunc="mean"
+)
+
+fig, ax = plt.subplots(figsize=(12,6))
+sns.heatmap(pivot, annot=True, fmt=".2f", cmap="YlGnBu", ax=ax)
+ax.set_title("Year of Study × Faculty vs Average GPA")
+st.pyplot(fig)
+
+# =====================================
+# 7. LINE CHART – GPA TREND BY YEAR
+# =====================================
+st.subheader("7. GPA Trend Across Years of Study")
+
+yearly_gpa = df.groupby("YearStudy")["GPA"].mean().reset_index()
+
+fig, ax = plt.subplots()
+sns.lineplot(data=yearly_gpa, x="YearStudy", y="GPA", marker="o", ax=ax)
+ax.set_title("GPA Trend Across Years of Study")
+st.pyplot(fig)
+
+# =====================================
+# DATA PREVIEW (OPTIONAL)
+# =====================================
+with st.expander("View Cleaned Data"):
+    st.dataframe(df)
