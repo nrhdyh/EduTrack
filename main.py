@@ -18,7 +18,7 @@ objective1 = st.Page(
 )
 
 objective2 = st.Page(
-    "objective2.py"
+    "objective2.py",
     title="📚 Study & Lifestyle"
 )
 
