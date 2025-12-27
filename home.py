@@ -7,8 +7,7 @@ import pandas as pd
 st.markdown("""
 <style>
 body {
-    background-color: #F6F4FA;
-}
+
 
 .hero {
     background: linear-gradient(135deg, #5E35B1, #3949AB);
