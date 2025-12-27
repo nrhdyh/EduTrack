@@ -12,35 +12,35 @@ home = st.Page(
     default=True
 )
 
-objective1 = st.Page(
-    "objective1.py",
-    title="👤 Demographics"
-)
+# objective1 = st.Page(
+#     "objective1.py",
+#     title="👤 Demographics"
+# )
 
-objective2 = st.Page(
-    "objective2.py",
-    title="📚 Study & Lifestyle"
-)
+# objective2 = st.Page(
+#     "objective2.py",
+#     title="📚 Study & Lifestyle"
+# )
 
-objective3 = st.Page(
-    "objective3.py",
-    title="💻 Learning Mode"
-)
+# objective3 = st.Page(
+#     "objective3.py",
+#     title="💻 Learning Mode"
+# )
 
-objective4 = st.Page(
-    "objective4.py",
-    title="🛠️ Skills & Activities"
-)
+# objective4 = st.Page(
+#     "objective4.py",
+#     title="🛠️ Skills & Activities"
+# )
 
 # Navigation
 pg = st.navigation(
     {
         "📌 Dashboard Sections": [
-            home,
-            objective1,
-            objective2,
-            objective3,
-            objective4
+            home
+            # objective1,
+            # objective2,
+            # objective3,
+            # objective4
         ]
     }
 )
