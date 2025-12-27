@@ -1,102 +1,117 @@
-# objective1.py
-# Objective 1: Demographics & Academic Factors Visualizations (Live Google Sheet)
-
+# ==========================================
+# 1. IMPORT LIBRARIES
+# ==========================================
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
-# -----------------------------
-# Step 1: Load Google Sheet directly
-# -----------------------------
-# Replace your sheet ID and gid
+# ==========================================
+# 2. LOAD DATA FROM GOOGLE SHEET
+# ==========================================
 sheet_id = "1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw"
-gid = "680023838"
+sheet_name = "cleaned_data"
 
-url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/export?format=csv&gid={gid}"
+url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
 
 df = pd.read_csv(url)
+
+print("Data Loaded Successfully")
 print(df.head())
 
-# -----------------------------
-# Step 2: Data Cleaning
-# -----------------------------
-# Ensure GPA is numeric
-def convert_gpa(value):
-    if pd.isna(value):
-        return None
-    if "–" in str(value):
-        low, high = value.split("–")
-        return (float(low.strip()) + float(high.strip())) / 2
-    try:
-        return float(value)
-    except:
-        return None
+# ==========================================
+# 3. DATA CLEANING
+# ==========================================
+# Convert relevant columns to numeric
+df['GPA'] = pd.to_numeric(df['GPA'], errors='coerce')
+df['Attendance'] = pd.to_numeric(df['Attendance'], errors='coerce')
+df['YearStudy'] = pd.to_numeric(df['YearStudy'], errors='coerce')
 
-df["GPA"] = df["GPA"].apply(convert_gpa)
+# Drop rows with missing GPA
+df = df.dropna(subset=['GPA'])
 
-# Ensure Attendance is numeric if stored as string %
-if df["Attendance"].dtype == object:
-    df["Attendance"] = df["Attendance"].str.replace("%", "").astype(float)
-
-# -----------------------------
-# Step 3: Visualizations
-# -----------------------------
+# ==========================================
+# 4. VISUALIZATION SETTINGS
+# ==========================================
 sns.set(style="whitegrid")
+plt.rcParams["figure.figsize"] = (8,5)
+
+# ==========================================
+# 5. VISUALIZATIONS
+# ==========================================
 
 # 1️⃣ Bar Chart – Average GPA by Gender
-plt.figure(figsize=(6,5))
-avg_gpa_gender = df.groupby("Gender")["GPA"].mean().reset_index()
-sns.barplot(data=avg_gpa_gender, x="Gender", y="GPA", palette="pastel")
+plt.figure()
+sns.barplot(x='Gender', y='GPA', data=df, ci=None)
 plt.title("Average GPA by Gender")
 plt.ylabel("Average GPA")
-plt.savefig("avg_gpa_by_gender.png")
+plt.xlabel("Gender")
 plt.show()
 
-# 2️⃣ Box Plot – GPA distribution by Year of Study
-plt.figure(figsize=(8,5))
-sns.boxplot(data=df, x="YearStudy", y="GPA", palette="Set2")
+
+# 2️⃣ Box Plot – GPA Distribution by Year of Study
+plt.figure()
+sns.boxplot(x='YearStudy', y='GPA', data=df)
 plt.title("GPA Distribution by Year of Study")
-plt.savefig("gpa_by_year.png")
+plt.xlabel("Year of Study")
+plt.ylabel("GPA")
 plt.show()
+
 
 # 3️⃣ Grouped Bar Chart – Average GPA by Faculty
 plt.figure(figsize=(10,5))
-avg_gpa_faculty = df.groupby("Faculty")["GPA"].mean().reset_index()
-sns.barplot(data=avg_gpa_faculty, x="Faculty", y="GPA", palette="muted")
-plt.xticks(rotation=45)
+faculty_order = df.groupby('Faculty')['GPA'].mean().sort_values(ascending=False).index
+sns.barplot(x='Faculty', y='GPA', data=df, order=faculty_order, ci=None)
 plt.title("Average GPA by Faculty")
-plt.savefig("avg_gpa_by_faculty.png")
+plt.xlabel("Faculty")
+plt.ylabel("Average GPA")
+plt.xticks(rotation=45, ha='right')
 plt.show()
 
-# 4️⃣ Scatter Plot – Attendance % vs GPA
-plt.figure(figsize=(6,5))
-sns.scatterplot(data=df, x="Attendance", y="GPA", hue="YearStudy", palette="deep")
+
+# 4️⃣ Scatter Plot – Attendance Percentage vs GPA
+plt.figure()
+sns.scatterplot(x='Attendance', y='GPA', hue='YearStudy', data=df)
 plt.title("Attendance Percentage vs GPA")
-plt.savefig("attendance_vs_gpa.png")
+plt.xlabel("Attendance (%)")
+plt.ylabel("GPA")
 plt.show()
+
 
 # 5️⃣ Box Plot – Scholarship Status vs GPA
-plt.figure(figsize=(6,5))
-sns.boxplot(data=df, x="Scholarship", y="GPA", palette="Set3")
+plt.figure()
+sns.boxplot(x='Scholarship', y='GPA', data=df)
 plt.title("Scholarship Status vs GPA")
-plt.savefig("scholarship_vs_gpa.png")
+plt.xlabel("Scholarship Status")
+plt.ylabel("GPA")
 plt.show()
+
 
 # 6️⃣ Heatmap – Year of Study × Faculty vs GPA
-plt.figure(figsize=(10,6))
-pivot_table = df.pivot_table(index="YearStudy", columns="Faculty", values="GPA", aggfunc="mean")
+pivot_table = df.pivot_table(
+    values='GPA',
+    index='YearStudy',
+    columns='Faculty',
+    aggfunc='mean'
+)
+
+plt.figure(figsize=(12,6))
 sns.heatmap(pivot_table, annot=True, fmt=".2f", cmap="YlGnBu")
-plt.title("Heatmap: Year × Faculty vs GPA")
-plt.savefig("heatmap_year_faculty_gpa.png")
+plt.title("Heatmap: Year of Study × Faculty vs Average GPA")
+plt.xlabel("Faculty")
+plt.ylabel("Year of Study")
 plt.show()
+
 
 # 7️⃣ Line Chart – GPA Trend Across Years of Study
-plt.figure(figsize=(6,5))
-gpa_trend = df.groupby("YearStudy")["GPA"].mean().reset_index()
-sns.lineplot(data=gpa_trend, x="YearStudy", y="GPA", marker="o", color="purple")
+yearly_gpa = df.groupby('YearStudy')['GPA'].mean().reset_index()
+
+plt.figure()
+sns.lineplot(x='YearStudy', y='GPA', data=yearly_gpa, marker='o')
 plt.title("GPA Trend Across Years of Study")
-plt.savefig("gpa_trend_years.png")
+plt.xlabel("Year of Study")
+plt.ylabel("Average GPA")
 plt.show()
 
-print("All visualizations generated from live Google Sheet data.")
-
+# ==========================================
+# END OF SCRIPT
+# ==========================================
