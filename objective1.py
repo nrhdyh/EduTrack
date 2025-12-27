@@ -128,43 +128,43 @@ fig = px.scatter(
 )
 st.plotly_chart(fig, use_container_width=True)
 
-# # =============================
-# # GPA Heatmap – Age Group x Study Hours
-# # =============================
-# st.subheader("8️⃣ Average GPA by Age Group & Study Hours")
+# =============================
+# GPA Heatmap – Age Group x Study Hours
+# =============================
+st.subheader("8️⃣ Average GPA by Age Group & Study Hours")
 
-# # Define bins
-# age_bins = [18, 20, 22, 24, 26, 28, 30]
-# age_labels = ['18-19', '20-21', '22-23', '24-25', '26-27', '28-29']
-# df['Age_Group'] = pd.cut(df['Age'], bins=age_bins, labels=age_labels, right=False)
+# Define bins
+age_bins = [18, 20, 22, 24, 26, 28, 30]
+age_labels = ['18-19', '20-21', '22-23', '24-25', '26-27', '28-29']
+df['Age_Group'] = pd.cut(df['Age'], bins=age_bins, labels=age_labels, right=False)
 
-# study_bins = [0, 1, 2, 3, 4, 5, 6, 7]
-# study_labels = ['<1', '1-2', '2-3', '3-4', '4-5', '5-6', '6+']
-# df['StudyHours_Group'] = pd.cut(df['StudyHours'], bins=study_bins, labels=study_labels, right=False)
+study_bins = [0, 1, 2, 3, 4, 5, 6, 7]
+study_labels = ['<1', '1-2', '2-3', '3-4', '4-5', '5-6', '6+']
+df['StudyHours_Group'] = pd.cut(df['StudyHours'], bins=study_bins, labels=study_labels, right=False)
 
-# # Calculate average GPA
-# heatmap_df = (
-#     df.groupby(['Age_Group','StudyHours_Group'])['GPA']
-#       .mean()
-#       .reset_index()
-# )
+# Calculate average GPA
+heatmap_df = (
+    df.groupby(['Age_Group','StudyHours_Group'])['GPA']
+      .mean()
+      .reset_index()
+)
 
-# # Plot heatmap
-# fig = px.density_heatmap(
-#     heatmap_df,
-#     x="StudyHours_Group",
-#     y="Age_Group",
-#     z="GPA",
-#     text_auto=".2f",
-#     color_continuous_scale="RdBu"
-# )
+# Plot heatmap
+fig = px.density_heatmap(
+    heatmap_df,
+    x="StudyHours_Group",
+    y="Age_Group",
+    z="GPA",
+    text_auto=".2f",
+    color_continuous_scale="RdBu"
+)
 
-# fig.update_layout(
-#     xaxis_title="Study Hours Group",
-#     yaxis_title="Age Group"
-# )
+fig.update_layout(
+    xaxis_title="Study Hours Group",
+    yaxis_title="Age Group"
+)
 
-# st.plotly_chart(fig, use_container_width=True)
+st.plotly_chart(fig, use_container_width=True)
 
 # =============================
 # 9️⃣ Radar Chart – Gender Metrics
