@@ -23,8 +23,8 @@ def sort_by_lower_bound(value):
 # ---------------------------------------
 # TITLE
 # ---------------------------------------
-st.title("🎓 Student Performance Analysis Dashboard")
-st.markdown("Interactive dashboard for analysing academic performance patterns")
+st.title("🎓 Demographic Characteristics and Academic Factors Influencing UMK Students Performance")
+st.markdown("Academic performance is a key indicator of student success, yet it is influenced by a combination of demographic characteristics and academic factors. At Universiti Malaysia Kelantan (UMK), students come from diverse backgrounds in terms of gender, age, races, and relationship status, while also differing in academic-related behaviors such as participation in co-curricular activities, attendance, and CGPA/GPA. Despite the availability of such data, there is limited research analyzing how these factors collectively affect student performance. Without this understanding, it is challenging for university stakeholders to design effective interventions and support programs. Therefore, this study seeks to examine the relationship between demographic and academic factors and student performance at UMK, with the aim of identifying key predictors of academic success to guide strategies for improving student outcomes.")
 
 # ---------------------------------------
 # SIDEBAR
