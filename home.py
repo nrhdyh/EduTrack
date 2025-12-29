@@ -67,7 +67,7 @@ body {
 # ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
-col1, col2 = st.columns([1,6])
+col1, col2 = st.columns([6,6])
 
 with col1:
     st.image("logo.png", width=1000)  # make sure logo.png is in the same folder
