@@ -244,6 +244,43 @@ fig_faculty = px.bar(
 
 fig_faculty.update_layout(xaxis_tickangle=-45)
 st.plotly_chart(fig_faculty, use_container_width=True)
+
+# =====================================================
+# Display Options
+# =====================================================
+st.markdown("### 🔍 Display Options")
+
+show_stats_3 = st.checkbox("Show Average CGPA Table", value=True, key="stats3")
+show_description_3 = st.checkbox("Show Distribution Description", value=True, key="desc3")
+
+# =====================================================
+# Average CGPA Table (Descriptive)
+# =====================================================
+if show_stats_3:
+    st.markdown("### 📊 Average CGPA by Faculty")
+
+    faculty_avg = (
+        df.groupby("Faculty_Short")["CGPA_Midpoint"]
+        .mean()
+        .reset_index(name="Average_CGPA")
+    )
+
+    st.dataframe(faculty_avg, use_container_width=True)
+
+# =====================================================
+# Description (Neutral Only)
+# =====================================================
+if show_description_3:
+    st.markdown("""
+### 📈 Distribution Description
+
+The bar chart displays the average CGPA midpoint for each faculty, allowing comparison of mean CGPA values across academic faculties.
+
+Differences in bar height reflect variation in average CGPA midpoints among faculties. Some faculties show higher average values while others display lower averages within the overall CGPA range observed in the dataset.
+
+The chart summarizes central tendency at the faculty level and does not reflect individual student-level variation within each faculty.
+""")
+
 st.markdown("---")
 
 # =====================================================
@@ -260,7 +297,45 @@ fig_age = px.scatter(
 )
 
 st.plotly_chart(fig_age, use_container_width=True)
+
+# =====================================================
+# Display Options
+# =====================================================
+st.markdown("### 🔍 Display Options")
+
+show_stats_4 = st.checkbox("Show Summary Statistics", value=True, key="stats4")
+show_description_4 = st.checkbox("Show Distribution Description", value=True, key="desc4")
+
+# =====================================================
+# Summary Statistics (Descriptive)
+# =====================================================
+if show_stats_4:
+    st.markdown("### 📊 Summary Statistics")
+
+    age_cgpa_stats = (
+        df[["CGPA_Midpoint", "Age_Midpoint"]]
+        .describe()
+        .reset_index()
+    )
+
+    st.dataframe(age_cgpa_stats, use_container_width=True)
+
+# =====================================================
+# Distribution Description (Neutral Only)
+# =====================================================
+if show_description_4:
+    st.markdown("""
+### 📈 Distribution Description
+
+The scatter plot displays individual data points representing CGPA midpoints plotted against age midpoints.
+
+Points are spread across the CGPA range with variation in age values, showing how observations are distributed across both variables. The fitted trendline provides a visual reference for the general direction of the data without indicating the strength or significance of the relationship.
+
+The dispersion of points around the trendline indicates variability in CGPA values across different ages, with no single age group dominating the distribution.
+""")
+
 st.markdown("---")
+
 
 # =====================================================
 # 5️⃣ Line Chart: CGPA vs GPA by Year of Study
@@ -283,11 +358,44 @@ fig_line = px.line(
 )
 
 st.plotly_chart(fig_line, use_container_width=True)
-st.markdown("---")
 
 # =====================================================
-# 6️⃣ Bar Chart: CGPA by Family Income
+# Display Options
 # =====================================================
+st.markdown("### 🔍 Display Options")
+
+show_stats_5 = st.checkbox("Show Summary Statistics", value=True, key="stats5")
+show_description_5 = st.checkbox("Show Distribution Description", value=True, key="desc5")
+
+# =====================================================
+# Summary Statistics (Descriptive)
+# =====================================================
+if show_stats_5:
+    st.markdown("### 📊 Summary Statistics")
+
+    cgpa_gpa_stats = (
+        line_data[["GPA_Midpoint", "CGPA_Midpoint"]]
+        .describe()
+        .reset_index()
+    )
+
+    st.dataframe(cgpa_gpa_stats, use_container_width=True)
+
+# =====================================================
+# Distribution Description (Neutral Only)
+# =====================================================
+if show_description_5:
+    st.markdown(""" 
+### 📈 Distribution Description
+
+The line chart shows average CGPA values for each GPA midpoint, separated by year of study.  
+
+Lines indicate the distribution of CGPA averages across GPA midpoints, with each year represented by a separate line, showing how observations are spread without implying trends or effects.
+""")
+
+st.markdown("---")
+
+
 # =====================================================
 # 6️⃣ Bar Chart: CGPA by Income Category
 # =====================================================
@@ -303,7 +411,43 @@ fig_income = px.bar(
 
 fig_income.update_layout(xaxis_tickangle=-45)
 st.plotly_chart(fig_income, use_container_width=True)
+
+# =====================================================
+# Display Options
+# =====================================================
+st.markdown("### 🔍 Display Options")
+
+show_stats_6 = st.checkbox("Show Summary Statistics", value=True, key="stats6")
+show_description_6 = st.checkbox("Show Distribution Description", value=True, key="desc6")
+
+# =====================================================
+# Summary Statistics (Descriptive)
+# =====================================================
+if show_stats_6:
+    st.markdown("### 📊 Summary Statistics")
+
+    cgpa_income_stats = (
+        df.groupby("Income_Category")["CGPA_Midpoint"]
+        .describe()
+        .reset_index()
+    )
+
+    st.dataframe(cgpa_income_stats, use_container_width=True)
+
+# =====================================================
+# Distribution Description (Neutral Only)
+# =====================================================
+if show_description_6:
+    st.markdown(""" 
+### 📈 Distribution Description
+
+The bar chart displays average CGPA midpoints for each income category.  
+
+Bars represent the spread of CGPA values across categories, showing differences in averages without implying cause or effect.
+""")
+
 st.markdown("---")
+
 
 # =====================================================
 # 7️⃣ Heatmap: Study Hours vs Attendance (by Living With)
@@ -351,6 +495,39 @@ fig_heatmap.update_layout(
 )
 
 st.plotly_chart(fig_heatmap, use_container_width=True)
+
+# =====================================================
+# Display Options
+# =====================================================
+st.markdown("### 🔍 Display Options")
+
+show_stats_7 = st.checkbox("Show Summary Statistics", value=True, key="stats7")
+show_description_7 = st.checkbox("Show Distribution Description", value=True, key="desc7")
+
+# =====================================================
+# Summary Statistics (Descriptive)
+# =====================================================
+if show_stats_7:
+    st.markdown("### 📊 Summary Statistics")
+
+    study_attendance_stats = (
+        pivot.stack().describe().reset_index().rename(columns={0: "CGPA_Midpoint"})
+    )
+
+    st.dataframe(study_attendance_stats, use_container_width=True)
+
+# =====================================================
+# Distribution Description (Neutral Only)
+# =====================================================
+if show_description_7:
+    st.markdown(""" 
+### 📈 Distribution Description
+
+The heatmap shows average CGPA values for combinations of daily study hours and attendance percentages, filtered by living arrangement.  
+
+Color intensity represents the distribution of CGPA values across these combinations, without implying causation or trends.
+""")
+
 st.markdown("---")
 
 # =====================================================
@@ -371,10 +548,45 @@ fig_bubble = px.scatter(
 
 st.plotly_chart(fig_bubble, use_container_width=True)
 
+# =====================================================
+# Display Options
+# =====================================================
+st.markdown("### 🔍 Display Options")
+
+show_stats_8 = st.checkbox("Show Summary Statistics", value=True, key="stats8")
+show_description_8 = st.checkbox("Show Distribution Description", value=True, key="desc8")
+
+# =====================================================
+# Summary Statistics (Descriptive)
+# =====================================================
+if show_stats_8:
+    st.markdown("### 📊 Summary Statistics")
+
+    bubble_stats = (
+        df.groupby("Races")[["CGPA_Midpoint", "GPA_Midpoint"]]
+        .describe()
+        .reset_index()
+    )
+
+    st.dataframe(bubble_stats, use_container_width=True)
+
+# =====================================================
+# Distribution Description (Neutral Only)
+# =====================================================
+if show_description_8:
+    st.markdown(""" 
+### 📈 Distribution Description
+
+The bubble chart displays CGPA midpoints on the x-axis and race categories on the y-axis, with bubble size representing GPA midpoints.  
+
+Bubbles indicate the distribution of GPA and CGPA values across races, without implying trends or causal relationships.
+""")
+
+st.markdown("---")
+
 # ---------------------------------------
 # FOOTER
 # ---------------------------------------
-st.markdown("### 📌 Conclusion")
 st.markdown(
     "This dashboard provides interactive visual insights into how demographic, academic, "
     "and socio-economic factors influence student academic performance."
