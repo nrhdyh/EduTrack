@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 # ---------------------------------------
-# HELPER FUNCTION (FOR HEATMAP SORTING)
+# HELPER FUNCTION (FIX HEATMAP ISSUE)
 # ---------------------------------------
 def sort_by_lower_bound(value):
     try:
@@ -27,17 +27,16 @@ st.title("🎓 Student Performance Analysis Dashboard")
 st.markdown("Interactive dashboard for analysing academic performance patterns")
 
 # ---------------------------------------
+# SIDEBAR
+# ---------------------------------------
+# st.sidebar.title("📊 Dashboard Controls")
+# st.sidebar.markdown("Use the filters below to explore the dataset")
+
+# ---------------------------------------
 # LOAD DATA
 # ---------------------------------------
 url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
 df = pd.read_csv(url)
-
-# ---------------------------------------
-# DATA PREVIEW
-# ---------------------------------------
-st.subheader("📄 Dataset Preview")
-st.dataframe(df.head())
-st.markdown("---")
 
 # =====================================================
 # 📊 SUMMARY INSIGHT BOXES
@@ -61,6 +60,13 @@ col4.metric("🏠 Common Living Arrangement", common_living)
 
 st.markdown("---")
 
+# ---------------------------------------
+# DATA PREVIEW
+# ---------------------------------------
+st.subheader("📄 Dataset Preview")
+st.dataframe(df.head())
+st.markdown("---")
+
 # =====================================================
 # 1️⃣ Violin Plot: CGPA by Gender
 # =====================================================
@@ -73,7 +79,6 @@ fig_violin = px.violin(
     box=True,
     points="all",
     color="Gender",
-    color_discrete_sequence=px.colors.qualitative.Set2,
     title="Violin Plot of CGPA Midpoint by Gender"
 )
 
@@ -81,7 +86,7 @@ st.plotly_chart(fig_violin, use_container_width=True)
 st.markdown("---")
 
 # =====================================================
-# 2️⃣ Histogram: GPA by Relationship Status & Gender
+# 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
 # =====================================================
 st.subheader("2️⃣ GPA Distribution by Relationship Status and Gender")
 
@@ -98,8 +103,7 @@ fig_hist = px.histogram(
     x="GPA_Midpoint",
     color="Gender",
     barmode="overlay",
-    opacity=0.75,
-    color_discrete_sequence=px.colors.qualitative.Set2,
+    opacity=0.7,
     title=f"GPA Distribution by Gender ({selected_relationship})"
 )
 
@@ -116,7 +120,6 @@ fig_faculty = px.bar(
     x="Faculty_Short",
     y="CGPA_Midpoint",
     color="Faculty_Short",
-    color_discrete_sequence=px.colors.qualitative.Pastel,
     title="Average CGPA Midpoint by Faculty"
 )
 
@@ -134,8 +137,6 @@ fig_age = px.scatter(
     x="CGPA_Midpoint",
     y="Age_Midpoint",
     trendline="ols",
-    color="CGPA_Midpoint",
-    color_continuous_scale="Blues",
     title="Scatter Plot of CGPA vs Age"
 )
 
@@ -159,7 +160,6 @@ fig_line = px.line(
     y="CGPA_Midpoint",
     color="Year_of_Study",
     markers=True,
-    color_discrete_sequence=px.colors.qualitative.Dark2,
     title="Average CGPA by GPA Midpoint and Year of Study"
 )
 
@@ -175,8 +175,7 @@ fig_income = px.bar(
     df,
     x="Family_Income",
     y="CGPA_Midpoint",
-    color="CGPA_Midpoint",
-    color_continuous_scale="Teal",
+    color="Family_Income",
     title="Average CGPA Midpoint by Family Income"
 )
 
@@ -242,8 +241,8 @@ fig_bubble = px.scatter(
     x="CGPA_Midpoint",
     y="Races",
     size="GPA_Midpoint",
-    color="CGPA_Midpoint",
-    color_continuous_scale="Plasma",
+    color="GPA_Midpoint",
+    color_continuous_scale="Viridis",
     title="Bubble Chart of GPA and CGPA by Race",
     size_max=40
 )
@@ -251,11 +250,10 @@ fig_bubble = px.scatter(
 st.plotly_chart(fig_bubble, use_container_width=True)
 
 # ---------------------------------------
-# FOOTER / CONCLUSION
+# FOOTER
 # ---------------------------------------
 st.markdown("### 📌 Conclusion")
 st.markdown(
-    "The analysis indicates that academic behaviour such as GPA, attendance, and study hours "
-    "has a stronger influence on CGPA compared to demographic factors. These insights support "
-    "the development of predictive models for identifying at-risk students."
+    "This dashboard provides interactive visual insights into how demographic, academic, "
+    "and socio-economic factors influence student academic performance."
 )
