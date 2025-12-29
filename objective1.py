@@ -131,46 +131,46 @@ st.plotly_chart(fig_income, use_container_width=True)
 # =====================================================
 # 7️⃣ Complex Heatmaps: Study Hours vs Attendance (by Living With)
 # =====================================================
-st.subheader("7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement")
+# st.subheader("7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement")
 
-study_order = sorted(
-    df["Study_Hours_Daily"].dropna().unique(),
-    key=sort_by_lower_bound
-)
+# study_order = sorted(
+#     df["Study_Hours_Daily"].dropna().unique(),
+#     key=sort_by_lower_bound
+# )
 
-attendance_order = sorted(
-    df["Attendance_Percentage"].dropna().unique(),
-    key=sort_by_lower_bound
-)
+# attendance_order = sorted(
+#     df["Attendance_Percentage"].dropna().unique(),
+#     key=sort_by_lower_bound
+# )
 
-living_options = df["Living_With"].dropna().unique()
-selected_living = st.selectbox("Select Living Arrangement", living_options)
+# living_options = df["Living_With"].dropna().unique()
+# selected_living = st.selectbox("Select Living Arrangement", living_options)
 
-subset = df[df["Living_With"] == selected_living]
+# subset = df[df["Living_With"] == selected_living]
 
-pivot = subset.pivot_table(
-    index="Study_Hours_Daily",
-    columns="Attendance_Percentage",
-    values="CGPA_Midpoint",
-    aggfunc="mean"
-)
+# pivot = subset.pivot_table(
+#     index="Study_Hours_Daily",
+#     columns="Attendance_Percentage",
+#     values="CGPA_Midpoint",
+#     aggfunc="mean"
+# )
 
-pivot = pivot.reindex(index=study_order, columns=attendance_order)
+# pivot = pivot.reindex(index=study_order, columns=attendance_order)
 
-fig_heatmap = px.imshow(
-    pivot,
-    text_auto=".2f",
-    color_continuous_scale="Viridis",
-    aspect="auto",
-    title=f"Average CGPA by Study Hours & Attendance ({selected_living})"
-)
+# fig_heatmap = px.imshow(
+#     pivot,
+#     text_auto=".2f",
+#     color_continuous_scale="Viridis",
+#     aspect="auto",
+#     title=f"Average CGPA by Study Hours & Attendance ({selected_living})"
+# )
 
-fig_heatmap.update_layout(
-    xaxis_title="Attendance Percentage",
-    yaxis_title="Daily Study Hours"
-)
+# fig_heatmap.update_layout(
+#     xaxis_title="Attendance Percentage",
+#     yaxis_title="Daily Study Hours"
+# )
 
-st.plotly_chart(fig_heatmap, use_container_width=True)
+# st.plotly_chart(fig_heatmap, use_container_width=True)
 
 
 # =====================================================
