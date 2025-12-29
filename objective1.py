@@ -145,20 +145,11 @@ st.plotly_chart(fig_violin, use_container_width=True)
 # =====================================================
 # st.markdown("---")
 
-# =====================================================
-# Compact Display Options (Side by Side)
-# =====================================================
-col1, col2 = st.columns(2)  # create 2 columns
-
-with col1:
-    show_stats = st.checkbox("Summary Statistics", value=True, key="compact_stats")
-
-with col2:
-    show_description = st.checkbox("Distribution Description", value=True, key="compact_desc")
 
 # =====================================================
 # Summary Statistics (Descriptive Only)
 # =====================================================
+show_stats = st.checkbox("Summary Statistics", value=True, key="compact_stats")
 if show_stats:
     st.markdown("### 📊 Summary Statistics by Gender")
 
@@ -173,6 +164,7 @@ if show_stats:
 # =====================================================
 # Distribution Description (Neutral)
 # =====================================================
+show_description = st.checkbox("Distribution Description", value=True, key="compact_desc")
 if show_description:
     st.markdown("""
 ### 📈 Distribution Description
