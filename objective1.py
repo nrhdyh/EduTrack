@@ -124,26 +124,30 @@ st.markdown("---")
 
 
 # =====================================================
-# 1️⃣ Box Plot: CGPA by Gender
+# 1️⃣ Violin Plot: CGPA by Gender
 # =====================================================
 st.subheader("1️⃣ CGPA Distribution by Gender")
 
-fig_box = px.box(
+fig_violin = px.violin(
     df,
     x="Gender",
     y="CGPA_Midpoint",
+    box=True,
+    points="all",
     color="Gender",
-    points="all",  # show all data points
-    title="Box Plot of CGPA Midpoint by Gender"
+    title="Violin Plot of CGPA Midpoint by Gender"
 )
 
-st.plotly_chart(fig_box, use_container_width=True)
+st.plotly_chart(fig_violin, use_container_width=True)
 
 # =====================================================
 # Compact Display Options
 # =====================================================
+# st.markdown("---")
+
 show_stats = st.checkbox("Summary Statistics", value=True, key="compact_stats")
 show_description = st.checkbox("Distribution Description", value=True, key="compact_desc")
+
 
 # =====================================================
 # Summary Statistics (Descriptive Only)
@@ -166,15 +170,14 @@ if show_description:
     st.markdown("""
 ### 📈 Distribution Description
 
-The box plot displays the distribution of CGPA midpoints for male and female students, highlighting the median, quartiles, and potential outliers for each group.
+The violin plot displays the distribution of CGPA midpoints for male and female students, showing the shape, spread, and concentration of values for each group.
 
-The boxes show the interquartile range (IQR), whiskers indicate the range of non-outlier data, and individual points represent actual CGPA values. 
+CGPA values for both genders are distributed within a similar overall range, with areas of higher density where values occur more frequently. The distributions overlap across most of the CGPA range.
 
-CGPA values for both genders cover a similar range, with most data concentrated around the median. A few points at the extremes indicate less frequent CGPA values.
+Variation in the width of the violins reflects differences in data concentration at specific CGPA levels. A small number of observations appear at the lower and upper ends of the distributions, indicating less frequent CGPA values.
 """)
 
 st.markdown("---")
-
 
 # =====================================================
 # 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
