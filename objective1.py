@@ -37,11 +37,11 @@ url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned
 df = pd.read_csv(url)
 
 # =====================================================
-# 📊 SUMMARY INSIGHT BOXES
+# 📊 SUMMARY INSIGHT BOXES (Colored)
 # =====================================================
-
 st.subheader("📊 Key Summary Insights")
 
+# Filters
 col_f1, col_f2, col_f3 = st.columns(3)
 
 with col_f1:
@@ -64,17 +64,14 @@ with col_f3:
 
 # Apply filters
 filtered_df = df.copy()
-
 if selected_gender != "All":
     filtered_df = filtered_df[filtered_df["Gender"] == selected_gender]
-
 if selected_faculty != "All":
     filtered_df = filtered_df[filtered_df["Faculty_Short"] == selected_faculty]
-
 if selected_living != "All":
     filtered_df = filtered_df[filtered_df["Living_With"] == selected_living]
 
-# Compute metrics dynamically
+# Compute metrics
 avg_cgpa = filtered_df["CGPA_Midpoint"].mean()
 top_faculty = (
     filtered_df.groupby("Faculty_Short")["CGPA_Midpoint"]
@@ -82,24 +79,46 @@ top_faculty = (
     .idxmax()
     if not filtered_df.empty else "N/A"
 )
-
 cgpa_gpa_corr = (
     filtered_df["CGPA_Midpoint"].corr(filtered_df["GPA_Midpoint"])
     if len(filtered_df) > 1 else 0
 )
-
 common_living = (
     filtered_df["Living_With"].mode()[0]
     if not filtered_df.empty else "N/A"
 )
-st.markdown("---")
-# Display metrics
-col1, col2, col3, col4 = st.columns(4)
 
-col1.metric("📈 Average CGPA", f"{avg_cgpa:.2f}")
-col2.metric("🏆 Top Faculty", top_faculty)
-col3.metric("🔗 CGPA–GPA Correlation", f"{cgpa_gpa_corr:.2f}")
-col4.metric("🏠 Common Living", common_living)
+# Display metrics in a colored box
+st.markdown(
+    f"""
+    <div style="
+        background-color:#E0F7FA;
+        padding:20px;
+        border-radius:10px;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    ">
+        <div style="display:flex; justify-content:space-between; text-align:center;">
+            <div>
+                <h3>📈 Average CGPA</h3>
+                <p style="font-size:20px; font-weight:bold;">{avg_cgpa:.2f}</p>
+            </div>
+            <div>
+                <h3>🏆 Top Faculty</h3>
+                <p style="font-size:20px; font-weight:bold;">{top_faculty}</p>
+            </div>
+            <div>
+                <h3>🔗 CGPA–GPA Correlation</h3>
+                <p style="font-size:20px; font-weight:bold;">{cgpa_gpa_corr:.2f}</p>
+            </div>
+            <div>
+                <h3>🏠 Common Living</h3>
+                <p style="font-size:20px; font-weight:bold;">{common_living}</p>
+            </div>
+        </div>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 st.markdown("---")
 
