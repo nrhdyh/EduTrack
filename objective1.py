@@ -88,15 +88,18 @@ common_living = (
     if not filtered_df.empty else "N/A"
 )
 
-# Display metrics in block boxes
-col1, col2, col3, col4 = st.columns(4)
-
-background-color:#6A1B9A;
+# Define the block style as a string
+block_style = """
+    background-color:#6A1B9A;
     color:white;
     padding:20px;
     border-radius:10px;
     text-align:center;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+"""
+
+# Display metrics in block boxes
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     st.markdown(f'<div style="{block_style}"><h3>📈 Average CGPA</h3><p style="font-size:20px; font-weight:bold;">{avg_cgpa:.2f}</p></div>', unsafe_allow_html=True)
