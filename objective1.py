@@ -133,9 +133,9 @@ st.plotly_chart(fig_violin, use_container_width=True)
 # =====================================================
 st.markdown("### 🔍 Interactive Analysis Options")
 
-show_stats = st.checkbox("Show Summary Statistics by Gender", value=True)
-show_interpretation = st.checkbox("Show Interpretation", value=True)
-show_conclusion = st.checkbox("Show Scientific Conclusion", value=True)
+show_stats = st.checkbox("Summary Statistics by Gender", value=True)
+show_interpretation = st.checkbox("Interpretation", value=True)
+show_conclusion = st.checkbox("Conclusion", value=True)
 
 # =====================================================
 # Summary Statistics
@@ -172,7 +172,7 @@ if show_conclusion:
     female_mean = df[df["Gender"] == "Female"]["CGPA_Midpoint"].mean()
     male_mean = df[df["Gender"] == "Male"]["CGPA_Midpoint"].mean()
 
-    st.markdown("### 🧪 Scientific Conclusion")
+    st.markdown("### 🧪 Conclusion")
 
     if female_mean > male_mean:
         st.success(
