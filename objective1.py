@@ -218,7 +218,43 @@ fig_hist = px.histogram(
 )
 
 st.plotly_chart(fig_hist, use_container_width=True)
+
+# =====================================================
+# Analysis Options (Optional Display Only)
+# =====================================================
+show_stats_2 = st.checkbox("Show Summary Statistics", value=True, key="stats2")
+show_interpretation_2 = st.checkbox("Show Distribution Description", value=True, key="desc2")
+
+# =====================================================
+# Summary Statistics (Descriptive)
+# =====================================================
+if show_stats_2:
+    st.markdown("### 📊 Summary Statistics by Gender")
+
+    stats_df_2 = (
+        filtered_df.groupby("Gender")["GPA_Midpoint"]
+        .agg(["count", "mean", "median", "std", "min", "max"])
+        .reset_index()
+    )
+
+    st.dataframe(stats_df_2, use_container_width=True)
+
+# =====================================================
+# Distribution Description (Neutral Only)
+# =====================================================
+if show_interpretation_2:
+    st.markdown(f"""
+### 📈 Distribution Description
+
+The histogram displays the frequency distribution of GPA midpoints by gender for students with **{selected_relationship}** relationship status.
+
+GPA values for both genders are spread across a similar range, with overlapping bars observed across most GPA intervals. Differences in bar height indicate variations in the number of observations within each GPA bin.
+
+The distribution shapes show areas of higher concentration where GPA values occur more frequently, as well as lower-frequency intervals. No distinct separation between gender-based distributions is visually apparent within this relationship category.
+""")
+
 st.markdown("---")
+
 
 # =====================================================
 # 3️⃣ Bar Chart: Average CGPA by Faculty
