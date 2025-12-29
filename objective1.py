@@ -90,7 +90,7 @@ common_living = (
 
 # Define the block style as a string
 block_style = """
-    background-color:#6A1B9A;
+    background: linear-gradient(135deg, #5E35B1, #3949AB);
     color:white;
     padding:20px;
     border-radius:10px;
