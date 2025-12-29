@@ -3,167 +3,187 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 
-# --------------------------------------------------
+# ---------------------------------------
 # PAGE CONFIG
-# --------------------------------------------------
+# ---------------------------------------
 st.set_page_config(
     page_title="Student Performance Dashboard",
     layout="wide"
 )
 
-st.title("📊 Student Performance Analysis Dashboard")
-st.markdown("Demographic & Academic Factors Influencing CGPA")
+st.title("🎓 Student Performance Analysis Dashboard")
 
-# --------------------------------------------------
+# ---------------------------------------
 # LOAD DATA
-# --------------------------------------------------
+# ---------------------------------------
 url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
 df = pd.read_csv(url)
 
-st.subheader("📄 Dataset Preview")
+st.subheader("Dataset Preview")
 st.dataframe(df.head())
 
-# --------------------------------------------------
-# HELPER FUNCTION FOR SORTING RANGE CATEGORIES
-# --------------------------------------------------
-def sort_by_lower_bound(val):
-    if pd.isna(val):
-        return np.inf
-    s = str(val).strip()
-    if s.startswith(">"):
-        return float(s[1:])
-    if "-" in s:
-        return float(s.split("-")[0])
-    return np.inf
-
-# --------------------------------------------------
-# 1️⃣ VIOLIN PLOT: Gender vs CGPA
-# --------------------------------------------------
+# =====================================================
+# 1️⃣ Violin Plot: CGPA by Gender
+# =====================================================
 st.subheader("1️⃣ CGPA Distribution by Gender")
 
-fig1 = px.violin(
+fig_violin = px.violin(
     df,
     x="Gender",
     y="CGPA_Midpoint",
     box=True,
     points="all",
-    color="Gender"
+    color="Gender",
+    title="Violin Plot of CGPA Midpoint by Gender"
 )
-st.plotly_chart(fig1, use_container_width=True)
 
-# --------------------------------------------------
-# 2️⃣ BAR CHART: Faculty vs CGPA
-# --------------------------------------------------
-st.subheader("2️⃣ Average CGPA by Faculty")
+st.plotly_chart(fig_violin, use_container_width=True)
 
-faculty_avg = df.groupby("Faculty_Short", as_index=False)["CGPA_Midpoint"].mean()
+# =====================================================
+# 2️⃣ Faceted Histogram: GPA by Relationship Status & Gender
+# =====================================================
+st.subheader("2️⃣ GPA Distribution by Relationship Status and Gender")
 
-fig2 = px.bar(
-    faculty_avg,
+fig_hist = px.histogram(
+    df,
+    x="GPA_Midpoint",
+    color="Gender",
+    facet_col="Relationship_Status",
+    facet_col_wrap=3,
+    barmode="overlay",
+    opacity=0.7,
+    title="Distribution of GPA Midpoint by Relationship Status and Gender"
+)
+
+st.plotly_chart(fig_hist, use_container_width=True)
+
+# =====================================================
+# 3️⃣ Bar Chart: Average CGPA by Faculty
+# =====================================================
+st.subheader("3️⃣ Average CGPA by Faculty")
+
+fig_faculty = px.bar(
+    df,
     x="Faculty_Short",
     y="CGPA_Midpoint",
-    text_auto=".2f",
-    color="Faculty_Short"
+    color="Faculty_Short",
+    title="Average CGPA Midpoint by Faculty"
 )
-st.plotly_chart(fig2, use_container_width=True)
 
-# --------------------------------------------------
-# 3️⃣ SCATTER PLOT: Study Hours vs CGPA
-# --------------------------------------------------
-st.subheader("3️⃣ Daily Study Hours vs CGPA")
+fig_faculty.update_layout(xaxis_tickangle=-45)
 
-fig3 = px.scatter(
+st.plotly_chart(fig_faculty, use_container_width=True)
+
+# =====================================================
+# 4️⃣ Scatter Plot: CGPA vs Age
+# =====================================================
+st.subheader("4️⃣ Relationship Between CGPA and Age")
+
+fig_age = px.scatter(
     df,
-    x="Study_Hours_Daily",
-    y="CGPA_Midpoint",
-    color="Gender",
-    size="CGPA_Midpoint",
-    hover_data=["Faculty_Short"]
+    x="CGPA_Midpoint",
+    y="Age_Midpoint",
+    trendline="ols",
+    title="Scatter Plot of CGPA vs Age"
 )
-st.plotly_chart(fig3, use_container_width=True)
 
-# --------------------------------------------------
-# 4️⃣ BOX PLOT: Attendance vs CGPA
-# --------------------------------------------------
-st.subheader("4️⃣ CGPA Distribution by Attendance Percentage")
+st.plotly_chart(fig_age, use_container_width=True)
 
-fig4 = px.box(
+# =====================================================
+# 5️⃣ Line Chart: CGPA vs GPA by Year of Study
+# =====================================================
+st.subheader("5️⃣ CGPA Trend by GPA and Year of Study")
+
+line_data = (
+    df.groupby(["GPA_Midpoint", "Year_of_Study"])["CGPA_Midpoint"]
+    .mean()
+    .reset_index()
+)
+
+fig_line = px.line(
+    line_data,
+    x="GPA_Midpoint",
+    y="CGPA_Midpoint",
+    color="Year_of_Study",
+    markers=True,
+    title="Average CGPA by GPA Midpoint and Year of Study"
+)
+
+st.plotly_chart(fig_line, use_container_width=True)
+
+# =====================================================
+# 6️⃣ Bar Chart: CGPA by Family Income
+# =====================================================
+st.subheader("6️⃣ Average CGPA by Family Income")
+
+fig_income = px.bar(
     df,
-    x="Attendance_Percentage",
-    y="CGPA_Midpoint",
-    color="Attendance_Percentage"
-)
-st.plotly_chart(fig4, use_container_width=True)
-
-# --------------------------------------------------
-# 5️⃣ BAR CHART: Family Income vs CGPA
-# --------------------------------------------------
-st.subheader("5️⃣ Average CGPA by Family Income")
-
-income_order = sorted(df["Family_Income"].dropna().unique(), key=sort_by_lower_bound)
-
-income_avg = df.groupby("Family_Income", as_index=False)["CGPA_Midpoint"].mean()
-
-fig5 = px.bar(
-    income_avg,
     x="Family_Income",
     y="CGPA_Midpoint",
-    category_orders={"Family_Income": income_order},
-    text_auto=".2f",
-    color="Family_Income"
+    color="Family_Income",
+    title="Average CGPA Midpoint by Family Income"
 )
-st.plotly_chart(fig5, use_container_width=True)
 
-# --------------------------------------------------
-# 6️⃣ HEATMAP: Study Hours × Attendance
-# --------------------------------------------------
-st.subheader("6️⃣ Heatmap: Study Hours vs Attendance (Avg CGPA)")
+fig_income.update_layout(xaxis_tickangle=-45)
 
-pivot = df.pivot_table(
-    index="Study_Hours_Daily",
-    columns="Attendance_Percentage",
-    values="CGPA_Midpoint",
-    aggfunc="mean"
-)
+st.plotly_chart(fig_income, use_container_width=True)
+
+# =====================================================
+# 7️⃣ Complex Heatmaps: Study Hours vs Attendance (by Living With)
+# =====================================================
+st.subheader("7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement")
+
+def sort_by_lower_bound(val):
+    if pd.isna(val):
+        return np.inf
+    val = str(val)
+    if val.startswith(">"):
+        return float(val[1:])
+    return float(val.split("-")[0])
 
 study_order = sorted(df["Study_Hours_Daily"].dropna().unique(), key=sort_by_lower_bound)
 attendance_order = sorted(df["Attendance_Percentage"].dropna().unique(), key=sort_by_lower_bound)
 
-pivot = pivot.reindex(index=study_order, columns=attendance_order)
+living_options = df["Living_With"].dropna().unique()
+selected_living = st.selectbox("Select Living Arrangement", living_options)
 
-fig6 = px.imshow(
+subset = df[df["Living_With"] == selected_living]
+
+pivot = subset.pivot_table(
+    index="Study_Hours_Daily",
+    columns="Attendance_Percentage",
+    values="CGPA_Midpoint",
+    aggfunc="mean"
+).reindex(index=study_order, columns=attendance_order)
+
+fig_heatmap = px.imshow(
     pivot,
     text_auto=".2f",
-    aspect="auto",
     color_continuous_scale="Viridis",
-    labels=dict(color="Avg CGPA")
-)
-st.plotly_chart(fig6, use_container_width=True)
-
-# --------------------------------------------------
-# 7️⃣ BUBBLE CHART: Skills × Study Hours
-# --------------------------------------------------
-st.subheader("7️⃣ Bubble Chart: Skills Category & Study Hours vs CGPA")
-
-bubble_data = (
-    df.groupby(["Skills_Category", "Study_Hours_Daily"], as_index=False)
-    ["CGPA_Midpoint"]
-    .mean()
+    title=f"Average CGPA by Study Hours & Attendance ({selected_living})"
 )
 
-fig7 = px.scatter(
-    bubble_data,
-    x="Study_Hours_Daily",
-    y="Skills_Category",
-    size="CGPA_Midpoint",
-    color="CGPA_Midpoint",
-    size_max=50,
-    color_continuous_scale="Viridis"
+fig_heatmap.update_layout(
+    xaxis_title="Attendance Percentage",
+    yaxis_title="Daily Study Hours"
 )
-st.plotly_chart(fig7, use_container_width=True)
 
-# --------------------------------------------------
-# FOOTER
-# --------------------------------------------------
-st.markdown("---")
-st.caption("Student Performance Dashboard • Streamlit + Plotly")
+st.plotly_chart(fig_heatmap, use_container_width=True)
+
+# =====================================================
+# 8️⃣ Bubble Chart: GPA & CGPA by Race
+# =====================================================
+st.subheader("8️⃣ Bubble Chart: GPA & CGPA by Race")
+
+fig_bubble = px.scatter(
+    df,
+    x="CGPA_Midpoint",
+    y="Races",
+    size="GPA_Midpoint",
+    color="GPA_Midpoint",
+    color_continuous_scale="Viridis",
+    title="Bubble Chart of GPA and CGPA by Race",
+    size_max=40
+)
+
+st.plotly_chart(fig_bubble, use_container_width=True)
