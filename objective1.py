@@ -34,14 +34,6 @@ Therefore, this study seeks to examine the relationship between demographic and 
 # ---------------------------------------
 url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
 df = pd.read_csv(url)
-
-# ---------------------------------------
-# DATA PREVIEW
-# ---------------------------------------
-st.subheader("📄 Dataset Preview")
-st.dataframe(df.head())
-st.markdown("---")
-
 # =====================================================
 # 📊 SUMMARY INSIGHT BOXES
 # =====================================================
@@ -62,6 +54,12 @@ col2.metric("🏆 Top Faculty (Avg CGPA)", top_faculty)
 col3.metric("🔗 CGPA–GPA Correlation", f"{cgpa_gpa_corr:.2f}")
 col4.metric("🏠 Common Living Arrangement", common_living)
 
+st.markdown("---")
+# ---------------------------------------
+# DATA PREVIEW
+# ---------------------------------------
+st.subheader("📄 Dataset Preview")
+st.dataframe(df.head())
 st.markdown("---")
 
 
