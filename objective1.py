@@ -37,7 +37,7 @@ url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned
 df = pd.read_csv(url)
 
 # =====================================================
-# 📊 SUMMARY INSIGHT BOXES (Colored)
+# 📊 SUMMARY INSIGHT BLOCK BOXES
 # =====================================================
 st.subheader("📊 Key Summary Insights")
 
@@ -88,37 +88,28 @@ common_living = (
     if not filtered_df.empty else "N/A"
 )
 
-# Display metrics in a colored box
-st.markdown(
-    f"""
-    <div style="
-        background-color:#E0F7FA;
-        padding:20px;
-        border-radius:10px;
-        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-    ">
-        <div style="display:flex; justify-content:space-between; text-align:center;">
-            <div>
-                <h3>📈 Average CGPA</h3>
-                <p style="font-size:20px; font-weight:bold;">{avg_cgpa:.2f}</p>
-            </div>
-            <div>
-                <h3>🏆 Top Faculty</h3>
-                <p style="font-size:20px; font-weight:bold;">{top_faculty}</p>
-            </div>
-            <div>
-                <h3>🔗 CGPA–GPA Correlation</h3>
-                <p style="font-size:20px; font-weight:bold;">{cgpa_gpa_corr:.2f}</p>
-            </div>
-            <div>
-                <h3>🏠 Common Living</h3>
-                <p style="font-size:20px; font-weight:bold;">{common_living}</p>
-            </div>
-        </div>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+# Display metrics in block boxes
+col1, col2, col3, col4 = st.columns(4)
+
+block_style = """
+    background-color:#B2EBF2;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+"""
+
+with col1:
+    st.markdown(f'<div style="{block_style}"><h3>📈 Average CGPA</h3><p style="font-size:20px; font-weight:bold;">{avg_cgpa:.2f}</p></div>', unsafe_allow_html=True)
+
+with col2:
+    st.markdown(f'<div style="{block_style}"><h3>🏆 Top Faculty</h3><p style="font-size:20px; font-weight:bold;">{top_faculty}</p></div>', unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f'<div style="{block_style}"><h3>🔗 CGPA–GPA Correlation</h3><p style="font-size:20px; font-weight:bold;">{cgpa_gpa_corr:.2f}</p></div>', unsafe_allow_html=True)
+
+with col4:
+    st.markdown(f'<div style="{block_style}"><h3>🏠 Common Living</h3><p style="font-size:20px; font-weight:bold;">{common_living}</p></div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
