@@ -23,12 +23,12 @@ def sort_by_lower_bound(value):
 # ---------------------------------------
 # TITLE
 # ---------------------------------------
-st.title("🎓 Demographic Characteristics and Academic Factors Influencing UMK Students Performance")
-st.markdown("""Academic performance is influenced by both demographic and academic factors. 
-At Universiti Malaysia Kelantan (UMK), students vary in gender, age, race, and relationship status, as well as in academic behaviors attendance and CGPA/GPA. 
-However, limited research examines how these factors collectively impact student performance, making it difficult for stakeholders to design effective support programs. 
-This study aims to explore these relationships to identify key predictors of academic success and guide strategies to improve student outcomes.""")
-st.markdown("---")
+# st.title("🎓 Demographic Characteristics and Academic Factors Influencing UMK Students Performance")
+# st.markdown("""Academic performance is influenced by both demographic and academic factors. 
+# At Universiti Malaysia Kelantan (UMK), students vary in gender, age, race, and relationship status, as well as in academic behaviors attendance and CGPA/GPA. 
+# However, limited research examines how these factors collectively impact student performance, making it difficult for stakeholders to design effective support programs. 
+# This study aims to explore these relationships to identify key predictors of academic success and guide strategies to improve student outcomes.""")
+# st.markdown("---")
 
 # ---------------------------------------
 # LOAD DATA
