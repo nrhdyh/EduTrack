@@ -213,14 +213,17 @@ st.markdown("---")
 # =====================================================
 # 6️⃣ Bar Chart: CGPA by Family Income
 # =====================================================
-st.subheader("6️⃣ Average CGPA by Family Income")
+# =====================================================
+# 6️⃣ Bar Chart: CGPA by Income Category
+# =====================================================
+st.subheader("6️⃣ Average CGPA by Income Category")
 
 fig_income = px.bar(
     df,
-    x="Family_Income",
+    x="Income_Category",
     y="CGPA_Midpoint",
-    color="Family_Income",
-    title="Average CGPA Midpoint by Family Income"
+    color="Income_Category",
+    title="Average CGPA Midpoint by Income Category"
 )
 
 fig_income.update_layout(xaxis_tickangle=-45)
