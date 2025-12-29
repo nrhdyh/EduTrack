@@ -195,6 +195,8 @@ st.plotly_chart(fig_hist, use_container_width=True)
 # =====================================================
 # Analysis Options (Optional Display Only)
 # =====================================================
+st.markdown("### 🔍 Display Options")
+
 show_stats_2 = st.checkbox("Show Summary Statistics", value=True, key="stats2")
 show_interpretation_2 = st.checkbox("Show Distribution Description", value=True, key="desc2")
 
