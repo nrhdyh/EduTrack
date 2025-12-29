@@ -202,17 +202,11 @@ fig_hist = px.histogram(
 
 st.plotly_chart(fig_hist, use_container_width=True)
 
-# =====================================================
-# Analysis Options (Optional Display Only)
-# =====================================================
-# st.markdown("### 🔍 Display Options")
-
-show_stats_2 = st.checkbox("Summary Statistics", value=True, key="stats2")
-show_interpretation_2 = st.checkbox("Distribution Description", value=True, key="desc2")
 
 # =====================================================
 # Summary Statistics (Descriptive)
 # =====================================================
+show_stats_2 = st.checkbox("Summary Statistics", value=True, key="stats2")
 if show_stats_2:
     st.markdown("### 📊 Summary Statistics by Gender")
 
@@ -227,6 +221,7 @@ if show_stats_2:
 # =====================================================
 # Distribution Description (Neutral Only)
 # =====================================================
+show_interpretation_2 = st.checkbox("Distribution Description", value=True, key="desc2")
 if show_interpretation_2:
     st.markdown(f"""
 ### 📈 Distribution Description
@@ -257,17 +252,11 @@ fig_faculty = px.bar(
 fig_faculty.update_layout(xaxis_tickangle=-45)
 st.plotly_chart(fig_faculty, use_container_width=True)
 
-# =====================================================
-# Display Options
-# =====================================================
-# st.markdown("### 🔍 Display Options")
-
-show_stats_3 = st.checkbox("Average CGPA Table", value=True, key="stats3")
-show_description_3 = st.checkbox("Distribution Description", value=True, key="desc3")
 
 # =====================================================
 # Average CGPA Table (Descriptive)
 # =====================================================
+show_stats_3 = st.checkbox("Average CGPA Table", value=True, key="stats3")
 if show_stats_3:
     st.markdown("### 📊 Average CGPA by Faculty")
 
@@ -282,6 +271,7 @@ if show_stats_3:
 # =====================================================
 # Description (Neutral Only)
 # =====================================================
+show_description_3 = st.checkbox("Distribution Description", value=True, key="desc3")
 if show_description_3:
     st.markdown("""
 ### 📈 Distribution Description
@@ -311,16 +301,9 @@ fig_age = px.scatter(
 st.plotly_chart(fig_age, use_container_width=True)
 
 # =====================================================
-# Display Options
-# =====================================================
-# st.markdown("### 🔍 Display Options")
-
-show_stats_4 = st.checkbox("Summary Statistics", value=True, key="stats4")
-show_description_4 = st.checkbox("Distribution Description", value=True, key="desc4")
-
-# =====================================================
 # Summary Statistics (Descriptive)
 # =====================================================
+show_stats_4 = st.checkbox("Summary Statistics", value=True, key="stats4")
 if show_stats_4:
     st.markdown("### 📊 Summary Statistics")
 
@@ -335,6 +318,7 @@ if show_stats_4:
 # =====================================================
 # Distribution Description (Neutral Only)
 # =====================================================
+show_description_4 = st.checkbox("Distribution Description", value=True, key="desc4")
 if show_description_4:
     st.markdown("""
 ### 📈 Distribution Description
@@ -372,16 +356,9 @@ fig_line = px.line(
 st.plotly_chart(fig_line, use_container_width=True)
 
 # =====================================================
-# Display Options
-# =====================================================
-# st.markdown("### 🔍 Display Options")
-
-show_stats_5 = st.checkbox("Summary Statistics", value=True, key="stats5")
-show_description_5 = st.checkbox("Distribution Description", value=True, key="desc5")
-
-# =====================================================
 # Summary Statistics (Descriptive)
 # =====================================================
+show_stats_5 = st.checkbox("Summary Statistics", value=True, key="stats5")
 if show_stats_5:
     st.markdown("### 📊 Summary Statistics")
 
@@ -396,6 +373,7 @@ if show_stats_5:
 # =====================================================
 # Distribution Description (Neutral Only)
 # =====================================================
+show_description_5 = st.checkbox("Distribution Description", value=True, key="desc5")
 if show_description_5:
     st.markdown(""" 
 ### 📈 Distribution Description
@@ -425,16 +403,9 @@ fig_income.update_layout(xaxis_tickangle=-45)
 st.plotly_chart(fig_income, use_container_width=True)
 
 # =====================================================
-# Display Options
-# =====================================================
-# st.markdown("### 🔍 Display Options")
-
-show_stats_6 = st.checkbox("Summary Statistics", value=True, key="stats6")
-show_description_6 = st.checkbox("Distribution Description", value=True, key="desc6")
-
-# =====================================================
 # Summary Statistics (Descriptive)
 # =====================================================
+show_stats_6 = st.checkbox("Summary Statistics", value=True, key="stats6")
 if show_stats_6:
     st.markdown("### 📊 Summary Statistics")
 
@@ -449,6 +420,7 @@ if show_stats_6:
 # =====================================================
 # Distribution Description (Neutral Only)
 # =====================================================
+show_description_6 = st.checkbox("Distribution Description", value=True, key="desc6")
 if show_description_6:
     st.markdown(""" 
 ### 📈 Distribution Description
@@ -509,16 +481,9 @@ fig_heatmap.update_layout(
 st.plotly_chart(fig_heatmap, use_container_width=True)
 
 # =====================================================
-# Display Options
-# =====================================================
-# st.markdown("### 🔍 Display Options")
-
-show_stats_7 = st.checkbox("Summary Statistics", value=True, key="stats7")
-show_description_7 = st.checkbox("Distribution Description", value=True, key="desc7")
-
-# =====================================================
 # Summary Statistics (Descriptive)
 # =====================================================
+show_stats_7 = st.checkbox("Summary Statistics", value=True, key="stats7")
 if show_stats_7:
     st.markdown("### 📊 Summary Statistics")
 
@@ -531,6 +496,7 @@ if show_stats_7:
 # =====================================================
 # Distribution Description (Neutral Only)
 # =====================================================
+show_description_7 = st.checkbox("Distribution Description", value=True, key="desc7")
 if show_description_7:
     st.markdown(""" 
 ### 📈 Distribution Description
@@ -561,16 +527,9 @@ fig_bubble = px.scatter(
 st.plotly_chart(fig_bubble, use_container_width=True)
 
 # =====================================================
-# Display Options
-# =====================================================
-# st.markdown("### 🔍 Display Options")
-
-show_stats_8 = st.checkbox("Summary Statistics", value=True, key="stats8")
-show_description_8 = st.checkbox("Distribution Description", value=True, key="desc8")
-
-# =====================================================
 # Summary Statistics (Descriptive)
 # =====================================================
+show_stats_8 = st.checkbox("Summary Statistics", value=True, key="stats8")
 if show_stats_8:
     st.markdown("### 📊 Summary Statistics")
 
@@ -585,6 +544,7 @@ if show_stats_8:
 # =====================================================
 # Distribution Description (Neutral Only)
 # =====================================================
+show_description_8 = st.checkbox("Distribution Description", value=True, key="desc8")
 if show_description_8:
     st.markdown(""" 
 ### 📈 Distribution Description
