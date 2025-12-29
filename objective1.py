@@ -111,88 +111,88 @@ st.dataframe(df.head())
 st.markdown("---")
 
 
-# # =====================================================
-# # 1️⃣ Violin Plot: CGPA by Gender
-# # =====================================================
-# st.subheader("1️⃣ CGPA Distribution by Gender")
+# =====================================================
+# 1️⃣ Violin Plot: CGPA by Gender
+# =====================================================
+st.subheader("1️⃣ CGPA Distribution by Gender")
 
-# fig_violin = px.violin(
-#     df,
-#     x="Gender",
-#     y="CGPA_Midpoint",
-#     box=True,
-#     points="all",
-#     color="Gender",
-#     title="Violin Plot of CGPA Midpoint by Gender"
-# )
+fig_violin = px.violin(
+    df,
+    x="Gender",
+    y="CGPA_Midpoint",
+    box=True,
+    points="all",
+    color="Gender",
+    title="Violin Plot of CGPA Midpoint by Gender"
+)
 
-# st.plotly_chart(fig_violin, use_container_width=True)
+st.plotly_chart(fig_violin, use_container_width=True)
 
-# # =====================================================
-# # Interactive Analysis Controls
-# # =====================================================
-# st.markdown("### 🔍 Interactive Analysis Options")
+# =====================================================
+# Interactive Analysis Controls
+# =====================================================
+st.markdown("### 🔍 Interactive Analysis Options")
 
-# show_stats = st.checkbox("Summary Statistics by Gender", value=True)
-# show_interpretation = st.checkbox("Interpretation", value=True)
-# show_conclusion = st.checkbox("Conclusion", value=True)
+show_stats = st.checkbox("Summary Statistics by Gender", value=True)
+show_interpretation = st.checkbox("Interpretation", value=True)
+show_conclusion = st.checkbox("Conclusion", value=True)
 
-# # =====================================================
-# # Summary Statistics
-# # =====================================================
-# if show_stats:
-#     st.markdown("### 📊 Summary Statistics")
-#     stats_df = (
-#         df.groupby("Gender")["CGPA_Midpoint"]
-#         .agg(["count", "mean", "median", "std", "min", "max"])
-#         .reset_index()
-#     )
-#     st.dataframe(stats_df, use_container_width=True)
+# =====================================================
+# Summary Statistics
+# =====================================================
+if show_stats:
+    st.markdown("### 📊 Summary Statistics")
+    stats_df = (
+        df.groupby("Gender")["CGPA_Midpoint"]
+        .agg(["count", "mean", "median", "std", "min", "max"])
+        .reset_index()
+    )
+    st.dataframe(stats_df, use_container_width=True)
 
-# # =====================================================
-# # Interpretation Section
-# # =====================================================
-# if show_interpretation:
-#     st.markdown("""
-# ### 📈 Interpretation
+# =====================================================
+# Interpretation Section
+# =====================================================
+if show_interpretation:
+    st.markdown("""
+### 📈 Interpretation
 
-# The violin plot illustrates the distribution of CGPA midpoints for male and female students, highlighting differences in central tendency, spread, and density.
+The violin plot illustrates the distribution of CGPA midpoints for male and female students, highlighting differences in central tendency, spread, and density.
 
-# Both genders show CGPA values primarily concentrated between **3.2 and 3.6**, indicating strong overall academic performance. Female students demonstrate a **slightly higher median CGPA**, suggesting marginally better average academic outcomes.
+Both genders show CGPA values primarily concentrated between **3.2 and 3.6**, indicating strong overall academic performance. Female students demonstrate a **slightly higher median CGPA**, suggesting marginally better average academic outcomes.
 
-# Female CGPA values exhibit **greater variability**, indicating a broader range of performance, including a higher presence of top achievers. In contrast, male students display a **more compact distribution**, reflecting more consistent performance within a narrower CGPA range.
+Female CGPA values exhibit **greater variability**, indicating a broader range of performance, including a higher presence of top achievers. In contrast, male students display a **more compact distribution**, reflecting more consistent performance within a narrower CGPA range.
 
-# A small number of **lower-end CGPA outliers** are observed for both genders, likely reflecting individual academic challenges rather than a systematic gender effect.
-# """)
+A small number of **lower-end CGPA outliers** are observed for both genders, likely reflecting individual academic challenges rather than a systematic gender effect.
+""")
 
-# # =====================================================
-# # Scientific Conclusion (Dynamic)
-# # =====================================================
-# if show_conclusion:
-#     female_mean = df[df["Gender"] == "Female"]["CGPA_Midpoint"].mean()
-#     male_mean = df[df["Gender"] == "Male"]["CGPA_Midpoint"].mean()
+# =====================================================
+# Scientific Conclusion (Dynamic)
+# =====================================================
+if show_conclusion:
+    female_mean = df[df["Gender"] == "Female"]["CGPA_Midpoint"].mean()
+    male_mean = df[df["Gender"] == "Male"]["CGPA_Midpoint"].mean()
 
-#     st.markdown("### 🧪 Conclusion")
+    st.markdown("### 🧪 Conclusion")
 
-#     if female_mean > male_mean:
-#         st.success(
-#             f"Female students show a higher average CGPA ({female_mean:.2f}) "
-#             f"compared to male students ({male_mean:.2f}). "
-#             "This suggests a modest association between gender and academic performance."
-#         )
-#     else:
-#         st.info(
-#             f"Male students show a higher or comparable average CGPA "
-#             f"({male_mean:.2f}) compared to female students ({female_mean:.2f}). "
-#             "This suggests minimal gender-based differences in academic performance."
-#         )
+    if female_mean > male_mean:
+        st.success(
+            f"Female students show a higher average CGPA ({female_mean:.2f}) "
+            f"compared to male students ({male_mean:.2f}). "
+            "This suggests a modest association between gender and academic performance."
+        )
+    else:
+        st.info(
+            f"Male students show a higher or comparable average CGPA "
+            f"({male_mean:.2f}) compared to female students ({female_mean:.2f}). "
+            "This suggests minimal gender-based differences in academic performance."
+        )
 
-#     st.markdown("""
-# Despite observable differences in central tendency, the substantial overlap between distributions indicates that
-# **gender alone is not a strong predictor of academic success**. Other academic and socio-environmental factors are likely more influential.
-# """)
+    st.markdown("""
+Despite observable differences in central tendency, the substantial overlap between distributions indicates that
+**gender alone is not a strong predictor of academic success**. Other academic and socio-environmental factors are likely more influential.
+""")
 
-# st.markdown("---")
+st.markdown("---")
 
 
 # =====================================================
