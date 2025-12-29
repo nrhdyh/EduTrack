@@ -131,16 +131,9 @@ st.plotly_chart(fig_violin, use_container_width=True)
 # =====================================================
 # Compact Display Options
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 # Create two small columns for checkboxes
-col1, col2 = st.columns([1, 1], gap="small")
-
-with col1:
     show_stats = st.checkbox("Summary Stats", value=True, key="compact_stats")
-with col2:
     show_description = st.checkbox("Distribution Desc", value=True, key="compact_desc")
-
 
 # =====================================================
 # Summary Statistics (Descriptive Only)
@@ -201,8 +194,6 @@ st.plotly_chart(fig_hist, use_container_width=True)
 # =====================================================
 # Analysis Options (Optional Display Only)
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 show_stats_2 = st.checkbox("Summary Statistics", value=True, key="stats2")
 show_interpretation_2 = st.checkbox("Distribution Description", value=True, key="desc2")
 
@@ -256,8 +247,6 @@ st.plotly_chart(fig_faculty, use_container_width=True)
 # =====================================================
 # Display Options
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 show_stats_3 = st.checkbox("Average CGPA Table", value=True, key="stats3")
 show_description_3 = st.checkbox("Distribution Description", value=True, key="desc3")
 
@@ -309,8 +298,6 @@ st.plotly_chart(fig_age, use_container_width=True)
 # =====================================================
 # Display Options
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 show_stats_4 = st.checkbox("Summary Statistics", value=True, key="stats4")
 show_description_4 = st.checkbox("Distribution Description", value=True, key="desc4")
 
@@ -370,8 +357,6 @@ st.plotly_chart(fig_line, use_container_width=True)
 # =====================================================
 # Display Options
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 show_stats_5 = st.checkbox("Summary Statistics", value=True, key="stats5")
 show_description_5 = st.checkbox("Distribution Description", value=True, key="desc5")
 
@@ -423,8 +408,6 @@ st.plotly_chart(fig_income, use_container_width=True)
 # =====================================================
 # Display Options
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 show_stats_6 = st.checkbox("Summary Statistics", value=True, key="stats6")
 show_description_6 = st.checkbox("Distribution Description", value=True, key="desc6")
 
@@ -507,8 +490,6 @@ st.plotly_chart(fig_heatmap, use_container_width=True)
 # =====================================================
 # Display Options
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 show_stats_7 = st.checkbox("Summary Statistics", value=True, key="stats7")
 show_description_7 = st.checkbox("Distribution Description", value=True, key="desc7")
 
@@ -559,8 +540,6 @@ st.plotly_chart(fig_bubble, use_container_width=True)
 # =====================================================
 # Display Options
 # =====================================================
-st.markdown("### 🔍 Display Options")
-
 show_stats_8 = st.checkbox("Summary Statistics", value=True, key="stats8")
 show_description_8 = st.checkbox("Distribution Description", value=True, key="desc8")
 
