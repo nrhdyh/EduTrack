@@ -12,7 +12,7 @@ st.set_page_config(
 )
 
 st.title("📊 Student Performance Analysis Dashboard")
-st.markdown("**Focus:** Demographic & Academic Factors Influencing CGPA")
+st.markdown("Demographic & Academic Factors Influencing CGPA")
 
 # --------------------------------------------------
 # LOAD DATA
