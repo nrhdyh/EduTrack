@@ -129,20 +129,18 @@ fig_violin = px.violin(
 st.plotly_chart(fig_violin, use_container_width=True)
 
 # =====================================================
-# Interactive Display Options
+# Compact Display Options
 # =====================================================
 st.markdown("### 🔍 Display Options")
 
-# Use columns for inline, compact checkboxes
-col1, col2 = st.columns([1, 1], gap="medium")
+# Create two small columns for checkboxes
+col1, col2 = st.columns([1, 1], gap="small")
 
 with col1:
     show_stats = st.checkbox("Summary Stats", value=True, key="compact_stats")
 with col2:
     show_description = st.checkbox("Distribution Desc", value=True, key="compact_desc")
 
-# Optional: add a small horizontal separator to separate from chart
-st.markdown("<hr style='margin:5px 0;'>", unsafe_allow_html=True)"compact_desc")
 
 # =====================================================
 # Summary Statistics (Descriptive Only)
