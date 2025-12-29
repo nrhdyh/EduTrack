@@ -29,8 +29,8 @@ st.markdown("Interactive dashboard for analysing academic performance patterns")
 # ---------------------------------------
 # SIDEBAR
 # ---------------------------------------
-st.sidebar.title("📊 Dashboard Controls")
-st.sidebar.markdown("Use the filters below to explore the dataset")
+# st.sidebar.title("📊 Dashboard Controls")
+# st.sidebar.markdown("Use the filters below to explore the dataset")
 
 # ---------------------------------------
 # LOAD DATA
