@@ -133,8 +133,13 @@ st.plotly_chart(fig_violin, use_container_width=True)
 # =====================================================
 st.markdown("### 🔍 Display Options")
 
-show_stats = st.checkbox("Summary Statistics", value=True)
-show_description = st.checkbox("Distribution Description", value=True)
+# Create two small columns for checkboxes
+col1, col2 = st.columns([1, 1], gap="small")
+
+with col1:
+    show_stats = st.checkbox("Summary Stats", value=True, key="compact_stats")
+with col2:
+    show_description = st.checkbox("Distribution Desc", value=True, key="compact_desc")
 
 # =====================================================
 # Summary Statistics (Descriptive Only)
