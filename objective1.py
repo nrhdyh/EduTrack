@@ -129,6 +129,15 @@ fig_violin = px.violin(
 st.plotly_chart(fig_violin, use_container_width=True)
 
 # =====================================================
+# Interactive Analysis Controls
+# =====================================================
+st.markdown("### 🔍 Interactive Analysis Options")
+
+show_stats = st.checkbox("Show Summary Statistics by Gender", value=True)
+show_interpretation = st.checkbox("Show Interpretation", value=True)
+show_conclusion = st.checkbox("Show Scientific Conclusion", value=True)
+
+# =====================================================
 # Summary Statistics
 # =====================================================
 if show_stats:
@@ -162,7 +171,9 @@ A small number of **lower-end CGPA outliers** are observed for both genders, lik
 if show_conclusion:
     female_mean = df[df["Gender"] == "Female"]["CGPA_Midpoint"].mean()
     male_mean = df[df["Gender"] == "Male"]["CGPA_Midpoint"].mean()
-    st.markdown("### Conclusion")
+
+    st.markdown("### 🧪 Scientific Conclusion")
+
     if female_mean > male_mean:
         st.success(
             f"Female students show a higher average CGPA ({female_mean:.2f}) "
@@ -176,7 +187,13 @@ if show_conclusion:
             "This suggests minimal gender-based differences in academic performance."
         )
 
+    st.markdown("""
+Despite observable differences in central tendency, the substantial overlap between distributions indicates that
+**gender alone is not a strong predictor of academic success**. Other academic and socio-environmental factors are likely more influential.
+""")
+
 st.markdown("---")
+
 
 # =====================================================
 # 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
