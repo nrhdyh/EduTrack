@@ -24,10 +24,10 @@ def sort_by_lower_bound(value):
 # TITLE
 # ---------------------------------------
 st.title("🎓 Demographic Characteristics and Academic Factors Influencing UMK Students Performance")
-st.markdown("""Academic performance is a key indicator of student success, yet it is influenced by a combination of demographic characteristics and academic factors. 
-At Universiti Malaysia Kelantan (UMK), students come from diverse backgrounds in terms of gender, age, races, and relationship status, while also differing in academic-related behaviors such as participation in co-curricular activities, attendance, and CGPA/GPA. 
-Despite the availability of such data, there is limited research analyzing how these factors collectively affect student performance. Without this understanding, it is challenging for university stakeholders to design effective interventions and support programs. 
-Therefore, this study seeks to examine the relationship between demographic and academic factors and student performance at UMK, with the aim of identifying key predictors of academic success to guide strategies for improving student outcomes.""")
+st.markdown("""Academic performance is influenced by both demographic and academic factors. 
+At Universiti Malaysia Kelantan (UMK), students vary in gender, age, race, and relationship status, as well as in academic behaviors such as participation in co-curricular activities, attendance, and CGPA/GPA. 
+However, limited research examines how these factors collectively impact student performance, making it difficult for stakeholders to design effective support programs. 
+This study aims to explore these relationships to identify key predictors of academic success and guide strategies to improve student outcomes.""")
 st.markdown("---")
 
 # ---------------------------------------
@@ -35,12 +35,11 @@ st.markdown("---")
 # ---------------------------------------
 url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
 df = pd.read_csv(url)
+
 # =====================================================
 # 📊 SUMMARY INSIGHT BOXES
 # =====================================================
-# =====================================================
-# 📊 INTERACTIVE SUMMARY INSIGHT BOXES
-# =====================================================
+
 st.subheader("📊 Key Summary Insights")
 
 col_f1, col_f2, col_f3 = st.columns(3)
