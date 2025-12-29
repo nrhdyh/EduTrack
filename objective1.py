@@ -30,16 +30,17 @@ Despite the availability of such data, there is limited research analyzing how t
 Therefore, this study seeks to examine the relationship between demographic and academic factors and student performance at UMK, with the aim of identifying key predictors of academic success to guide strategies for improving student outcomes.""")
 
 # ---------------------------------------
-# SIDEBAR
-# ---------------------------------------
-# st.sidebar.title("📊 Dashboard Controls")
-# st.sidebar.markdown("Use the filters below to explore the dataset")
-
-# ---------------------------------------
 # LOAD DATA
 # ---------------------------------------
 url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
 df = pd.read_csv(url)
+
+# ---------------------------------------
+# DATA PREVIEW
+# ---------------------------------------
+st.subheader("📄 Dataset Preview")
+st.dataframe(df.head())
+st.markdown("---")
 
 # =====================================================
 # 📊 SUMMARY INSIGHT BOXES
@@ -63,12 +64,6 @@ col4.metric("🏠 Common Living Arrangement", common_living)
 
 st.markdown("---")
 
-# ---------------------------------------
-# DATA PREVIEW
-# ---------------------------------------
-st.subheader("📄 Dataset Preview")
-st.dataframe(df.head())
-st.markdown("---")
 
 # =====================================================
 # 1️⃣ Violin Plot: CGPA by Gender
@@ -260,4 +255,3 @@ st.markdown(
     "This dashboard provides interactive visual insights into how demographic, academic, "
     "and socio-economic factors influence student academic performance."
 )
-
