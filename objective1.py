@@ -162,7 +162,7 @@ A small number of **lower-end CGPA outliers** are observed for both genders, lik
 if show_conclusion:
     female_mean = df[df["Gender"] == "Female"]["CGPA_Midpoint"].mean()
     male_mean = df[df["Gender"] == "Male"]["CGPA_Midpoint"].mean()
-
+    st.markdown("### Conclusion")
     if female_mean > male_mean:
         st.success(
             f"Female students show a higher average CGPA ({female_mean:.2f}) "
