@@ -586,10 +586,10 @@ Bubbles indicate the distribution of GPA and CGPA values across races, without i
 
 st.markdown("---")
 
-# ---------------------------------------
-# FOOTER
-# ---------------------------------------
-st.markdown(
-    "This dashboard provides interactive visual insights into how demographic, academic, "
-    "and socio-economic factors influence student academic performance."
-)
+# # ---------------------------------------
+# # FOOTER
+# # ---------------------------------------
+# st.markdown(
+#     "This dashboard provides interactive visual insights into how demographic, academic, "
+#     "and socio-economic factors influence student academic performance."
+# )
