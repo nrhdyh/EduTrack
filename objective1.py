@@ -11,7 +11,26 @@ st.set_page_config(
     layout="wide"
 )
 
+# ---------------------------------------
+# HELPER FUNCTION (FIX HEATMAP ISSUE)
+# ---------------------------------------
+def sort_by_lower_bound(value):
+    try:
+        return float(value.split("-")[0].strip().replace("%", ""))
+    except:
+        return 0
+
+# ---------------------------------------
+# TITLE
+# ---------------------------------------
 st.title("🎓 Student Performance Analysis Dashboard")
+st.markdown("Interactive dashboard for analysing academic performance patterns")
+
+# ---------------------------------------
+# SIDEBAR
+# ---------------------------------------
+st.sidebar.title("📊 Dashboard Controls")
+st.sidebar.markdown("Use the filters below to explore the dataset")
 
 # ---------------------------------------
 # LOAD DATA
@@ -19,8 +38,12 @@ st.title("🎓 Student Performance Analysis Dashboard")
 url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
 df = pd.read_csv(url)
 
-st.subheader("Dataset Preview")
+# ---------------------------------------
+# DATA PREVIEW
+# ---------------------------------------
+st.subheader("📄 Dataset Preview")
 st.dataframe(df.head())
+st.markdown("---")
 
 # =====================================================
 # 1️⃣ Violin Plot: CGPA by Gender
@@ -38,24 +61,32 @@ fig_violin = px.violin(
 )
 
 st.plotly_chart(fig_violin, use_container_width=True)
+st.markdown("---")
 
 # =====================================================
-# 2️⃣ Faceted Histogram: GPA by Relationship Status & Gender
+# 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
 # =====================================================
 st.subheader("2️⃣ GPA Distribution by Relationship Status and Gender")
 
+relationship_options = df["Relationship_Status"].dropna().unique()
+selected_relationship = st.selectbox(
+    "Select Relationship Status",
+    relationship_options
+)
+
+filtered_df = df[df["Relationship_Status"] == selected_relationship]
+
 fig_hist = px.histogram(
-    df,
+    filtered_df,
     x="GPA_Midpoint",
     color="Gender",
-    facet_col="Relationship_Status",
-    facet_col_wrap=3,
     barmode="overlay",
     opacity=0.7,
-    title="Distribution of GPA Midpoint by Relationship Status and Gender"
+    title=f"GPA Distribution by Gender ({selected_relationship})"
 )
 
 st.plotly_chart(fig_hist, use_container_width=True)
+st.markdown("---")
 
 # =====================================================
 # 3️⃣ Bar Chart: Average CGPA by Faculty
@@ -71,8 +102,8 @@ fig_faculty = px.bar(
 )
 
 fig_faculty.update_layout(xaxis_tickangle=-45)
-
 st.plotly_chart(fig_faculty, use_container_width=True)
+st.markdown("---")
 
 # =====================================================
 # 4️⃣ Scatter Plot: CGPA vs Age
@@ -88,6 +119,7 @@ fig_age = px.scatter(
 )
 
 st.plotly_chart(fig_age, use_container_width=True)
+st.markdown("---")
 
 # =====================================================
 # 5️⃣ Line Chart: CGPA vs GPA by Year of Study
@@ -110,6 +142,7 @@ fig_line = px.line(
 )
 
 st.plotly_chart(fig_line, use_container_width=True)
+st.markdown("---")
 
 # =====================================================
 # 6️⃣ Bar Chart: CGPA by Family Income
@@ -125,11 +158,11 @@ fig_income = px.bar(
 )
 
 fig_income.update_layout(xaxis_tickangle=-45)
-
 st.plotly_chart(fig_income, use_container_width=True)
+st.markdown("---")
 
 # =====================================================
-# 7️⃣ Complex Heatmaps: Study Hours vs Attendance (by Living With)
+# 7️⃣ Heatmap: Study Hours vs Attendance (by Living With)
 # =====================================================
 st.subheader("7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement")
 
@@ -144,7 +177,10 @@ attendance_order = sorted(
 )
 
 living_options = df["Living_With"].dropna().unique()
-selected_living = st.selectbox("Select Living Arrangement", living_options)
+selected_living = st.selectbox(
+    "Select Living Arrangement",
+    living_options
+)
 
 subset = df[df["Living_With"] == selected_living]
 
@@ -171,7 +207,7 @@ fig_heatmap.update_layout(
 )
 
 st.plotly_chart(fig_heatmap, use_container_width=True)
-
+st.markdown("---")
 
 # =====================================================
 # 8️⃣ Bubble Chart: GPA & CGPA by Race
@@ -190,3 +226,12 @@ fig_bubble = px.scatter(
 )
 
 st.plotly_chart(fig_bubble, use_container_width=True)
+
+# ---------------------------------------
+# FOOTER
+# ---------------------------------------
+st.markdown("### 📌 Conclusion")
+st.markdown(
+    "This dashboard provides interactive visual insights into how demographic, academic, "
+    "and socio-economic factors influence student academic performance."
+)
