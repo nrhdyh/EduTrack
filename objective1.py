@@ -102,16 +102,16 @@ block_style = """
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.markdown(f'<div style="{block_style}"><h4>📈 Average CGPA</h4><p style="font-size:20px; font-weight:bold;">{avg_cgpa:.2f}</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h5>📈 Average CGPA</h5><p style="font-size:20px; font-weight:bold;">{avg_cgpa:.2f}</p></div>', unsafe_allow_html=True)
 
 with col2:
-    st.markdown(f'<div style="{block_style}"><h4>🏆 Top Faculty</h4><p style="font-size:20px; font-weight:bold;">{top_faculty}</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h5>🏆 Top Faculty</h5><p style="font-size:20px; font-weight:bold;">{top_faculty}</p></div>', unsafe_allow_html=True)
 
 with col3:
-    st.markdown(f'<div style="{block_style}"><h4>🔗 CGPA–GPA Correlation</h4><p style="font-size:20px; font-weight:bold;">{cgpa_gpa_corr:.2f}</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h5>🔗 CGPA–GPA Correlation</h5><p style="font-size:20px; font-weight:bold;">{cgpa_gpa_corr:.2f}</p></div>', unsafe_allow_html=True)
 
 with col4:
-    st.markdown(f'<div style="{block_style}"><h4>🏠 Common Living</h4><p style="font-size:20px; font-weight:bold;">{common_living}</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h5>🏠 Common Living</h5><p style="font-size:20px; font-weight:bold;">{common_living}</p></div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
