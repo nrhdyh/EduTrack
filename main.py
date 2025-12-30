@@ -23,7 +23,7 @@ objective2 = st.Page(
 )
 
 objective3 = st.Page(
-    "objective3.py",
+    "objective3_Fatin.py",
     title="💻 Learning Mode"
 )
 
