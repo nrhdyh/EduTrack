@@ -3,6 +3,16 @@ import pandas as pd
 import plotly.express as px
 
 # ---------------------------------------
+# DATA LOADING (Fixes the NameError)
+# ---------------------------------------
+@st.cache_data
+def load_data():
+    url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
+    return pd.read_csv(url)
+
+df = load_data()
+
+# ---------------------------------------
 # PAGE CONFIG
 # ---------------------------------------
 st.set_page_config(
