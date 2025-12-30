@@ -67,7 +67,7 @@ body {
 # ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
-st.image("logo.png", width=1000)
+st.image("logo.png", width=700)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
