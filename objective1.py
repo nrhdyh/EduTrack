@@ -140,41 +140,40 @@ fig_violin = px.violin(
 
 st.plotly_chart(fig_violin, use_container_width=True)
 
-# =====================================================
-# Compact Display Options
-# =====================================================
-# st.markdown("---")
-
+# 🔹 Natural visual break
+st.markdown("<br><br>", unsafe_allow_html=True)
 
 # =====================================================
 # Summary Statistics (Descriptive Only)
 # =====================================================
-show_stats = st.checkbox("Summary Statistics", value=True, key="compact_stats")
-if show_stats:
-    st.markdown("### 📊 Summary Statistics by Gender")
+st.markdown("### 📊 Summary Statistics")
 
+show_stats = st.checkbox("Show summary statistics", value=True, key="compact_stats")
+if show_stats:
     stats_df = (
         df.groupby("Gender")["CGPA_Midpoint"]
         .agg(["count", "mean", "median", "std", "min", "max"])
         .reset_index()
     )
-
     st.dataframe(stats_df, use_container_width=True)
+
+# 🔹 Natural visual break
+st.markdown("<br><br>", unsafe_allow_html=True)
 
 # =====================================================
 # Distribution Description (Neutral)
 # =====================================================
-show_description = st.checkbox("Distribution Description", value=True, key="compact_desc")
+st.markdown("### 📈 Distribution Description")
+
+show_description = st.checkbox("Show distribution description", value=True, key="compact_desc")
 if show_description:
     st.markdown("""
-### 📈 Distribution Description
+    Female students tend to achieve slightly higher CGPA scores, with results more concentrated
+    in the upper CGPA range, indicating greater consistency. Male students show a wider spread
+    of CGPA values, suggesting higher variability. Overall, the pattern indicates a moderate
+    relationship between gender and academic performance.
+    """)
 
-The violin plot shows a clear pattern in academic performance by gender. 
-- Female students tend to achieve slightly higher CGPA scores, with most of their results clustered in the upper CGPA range, indicating more consistent performance. 
-- In contrast, male students display a wider spread of CGPA values, suggesting greater variability in academic outcomes. 
-- While both genders have a few lower and higher outliers, high CGPA scores appear more frequently among females. 
-Overall, the distribution suggests a moderate relationship between gender and academic performance, where female students generally perform better and more consistently, while male students exhibit more diverse academic results.
-""")
 
 st.markdown("""
 <hr style="border:1px solid #E0E0E0; margin:60px 0;">
