@@ -44,7 +44,7 @@ df['Social_Media_Hours_Daily_Midpoint'] = df['Social_Media_Hours_Daily'].apply(c
 # ---------------------------------------
 # TITLE
 # ---------------------------------------
-st.title("🎓 Academic Factors Influencing Student Performance")
+st.title("🎓 Relationship between Study Habits, Social Media Usage, Health Factors in influencing Academic Perfomance of UMK Students. ")
 st.markdown("""
 Study habits, social media usage and health factors are aspects of lifestyle that could have influence the academic performance of UMK students.
 However, the relationship between these factors and students' academic is still poorly explored through visual analysis. Therefore, this study
