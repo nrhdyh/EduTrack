@@ -340,34 +340,61 @@ Overall, the dominant anomaly of FSDK overshadows any clear correlation among th
 st.markdown("---")
 
 # =====================================================
-# 4️⃣ Scatter Plot: CGPA vs Age
+# 4️⃣ Scatter Plot: CGPA vs Age (With Age Slider)
 # =====================================================
+
 st.markdown(f"""
 <div style="{block_style}">
     <h3>4️⃣ Scatter Plot: Relationship Between CGPA and Age</h3>
 </div>
 """, unsafe_allow_html=True)
 
+# =====================================================
+# 🎚️ Age Slider Filter
+# =====================================================
+min_age = int(df["Age_Midpoint"].min())
+max_age = int(df["Age_Midpoint"].max())
 
+age_range = st.slider(
+    "🎚️ Select Age Range",
+    min_value=min_age,
+    max_value=max_age,
+    value=(min_age, max_age),
+    key="age_slider"
+)
+
+# Filter dataset based on selected age range
+filtered_df = df[
+    (df["Age_Midpoint"] >= age_range[0]) &
+    (df["Age_Midpoint"] <= age_range[1])
+]
+
+# =====================================================
+# 📌 Scatter Plot
+# =====================================================
 fig_age = px.scatter(
-    df,
+    filtered_df,
     x="CGPA_Midpoint",
     y="Age_Midpoint",
     trendline="ols",
-    title="Scatter Plot of CGPA vs Age"
+    title=f"Scatter Plot of CGPA vs Age (Age {age_range[0]}–{age_range[1]})",
+    labels={
+        "CGPA_Midpoint": "CGPA",
+        "Age_Midpoint": "Age"
+    }
 )
 
 st.plotly_chart(fig_age, use_container_width=True)
 
 # =====================================================
-# Summary Statistics (Descriptive)
+# 📊 Summary Statistics (Descriptive)
 # =====================================================
 show_stats_4 = st.checkbox("Summary Statistics", value=True, key="stats4")
 if show_stats_4:
     st.markdown("### 📊 Summary Statistics")
 
     age_cgpa_stats = (
-        df[["CGPA_Midpoint", "Age_Midpoint"]]
+        filtered_df[["CGPA_Midpoint", "Age_Midpoint"]]
         .describe()
         .reset_index()
     )
@@ -375,21 +402,20 @@ if show_stats_4:
     st.dataframe(age_cgpa_stats, use_container_width=True)
 
 # =====================================================
-# Distribution Description (Neutral Only)
+# 📈 Distribution Description (Neutral Only)
 # =====================================================
 show_description_4 = st.checkbox("Distribution Description", value=True, key="desc4")
 if show_description_4:
     st.markdown("""
 ### 📈 Distribution Description
-The scatter plot shows a weak and slightly negative relationship between CGPA and age. 
-- Most data points are widely scattered, indicating that students of different ages achieve similar CGPA levels. 
-- The gently downward trend line suggests that older students tend to have marginally lower CGPA midpoints but the effect is minimal.
-- Several points deviate from the trend, showing that high and low CGPA values occur across multiple age groups. 
-Overall, age does not appear to be a strong predictor of CGPA, and academic performance remains relatively consistent regardless of age.
+The scatter plot illustrates the relationship between CGPA and age across the selected age range. 
+- Data points are widely dispersed, indicating that students of different ages tend to achieve similar CGPA levels.
+- The regression trend line shows a weak and slightly negative association, suggesting that age has minimal influence on CGPA.
+- High and low CGPA values appear across multiple age groups, highlighting consistent academic performance regardless of age.
+Overall, age does not emerge as a strong predictor of CGPA within the selected range.
 """)
 
 st.markdown("---")
-
 
 # =====================================================
 # 5️⃣ Line Chart: CGPA vs GPA by Year of Study
