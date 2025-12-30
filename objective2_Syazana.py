@@ -27,13 +27,36 @@ def calculate_hours_midpoint(hours_range):
         elif '<' in cleaned_range: return float(cleaned_range.replace('<', '')) - 0.5
     return np.nan
 
+# ---------------------------------------
+# LOAD & PRE-PROCESS DATA
+# ---------------------------------------
 df = load_data()
 df['Study_Hours_Daily_Midpoint'] = df['Study_Hours_Daily'].apply(calculate_hours_midpoint)
 df['Social_Media_Hours_Daily_Midpoint'] = df['Social_Media_Hours_Daily'].apply(calculate_hours_midpoint)
 
 # ---------------------------------------
-# STYLING & SUMMARY METRICS
+# TITLE
 # ---------------------------------------
+st.title("🎓 Relationship between Study Habits, Social Media Usage and Health Factors in influencing Academic Performance of UMK Students.")
+st.markdown("""
+Study habits, social media usage and health factors are aspects of lifestyle that could have influence the academic performance of UMK students.
+However, the relationship between these factors and students' academic is still poorly explored through visual analysis. Therefore, this study
+aims to visualize and understand the relationship between lifestyle factors and students' academic performance.
+""")
+st.markdown("---")
+
+# =====================================================
+# 📊 SUMMARY INSIGHT BLOCK BOXES
+# =====================================================
+st.subheader("📊 Key Summary Insights")
+
+# Compute overall metrics
+avg_gpa = df["GPA_Midpoint"].mean()
+avg_study = df["Study_Hours_Daily_Midpoint"].mean()
+avg_social = df["Social_Media_Hours_Daily_Midpoint"].mean()
+avg_attendance = df["Attendance_Midpoint"].mean()
+
+# Block Style
 block_style = """
     background: linear-gradient(135deg, #5E35B1, #3949AB);
     color:white;
@@ -43,31 +66,24 @@ block_style = """
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 """
 
-st.title("🎓 Relationship between Study Habits, Social Media Usage and Health Factors in influencing Academic Performance of UMK Students.")
-st.markdown("""
-Study habits, social media usage and health factors are aspects of lifestyle that could have influence the academic performance of UMK students.
-However, the relationship between these factors and students' academic is still poorly explored through visual analysis. Therefore, this study
-aims to visualize and understand the relationship between lifestyle factors and students' academic performance.
-""")
-st.markdown("---")
+col1, col2, col3, col4 = st.columns(4)
 
-# Summary Metrics Row
-avg_gpa = df["GPA_Midpoint"].mean()
-avg_study = df["Study_Hours_Daily_Midpoint"].mean()
-avg_social = df["Social_Media_Hours_Daily_Midpoint"].mean()
-avg_attendance = df["Attendance_Midpoint"].mean()
+with col1:
+    st.markdown(f'<div style="{block_style}"><h4>Average GPA</h4><p style="font-size:22px; font-weight:bold;">{avg_gpa:.2f}</p></div>', unsafe_allow_html=True)
 
-col_m1, col_m2, col_m3, col_m4 = st.columns(4)
-for col, label, val, unit in zip([col_m1, col_m2, col_m3, col_m4], 
-                                  ["Average GPA", "Avg Study Hours", "Avg Social Media", "Avg Attendance"],
-                                  [avg_gpa, avg_study, avg_social, avg_attendance],
-                                  ["", " hrs", " hrs", "%"]):
-    col.markdown(f'<div style="{block_style}"><h3>{label}</h3><p style="font-size:20px; font-weight:bold;">{val:.2f}{unit}</p></div>', unsafe_allow_html=True)
+with col2:
+    st.markdown(f'<div style="{block_style}"><h4>Avg Study Hours</h4><p style="font-size:22px; font-weight:bold;">{avg_study:.1f} hrs</p></div>', unsafe_allow_html=True)
+
+with col3:
+    st.markdown(f'<div style="{block_style}"><h4>Avg Social Media</h4><p style="font-size:22px; font-weight:bold;">{avg_social:.1f} hrs</p></div>', unsafe_allow_html=True)
+
+with col4:
+    st.markdown(f'<div style="{block_style}"><h4>Avg Attendance</h4><p style="font-size:22px; font-weight:bold;">{avg_attendance:.1f}%</p></div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
 # =====================================================
-# VISUALIZATION 1: STUDY HOURS
+# 📈 VISUALIZATION 1: STUDY HOURS
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>1️⃣ Bar Chart: Average GPA by Study Hours</h3></div>', unsafe_allow_html=True)
 
@@ -87,7 +103,7 @@ if show_desc1:
 st.markdown("<br><br>---", unsafe_allow_html=True)
 
 # =====================================================
-# VISUALIZATION 2: SOCIAL MEDIA
+# 📈 VISUALIZATION 2: SOCIAL MEDIA
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>2️⃣ Box Plot: Social Media Usage and Acedemic Performance</h3></div>', unsafe_allow_html=True)
 
@@ -106,7 +122,7 @@ if show_desc2:
 st.markdown("<br><br>---", unsafe_allow_html=True)
 
 # =====================================================
-# VISUALIZATION 3: HEALTH ISSUES
+# 📈 VISUALIZATION 3: HEALTH ISSUES
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>3️⃣ Bar Chart: Health Issues and Academic Outcomes</h3></div>', unsafe_allow_html=True)
 
@@ -126,7 +142,7 @@ if show_desc3:
 st.markdown("<br><br>---", unsafe_allow_html=True)
 
 # =====================================================
-# VISUALIZATION 4: ATTENDANCE TREND
+# 📈 VISUALIZATION 4: ATTENDANCE TREND
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>4️⃣ Line Plot: Attendance and Performance Trend</h3></div>', unsafe_allow_html=True)
 
@@ -145,7 +161,7 @@ if show_desc4:
 st.markdown("<br><br>---", unsafe_allow_html=True)
 
 # =====================================================
-# VISUALIZATION 5: CORRELATION HEATMAP
+# 📈 VISUALIZATION 5: CORRELATION HEATMAP
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>5️⃣ Correlation Heatmap</h3></div>', unsafe_allow_html=True)
 
