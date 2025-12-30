@@ -39,7 +39,7 @@ pg = st.navigation(
             home,
             objective1,
             objective2,
-            objective3,
+            objective3_Fatin,
             objective4
         ]
     }
