@@ -13,12 +13,12 @@ home = st.Page(
 )
 
 objective1 = st.Page(
-    "objective1.py",
+    "objective1_Hidayah.py",
     title="👤 Demographics"
 )
 
 objective2 = st.Page(
-    "objective2.py",
+    "objective2_Syazana.py",
     title="📚 Study & Lifestyle"
 )
 
@@ -28,7 +28,7 @@ objective3 = st.Page(
 )
 
 objective4 = st.Page(
-    "objective4.py",
+    "objective4_Syazwanie.py",
     title="🛠️ Skills & Activities"
 )
 
