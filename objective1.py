@@ -179,9 +179,7 @@ if show_description:
     """)
 
 
-st.markdown("""
-<hr style="border:1px solid #E0E0E0; margin:60px 0;">
-""", unsafe_allow_html=True)
+st.markdown("---")
 
 # =====================================================
 # 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
