@@ -71,6 +71,7 @@ col1, col2 = st.columns([6,6])
 
 with col1:
     st.image("logo.png", width=1000)  # make sure logo.png is in the same folder
+    st.markdown("<br>", unsafe_allow_html=True)
 
 with col2:
     st.markdown("""
@@ -86,39 +87,39 @@ with col2:
 # ---------------------------------------
 # OVERVIEW CARDS
 # ---------------------------------------
-col1, col2, col3, col4 = st.columns(4)
+# col1, col2, col3, col4 = st.columns(4)
 
-with col1:
-    st.markdown("""
-    <div class="card">
-        <h3>👤 Demographics</h3>
-        <p>Student background & profile</p>
-    </div>
-    """, unsafe_allow_html=True)
+# with col1:
+#     st.markdown("""
+#     <div class="card">
+#         <h3>👤 Demographics</h3>
+#         <p>Student background & profile</p>
+#     </div>
+#     """, unsafe_allow_html=True)
 
-with col2:
-    st.markdown("""
-    <div class="card">
-        <h3>📚 Study & Lifestyle</h3>
-        <p>Study habits & daily routines</p>
-    </div>
-    """, unsafe_allow_html=True)
+# with col2:
+#     st.markdown("""
+#     <div class="card">
+#         <h3>📚 Study & Lifestyle</h3>
+#         <p>Study habits & daily routines</p>
+#     </div>
+#     """, unsafe_allow_html=True)
 
-with col3:
-    st.markdown("""
-    <div class="card">
-        <h3>💻 Learning Mode</h3>
-        <p>Online & physical learning styles</p>
-    </div>
-    """, unsafe_allow_html=True)
+# with col3:
+#     st.markdown("""
+#     <div class="card">
+#         <h3>💻 Learning Mode</h3>
+#         <p>Online & physical learning styles</p>
+#     </div>
+#     """, unsafe_allow_html=True)
 
-with col4:
-    st.markdown("""
-    <div class="card">
-        <h3>🛠️ Skills & Activities</h3>
-        <p>Co-curricular & personal skills</p>
-    </div>
-    """, unsafe_allow_html=True)
+# with col4:
+#     st.markdown("""
+#     <div class="card">
+#         <h3>🛠️ Skills & Activities</h3>
+#         <p>Co-curricular & personal skills</p>
+#     </div>
+#     """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
