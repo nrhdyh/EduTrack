@@ -97,6 +97,28 @@ block_style = """
     text-align:center;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
 """
+# Define the subheaders
+subheaders = [
+    "1️⃣ Violin Plot: CGPA Distribution by Gender",
+    "2️⃣ Histogram: GPA Distribution by Relationship Status and Gender",
+    "3️⃣ Bar Chart: Average CGPA by Faculty",
+    "4️⃣ Scatter Plot: Relationship Between CGPA and Age",
+    "5️⃣ Line Chart: CGPA Trend by GPA and Year of Study",
+    "6️⃣ Bar Chart: Average CGPA by Income Category",
+    "7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement",
+    "8️⃣ Bubble Chart: GPA & CGPA by Race"
+]
+
+# Loop through each subheader and display in a styled box
+for sh in subheaders:
+    st.markdown(f"""
+    <div style="
+        {block_style}
+        margin-bottom: 15px;
+    ">
+        <h3>{sh}</h3>
+    </div>
+    """, unsafe_allow_html=True)
 
 # Display metrics in block boxes
 col1, col2, col3, col4 = st.columns(4)
@@ -126,7 +148,7 @@ st.markdown("---")
 # =====================================================
 # 1️⃣ Violin Plot: CGPA by Gender
 # =====================================================
-st.subheader("1️⃣ CGPA Distribution by Gender")
+st.subheader("1️⃣ Violin Plot: CGPA Distribution by Gender")
 
 fig_violin = px.violin(
     df,
@@ -182,7 +204,7 @@ st.markdown("""
 # =====================================================
 # 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
 # =====================================================
-st.subheader("2️⃣ GPA Distribution by Relationship Status and Gender")
+st.subheader("2️⃣ Histogram: GPA Distribution by Relationship Status and Gender")
 
 relationship_options = df["Relationship_Status"].dropna().unique()
 selected_relationship = st.selectbox(
@@ -280,7 +302,7 @@ st.markdown("---")
 # =====================================================
 # 3️⃣ Bar Chart: Average CGPA by Faculty
 # =====================================================
-st.subheader("3️⃣ Average CGPA by Faculty")
+st.subheader("3️⃣ Bar Chart: Average CGPA by Faculty")
 
 fig_faculty = px.bar(
     df,
@@ -330,7 +352,7 @@ st.markdown("---")
 # =====================================================
 # 4️⃣ Scatter Plot: CGPA vs Age
 # =====================================================
-st.subheader("4️⃣ Relationship Between CGPA and Age")
+st.subheader("4️⃣ Scatter Plot: Relationship Between CGPA and Age")
 
 fig_age = px.scatter(
     df,
@@ -377,7 +399,7 @@ st.markdown("---")
 # =====================================================
 # 5️⃣ Line Chart: CGPA vs GPA by Year of Study
 # =====================================================
-st.subheader("5️⃣ CGPA Trend by GPA and Year of Study")
+st.subheader("5️⃣ Line Chart: CGPA Trend by GPA and Year of Study")
 
 line_data = (
     df.groupby(["GPA_Midpoint", "Year_of_Study"])["CGPA_Midpoint"]
@@ -437,7 +459,7 @@ st.markdown("---")
 # =====================================================
 # 6️⃣ Bar Chart: CGPA by Income Category
 # =====================================================
-st.subheader("6️⃣ Average CGPA by Income Category")
+st.subheader("6️⃣ Bar Chart: Average CGPA by Income Category")
 
 fig_income = px.bar(
     df,
