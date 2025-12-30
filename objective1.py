@@ -186,7 +186,12 @@ st.markdown("""
 # =====================================================
 # 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
 # =====================================================
-st.subheader("2️⃣ Histogram: GPA Distribution by Relationship Status and Gender")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>2️⃣ Histogram: GPA Distribution by Relationship Status and Gender</h3>
+</div>
+""", unsafe_allow_html=True)
+
 
 relationship_options = df["Relationship_Status"].dropna().unique()
 selected_relationship = st.selectbox(
@@ -284,7 +289,12 @@ st.markdown("---")
 # =====================================================
 # 3️⃣ Bar Chart: Average CGPA by Faculty
 # =====================================================
-st.subheader("3️⃣ Bar Chart: Average CGPA by Faculty")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>3️⃣ Bar Chart: Average CGPA by Faculty</h3>
+</div>
+""", unsafe_allow_html=True)
+
 
 fig_faculty = px.bar(
     df,
@@ -334,7 +344,12 @@ st.markdown("---")
 # =====================================================
 # 4️⃣ Scatter Plot: CGPA vs Age
 # =====================================================
-st.subheader("4️⃣ Scatter Plot: Relationship Between CGPA and Age")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>4️⃣ Scatter Plot: Relationship Between CGPA and Age</h3>
+</div>
+""", unsafe_allow_html=True)
+
 
 fig_age = px.scatter(
     df,
@@ -381,7 +396,12 @@ st.markdown("---")
 # =====================================================
 # 5️⃣ Line Chart: CGPA vs GPA by Year of Study
 # =====================================================
-st.subheader("5️⃣ Line Chart: CGPA Trend by GPA and Year of Study")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>5️⃣ Line Chart: CGPA Trend by GPA and Year of Study</h3>
+</div>
+""", unsafe_allow_html=True)
+
 
 line_data = (
     df.groupby(["GPA_Midpoint", "Year_of_Study"])["CGPA_Midpoint"]
@@ -441,7 +461,12 @@ st.markdown("---")
 # =====================================================
 # 6️⃣ Bar Chart: CGPA by Income Category
 # =====================================================
-st.subheader("6️⃣ Bar Chart: Average CGPA by Income Category")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>6️⃣ Bar Chart: Average CGPA by Income Category</h3>
+</div>
+""", unsafe_allow_html=True)
+
 
 fig_income = px.bar(
     df,
@@ -497,7 +522,12 @@ st.markdown("---")
 # =====================================================
 # 7️⃣ Heatmap: Study Hours vs Attendance (by Living With)
 # =====================================================
-st.subheader("7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement</h3>
+</div>
+""", unsafe_allow_html=True)
+
 
 study_order = sorted(
     df["Study_Hours_Daily"].dropna().unique(),
@@ -607,7 +637,11 @@ st.markdown("---")
 # =====================================================
 # 8️⃣ Bubble Chart: GPA & CGPA by Race
 # =====================================================
-st.subheader("8️⃣ Bubble Chart: GPA & CGPA by Race")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>8️⃣ Bubble Chart: GPA & CGPA by Race</h3>
+</div>
+""", unsafe_allow_html=True)
 
 fig_bubble = px.scatter(
     df,
