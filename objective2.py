@@ -37,14 +37,14 @@ def calculate_hours_midpoint(hours_range):
 # ---------------------------------------
 df = load_data()
 
-# Calculate midpoints for correlation and metrics
+# Pre-calculate midpoints for metrics and correlation
 df['Study_Hours_Daily_Midpoint'] = df['Study_Hours_Daily'].apply(calculate_hours_midpoint)
 df['Social_Media_Hours_Daily_Midpoint'] = df['Social_Media_Hours_Daily'].apply(calculate_hours_midpoint)
 
 # ---------------------------------------
 # TITLE
 # ---------------------------------------
-st.title("🎓 Study and Lifestyle")
+st.title("🎓 Academic Factors Influencing Student Performance")
 st.markdown("""
 Study habits, social media usage and health factors are aspects of lifestyle that could have influence the academic performance of UMK students.
 However, the relationship between these factors and students' academic is still poorly explored through visual analysis. Therefore, this study
@@ -55,36 +55,15 @@ st.markdown("---")
 # =====================================================
 # 📊 SUMMARY INSIGHT BLOCK BOXES
 # =====================================================
-st.subheader("📊 Key Academic Summary")
+st.subheader("📊 Key Summary Insights")
 
-# Filters (Row style)
-#col_f1, col_f2, col_f3 = st.columns(3)
+# Compute overall metrics
+avg_gpa = df["GPA_Midpoint"].mean()
+avg_study = df["Study_Hours_Daily_Midpoint"].mean()
+avg_social = df["Social_Media_Hours_Daily_Midpoint"].mean()
+avg_attendance = df["Attendance_Midpoint"].mean()
 
-#with col_f1:
-    #selected_gender = st.selectbox("Filter by Gender", ["All"] + sorted(df["Gender"].dropna().unique().tolist()))
-
-#with col_f2:
-    #selected_faculty = st.selectbox("Filter by Faculty", ["All"] + sorted(df["Faculty_Short"].dropna().unique().tolist()))
-
-#with col_f3:
-    #selected_living = st.selectbox("Filter by Living Arrangement", ["All"] + sorted(df["Living_With"].dropna().unique().tolist()))
-
-# Apply filters
-#f_df = df.copy()
-#if selected_gender != "All":
-    #f_df = f_df[f_df["Gender"] == selected_gender]
-#if selected_faculty != "All":
-    #f_df = f_df[f_df["Faculty_Short"] == selected_faculty]
-#if selected_living != "All":
-    #f_df = f_df[f_df["Living_With"] == selected_living]
-
-# Compute Metrics
-avg_gpa = f_df["GPA_Midpoint"].mean() if not f_df.empty else 0
-avg_study = f_df["Study_Hours_Daily_Midpoint"].mean() if not f_df.empty else 0
-avg_social = f_df["Social_Media_Hours_Daily_Midpoint"].mean() if not f_df.empty else 0
-avg_attendance = f_df["Attendance_Midpoint"].mean() if not f_df.empty else 0
-
-# Block Style (Matching your Demographic page)
+# Block Style
 block_style = """
     background: linear-gradient(135deg, #5E35B1, #3949AB);
     color:white;
@@ -112,61 +91,74 @@ with col4:
 st.markdown("---")
 
 # =====================================================
-# 📈 VISUALIZATIONS (ONE BY ONE)
+# 📈 VISUALIZATIONS
 # =====================================================
 
 # 1. Study Hours
 st.header("1. Average GPA by Study Hours")
-study_gpa = f_df.groupby('Study_Hours_Category')['GPA_Midpoint'].mean().reset_index()
+study_gpa = df.groupby('Study_Hours_Category')['GPA_Midpoint'].mean().reset_index()
 fig1 = px.bar(
     study_gpa, x='Study_Hours_Category', y='GPA_Midpoint', color='Study_Hours_Category',
     category_orders={'Study_Hours_Category': ['Low', 'Medium', 'High']},
-    color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white"
+    color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white",
+    title="Average GPA by Study Category"
 )
 st.plotly_chart(fig1, use_container_width=True)
-st.info("**Interpretation:** Higher study hour categories generally correlate with higher GPA midpoints.")
+st.subheader("Interpretation")
+st.write("Enter your interpretation here...")
+st.markdown("---")
 
 # 2. Social Media
 st.header("2. Social Media Usage and Academic Performance")
 fig2 = px.box(
-    f_df, x='Social_Media_Hours_Daily', y='GPA_Midpoint', color='Social_Media_Hours_Daily',
+    df, x='Social_Media_Hours_Daily', y='GPA_Midpoint', color='Social_Media_Hours_Daily',
     category_orders={'Social_Media_Hours_Daily': ['< 1 hours', '2 - 3 hours', '4 - 5 hours', '> 6 hours']},
-    points='all', color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white"
+    points='all', color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white",
+    title="GPA Distribution by Social Media Usage"
 )
 st.plotly_chart(fig2, use_container_width=True)
-st.info("**Interpretation:** This distribution highlights how excessive social media use might impact the range of student performance.")
+st.subheader("Interpretation")
+st.write("Enter your interpretation here...")
+st.markdown("---")
 
 # 3. Health Issues
 st.header("3. Health Issues and Academic Outcomes")
-health_gpa = f_df.groupby('Health_Issues_Text')['GPA_Midpoint'].mean().reset_index()
+health_gpa = df.groupby('Health_Issues_Text')['GPA_Midpoint'].mean().reset_index()
 fig3 = px.bar(
     health_gpa, x='Health_Issues_Text', y='GPA_Midpoint', color='Health_Issues_Text',
     category_orders={'Health_Issues_Text': ['No', 'Yes']},
-    color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white"
+    color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white",
+    title="Average GPA by Health Issues"
 )
 st.plotly_chart(fig3, use_container_width=True)
-st.info("**Interpretation:** Comparison of GPA averages between students with and without reported health issues.")
+st.subheader("Interpretation")
+st.write("Enter your interpretation here...")
+st.markdown("---")
 
 # 4. Attendance
 st.header("4. Attendance and Performance Trend")
-attn_gpa = f_df.groupby('Attendance_Midpoint')['GPA_Midpoint'].mean().reset_index()
-fig4 = px.line(attn_gpa, x='Attendance_Midpoint', y='GPA_Midpoint', markers=True, template="simple_white")
+attn_gpa = df.groupby('Attendance_Midpoint')['GPA_Midpoint'].mean().reset_index()
+fig4 = px.line(
+    attn_gpa, x='Attendance_Midpoint', y='GPA_Midpoint', 
+    markers=True, template="simple_white",
+    title="GPA Trend over Attendance Percentage"
+)
 fig4.update_traces(line_color='#AEC6CF', marker=dict(size=10, color='#FFB347'))
 st.plotly_chart(fig4, use_container_width=True)
-st.info("**Interpretation:** The trend line shows the relationship between class attendance percentages and GPA.")
+st.subheader("Interpretation")
+st.write("Enter your interpretation here...")
+st.markdown("---")
 
-# 5. Heatmap
+# 5. Correlation Heatmap
 st.header("5. Correlation Heatmap")
 num_cols = ['Study_Hours_Daily_Midpoint', 'Social_Media_Hours_Daily_Midpoint', 'Attendance_Midpoint', 'GPA_Midpoint']
-if not f_df.empty and len(f_df) > 1:
-    corr = f_df[num_cols].corr()
-    fig5 = px.imshow(
-        corr, text_auto=".2f", aspect="auto",
-        color_continuous_scale='RdBu_r',
-        title='Correlation Heatmap'
-    )
-    st.plotly_chart(fig5, use_container_width=True)
-else:
-    st.warning("Not enough data to display correlation for the selected filters.")
-
-st.info("**Interpretation:** Red indicates a strong positive relationship, while Blue indicates a negative relationship.")
+corr = df[num_cols].corr()
+fig5 = px.imshow(
+    corr, text_auto=".2f", aspect="auto",
+    color_continuous_scale='RdBu_r', 
+    title='Statistical Correlation of Key Factors'
+)
+fig5.update_layout(template="simple_white")
+st.plotly_chart(fig5, use_container_width=True)
+st.subheader("Interpretation")
+st.write("Enter your interpretation here...")
