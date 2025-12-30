@@ -49,30 +49,56 @@ st.plotly_chart(fig2, use_container_width=True)
 
 
 # --- VISUALIZATION 3: Percentage Distribution (Stacked Horizontal Bar) ---
-st.header("3. CGPA Distribution by Skill Category")
 
-# Re-applying your specific ordering logic
-cgpa_order = ['2.50 – 2.99', '3.00 – 3.69', '3.70 - 4.00']
+# 2. Get the unique CGPA values actually present in your data
+# This avoids the "dash" character mismatch issue entirely
+actual_labels = df['CGPA'].unique().tolist()
+
+# 3. Sort them so they appear in academic order (Low to High)
+# This sorts them based on the first two numbers (e.g., 2.50, 3.00, 3.70)
+actual_labels.sort()
+
+# 4. Create the cross-tabulation using the actual labels found
 cross_tab = pd.crosstab(df['Skills_Category'], df['CGPA'])
-available_order = [c for c in cgpa_order if c in cross_tab.columns]
-cross_tab = cross_tab[available_order]
+cross_tab = cross_tab[actual_labels]
 
-# Convert to long format for Plotly Express
+# 5. Convert to percentages
 percentage_dist = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
-percentage_dist = percentage_dist.reset_index().melt(id_vars='Skills_Category', var_name='CGPA_Range', value_name='Percentage')
 
-fig3 = px.bar(
-    percentage_dist,
+# 6. Transform for Plotly
+df_plot = percentage_dist.reset_index().melt(
+    id_vars='Skills_Category', 
+    var_name='CGPA Range', 
+    value_name='Percentage'
+)
+
+# 7. Create Plotly Figure with a flexible color map
+# This maps colors based on the position in your sorted list 
+# (Red for lowest, Yellow for middle, Green for highest)
+colors = ['#e74c3c', '#f1c40f', '#2ecc71']
+color_map = {label: colors[i] for i, label in enumerate(actual_labels)}
+
+fig = px.bar(
+    df_plot,
     y='Skills_Category',
     x='Percentage',
-    color='CGPA_Range',
+    color='CGPA Range',
     orientation='h',
     title='Percentage Distribution of CGPA Ranges by Skill Category',
-    text=percentage_dist['Percentage'].apply(lambda x: f'{x:.1f}%'),
-    color_discrete_map={'2.50 – 2.99': '#e74c3c', '3.00 – 3.69': '#f1c40f', '3.70 - 4.00': '#2ecc71'}
+    color_discrete_map=color_map,
+    category_orders={'CGPA Range': actual_labels},
+    text=df_plot['Percentage'].apply(lambda x: f'{x:.1f}%' if x > 0 else '')
 )
-fig3.update_layout(xaxis_title="Percentage of Students (%)", yaxis_title="Skills Category")
-st.plotly_chart(fig3, use_container_width=True)
+
+fig.update_layout(
+    xaxis_range=[0, 100],
+    plot_bgcolor='white',
+    legend_title_text='CGPA Range'
+)
+
+fig.update_traces(textposition='inside', textfont=dict(color='black', family='Arial Black'))
+
+st.plotly_chart(fig, use_container_width=True)
 
 
 # --- VISUALIZATION 4: Academic Progression (Line Plot) ---
