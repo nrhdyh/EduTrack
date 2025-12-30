@@ -67,7 +67,6 @@ body {
 # ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
-:
     st.image("logo.png", width=1000)  # make sure logo.png is in the same folder
     st.markdown("<br><br>", unsafe_allow_html=True)
 
