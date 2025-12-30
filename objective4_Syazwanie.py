@@ -31,59 +31,76 @@ st.plotly_chart(fig1, use_container_width=True)
 
 # --- CHART 2: Stacked Horizontal Bar ---
 
-# 2. EXACT CGPA strings (important)
-cgpa_order = [
-    '2.50 – 2.99',
-    '3.00 – 3.69',
-    '3.70 - 4.00'
-]
+# 2. EXACT strings and order from your dataset
+cgpa_order = ['2.50 – 2.99', '3.00 – 3.69', '3.70 - 4.00']
 
-# 3. Cross-tabulation
+# 3. Create the cross-tabulation and convert to percentages
 cross_tab = pd.crosstab(df['Skills_Category'], df['CGPA'])
-
-# 4. Filter & reorder CGPA columns
 available_order = [c for c in cgpa_order if c in cross_tab.columns]
 cross_tab = cross_tab[available_order]
-
-# 5. Convert to percentages
 percentage_dist = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
 
-# 6. Convert to long format for Plotly
-plot_df = percentage_dist.reset_index().melt(
-    id_vars='Skills_Category',
-    var_name='CGPA',
+# 4. Transform to Long Format (Required for Plotly Express)
+# We reset the index so 'Skills_Category' becomes a column, then melt.
+df_plot = percentage_dist.reset_index().melt(
+    id_vars='Skills_Category', 
+    var_name='CGPA Range', 
     value_name='Percentage'
 )
 
-# 7. Plotly stacked horizontal bar chart
+# 5. Create the Plotly Figure
 fig = px.bar(
-    plot_df,
-    x='Percentage',
+    df_plot,
     y='Skills_Category',
-    color='CGPA',
+    x='Percentage',
+    color='CGPA Range',
     orientation='h',
-    text=plot_df['Percentage'].round(1).astype(str) + '%',
-    color_discrete_sequence=['#e74c3c', '#f1c40f', '#2ecc71'],
-    title='Percentage Distribution of CGPA Ranges by Skill Category'
+    title='Percentage Distribution of CGPA Ranges by Skill Category',
+    # Match the colors from your image exactly
+    color_discrete_map={
+        '2.50 – 2.99': '#e74c3c', # Red
+        '3.00 – 3.69': '#f1c40f', # Yellow
+        '3.70 - 4.00': '#2ecc71'  # Green
+    },
+    category_orders={
+        'CGPA Range': cgpa_order,
+        # This keeps the Y-axis in the same order as your dataframe index
+        'Skills_Category': percentage_dist.index.tolist() 
+    },
+    # This creates the text labels inside the bars
+    text=df_plot['Percentage'].apply(lambda x: f'{x:.1f}%' if x > 0 else '')
 )
 
-# 8. Layout formatting
+# 6. Fine-tune styling to match the Matplotlib output
 fig.update_layout(
-    xaxis=dict(title='Percentage of Students (%)', range=[0, 100]),
-    yaxis=dict(title='Skills Category'),
-    legend_title='CGPA Range',
-    barmode='stack',
-    height=600
+    xaxis_title='Percentage of Students (%)',
+    yaxis_title='Skills Category',
+    xaxis_range=[0, 100],
+    legend_title_text='CGPA Range',
+    # White background to match the "clean" look
+    plot_bgcolor='white',
+    font=dict(family="Arial", size=12, color="black"),
+    title_font=dict(size=18),
+    # Adjust margins to ensure labels aren't cut off
+    margin=dict(l=150, r=20, t=80, b=50),
+    # Legend positioning (similar to bbox_to_anchor in matplotlib)
+    legend=dict(
+        bordercolor="lightgrey",
+        borderwidth=1
+    )
 )
 
+# Bold black text for the labels inside the bars
 fig.update_traces(
     textposition='inside',
-    insidetextanchor='middle'
+    textfont=dict(color='black', family='Arial Black')
 )
 
-# 9. Display in Streamlit
-st.plotly_chart(fig, use_container_width=True)
+# Add vertical gridlines for the percentages (optional, matches the clean look)
+fig.update_xaxes(showgrid=True, gridcolor='lightgrey')
 
+# 7. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 # --- CHART 3: Ranking Bar Chart ---
 # Average CGPA by Skill Focus
