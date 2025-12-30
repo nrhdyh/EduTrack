@@ -176,7 +176,9 @@ The violin plot shows a clear pattern in academic performance by gender.
 Overall, the distribution suggests a moderate relationship between gender and academic performance, where female students generally perform better and more consistently, while male students exhibit more diverse academic results.
 """)
 
-st.markdown("---")
+st.markdown("""
+<hr style="border:1px solid #E0E0E0; margin:60px 0;">
+""", unsafe_allow_html=True)
 
 # =====================================================
 # 2️⃣ Histogram: GPA by Relationship Status & Gender (Dropdown)
