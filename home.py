@@ -67,22 +67,20 @@ body {
 # ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
-col1, col2 = st.columns([6,6])
-
-with col1:
-    st.image("logo.png", width=1000)  # make sure logo.png is in the same folder
-    st.markdown("<br>", unsafe_allow_html=True)
-
-with col2:
-    st.markdown("""
-    <div class="hero" style="padding:20px; margin-bottom:0;">
+st.markdown("""
+<div style="text-align:center;">
+    <img src="logo.png" width="1000">
+    <br><br>
+    <div class="hero" style="padding:20px;">
         <h1>🎓 EDUTRACK UMK</h1>
         <p>
             Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
             Universiti Malaysia Kelantan
         </p>
     </div>
-    """, unsafe_allow_html=True)
+</div>
+""", unsafe_allow_html=True)
+
 
 # ---------------------------------------
 # OVERVIEW CARDS
