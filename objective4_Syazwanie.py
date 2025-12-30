@@ -2,8 +2,15 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# 1. Load the dataset
-# df = pd.read_csv('processed_data.csv')
+# ---------------------------------------
+# DATA LOADING (Fixes the NameError)
+# ---------------------------------------
+@st.cache_data
+def load_data():
+    url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
+    return pd.read_csv(url)
+
+df = load_data()
 
 # --- CHART 1: Grouped Bar Chart ---
 # Average CGPA by Skill Development and Co-Curricular Participation
