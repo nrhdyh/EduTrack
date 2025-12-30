@@ -3,10 +3,10 @@ import pandas as pd
 import numpy as np
 import plotly.express as px
 
-# --- 1. Page Configuration ---
+# --- Page Configuration ---
 st.set_page_config(page_title="EduTrack Student Dashboard", layout="centered")
 
-# --- 2. Data Loading & Helper Functions ---
+# --- Data Loading & Helper Functions ---
 @st.cache_data
 def load_data():
     url = 'https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv'
@@ -25,7 +25,7 @@ def calculate_hours_midpoint(hours_range):
             return float(cleaned_range.replace('<', '')) - 0.5
     return np.nan
 
-# --- 3. Data Processing ---
+# --- Data Processing ---
 df_url = load_data()
 
 # Calculate midpoints for metrics
@@ -38,12 +38,14 @@ avg_study = df_url['Study_Hours_Daily_Midpoint'].mean()
 avg_social = df_url['Social_Media_Hours_Daily_Midpoint'].mean()
 avg_attendance = df_url['Attendance_Midpoint'].mean()
 
-# --- 4. App Header ---
+# --- App Header ---
 st.title("🎓 Study and Lifestyle")
-st.markdown("Study habits, social media usage and health factors are aspects of lifestyle that could have influence the academic performance of UMK students.")
+st.markdown("""Study habits, social media usage and health factors are aspects of lifestyle that could have influence the academic performance of UMK students.
+However, the relationship between these factors and students' academic achievement is still poorly explored through visual analysis. Therefore, this study aims
+to visualize and understand the realtionship between lifestyle factors and students' academic performance.""")
 st.markdown("---")
 
-# --- 5. KEY METRICS SUMMARY (4 Columns) ---
+# --- KEY METRICS SUMMARY (4 Columns) ---
 st.subheader("📌 Key Summary Insights")
 m1, m2, m3, m4 = st.columns(4)
 
@@ -54,7 +56,7 @@ m4.metric(label="Avg Attendance", value=f"{avg_attendance:.1f}%")
 
 st.markdown("---")
 
-# --- 6. Visualization 1: Study Hours ---
+# --- Visualization 1: Study Hours ---
 st.header("1. Impact of Study Habits")
 study_gpa = df_url.groupby('Study_Hours_Category')['GPA_Midpoint'].mean().reset_index()
 fig_study = px.bar(
