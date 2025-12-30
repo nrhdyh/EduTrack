@@ -39,8 +39,8 @@ avg_social = df_url['Social_Media_Hours_Daily_Midpoint'].mean()
 avg_attendance = df_url['Attendance_Midpoint'].mean()
 
 # --- 4. App Header ---
-st.title("🎓 EduTrack: Student Performance Analytics")
-st.markdown("Exploring the relationship between academic habits, social life, health, and GPA.")
+st.title("🎓 Study and Lifestyle")
+st.markdown("Study habits, social media usage and health factors are aspects of lifestyle that could have influence the academic performance of UMK students.")
 st.markdown("---")
 
 # --- 5. KEY METRICS SUMMARY (4 Columns) ---
