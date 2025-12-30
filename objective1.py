@@ -7,7 +7,7 @@ import plotly.express as px
 # PAGE CONFIG
 # ---------------------------------------
 st.set_page_config(
-    page_title="Student Performance Dashboard",
+    page_title="Demographic",
     layout="wide"
 )
 
