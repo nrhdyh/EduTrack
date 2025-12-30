@@ -88,27 +88,6 @@ common_living = (
     if not filtered_df.empty else "N/A"
 )
 
-# Define the block style as a string
-block_style = """
-    background: linear-gradient(135deg, #5E35B1, #3949AB);
-    color:white;
-    padding:20px;
-    border-radius:10px;
-    text-align:center;
-    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
-"""
-# Define the subheaders
-subheaders = [
-    "1️⃣ Violin Plot: CGPA Distribution by Gender",
-    "2️⃣ Histogram: GPA Distribution by Relationship Status and Gender",
-    "3️⃣ Bar Chart: Average CGPA by Faculty",
-    "4️⃣ Scatter Plot: Relationship Between CGPA and Age",
-    "5️⃣ Line Chart: CGPA Trend by GPA and Year of Study",
-    "6️⃣ Bar Chart: Average CGPA by Income Category",
-    "7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement",
-    "8️⃣ Bubble Chart: GPA & CGPA by Race"
-]
-
 # Loop through each subheader and display in a styled box
 for sh in subheaders:
     st.markdown(f"""
@@ -119,6 +98,16 @@ for sh in subheaders:
         <h3>{sh}</h3>
     </div>
     """, unsafe_allow_html=True)
+
+# Define the block style as a string
+block_style = """
+    background: linear-gradient(135deg, #5E35B1, #3949AB);
+    color:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.1);
+"""
 
 # Display metrics in block boxes
 col1, col2, col3, col4 = st.columns(4)
