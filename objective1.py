@@ -170,9 +170,9 @@ if show_description:
 ### 📈 Distribution Description
 
 The violin plot shows a clear pattern in academic performance by gender. 
-Female students tend to achieve slightly higher CGPA scores, with most of their results clustered in the upper CGPA range, indicating more consistent performance. 
-In contrast, male students display a wider spread of CGPA values, suggesting greater variability in academic outcomes. 
-While both genders have a few lower and higher outliers, high CGPA scores appear more frequently among females. 
+- Female students tend to achieve slightly higher CGPA scores, with most of their results clustered in the upper CGPA range, indicating more consistent performance. 
+- In contrast, male students display a wider spread of CGPA values, suggesting greater variability in academic outcomes. 
+- While both genders have a few lower and higher outliers, high CGPA scores appear more frequently among females. 
 Overall, the distribution suggests a moderate relationship between gender and academic performance, where female students generally perform better and more consistently, while male students exhibit more diverse academic results.
 """)
 
@@ -228,12 +228,14 @@ if show_interpretation_2:
         st.markdown(f"""
 ### 📈 Distribution Description
 
-For students who are **single**, the GPA distribution shows the widest spread across the scale.
+- For students who are **single**, the GPA distribution shows the widest spread across the scale.
 Most observations cluster around the mid-range GPA values, forming a clear central pattern,
 while a noticeable extension into higher GPA bins suggests that a subset of students performs particularly well.
 
-Female students appear more frequently in the higher GPA ranges, whereas male students are more concentrated
-around the central bins. Despite this, substantial overlap remains between genders, indicating shared academic
+- Female students appear more frequently in the higher GPA ranges, whereas male students are more concentrated
+around the central bins. 
+
+- Despite this, substantial overlap remains between genders, indicating shared academic
 patterns rather than strong gender separation. No extreme outliers or abrupt gaps are observed.
 """)
 
@@ -241,12 +243,14 @@ patterns rather than strong gender separation. No extreme outliers or abrupt gap
         st.markdown(f"""
 ### 📈 Distribution Description
 
-Among students **in a relationship**, GPA values are distributed mainly from mid to high ranges,
+- Among students **in a relationship**, GPA values are distributed mainly from mid to high ranges,
 with both genders showing a balanced and stable pattern.
 The overlapping bars across most GPA intervals suggest similar academic engagement between males and females.
 
-Female students show a slightly stronger presence in the higher GPA bins, though the difference is gradual
-and not sharply pronounced. The overall shape reflects consistency, with no clear anomalies or sudden
+- Female students show a slightly stronger presence in the higher GPA bins, though the difference is gradual
+and not sharply pronounced. 
+
+- The overall shape reflects consistency, with no clear anomalies or sudden
 declines in performance.
 """)
 
@@ -254,10 +258,10 @@ declines in performance.
         st.markdown(f"""
 ### 📈 Distribution Description
 
-For **married** students, the GPA distribution appears more concentrated, with values clustering toward
+- For **married** students, the GPA distribution appears more concentrated, with values clustering toward
 the higher end of the GPA scale. The narrower spread suggests stable and focused academic outcomes.
 
-Both genders display nearly identical patterns, and no notable gaps or anomalies are present.
+- Both genders display nearly identical patterns, and no notable gaps or anomalies are present.
 Although the sample size is smaller, the distribution indicates consistency rather than variability.
 """)
 
@@ -265,7 +269,7 @@ Although the sample size is smaller, the distribution indicates consistency rath
         st.markdown(f"""
 ### 📈 Distribution Description
 
-The GPA distribution for students with **{selected_relationship}** status shows overlapping patterns
+- The GPA distribution for students with **{selected_relationship}** status shows overlapping patterns
 between genders, with GPA values concentrated within similar ranges.
 No distinct anomalies or separations are visually evident.
 """)
@@ -313,10 +317,10 @@ if show_description_3:
 ### 📈 Distribution Description
 
 The chart tells a clear and slightly surprising story. 
-One faculty, FSDK, stands far above the rest, creating a strong imbalance in the average CGPA midpoint. 
-This sharp contrast because of the most questionnaire answers are from FSDK students. 
-In contrast, the remaining faculties cluster at much lower and relatively similar levels, indicating more consistent academic performance across them. 
-Faculties such as FPV and FAE show slightly higher midpoints within this cluster, while FBI and FSB sit at the lower end. 
+- One faculty, FSDK, stands far above the rest, creating a strong imbalance in the average CGPA midpoint. 
+- This sharp contrast because of the most questionnaire answers are from FSDK students. 
+- In contrast, the remaining faculties cluster at much lower and relatively similar levels, indicating more consistent academic performance across them. 
+- Faculties such as FPV and FAE show slightly higher midpoints within this cluster, while FBI and FSB sit at the lower end. 
 Overall, the dominant anomaly of FSDK overshadows any clear correlation among the other faculties, highlighting the need to analyze it separately to better understand underlying academic trends.
 """)
 
@@ -360,9 +364,9 @@ if show_description_4:
     st.markdown("""
 ### 📈 Distribution Description
 The scatter plot shows a weak and slightly negative relationship between CGPA and age. 
-Most data points are widely scattered, indicating that students of different ages achieve similar CGPA levels. 
-The gently downward trend line suggests that older students tend to have marginally lower CGPA midpoints but the effect is minimal.
-Several points deviate from the trend, showing that high and low CGPA values occur across multiple age groups. 
+- Most data points are widely scattered, indicating that students of different ages achieve similar CGPA levels. 
+- The gently downward trend line suggests that older students tend to have marginally lower CGPA midpoints but the effect is minimal.
+- Several points deviate from the trend, showing that high and low CGPA values occur across multiple age groups. 
 Overall, age does not appear to be a strong predictor of CGPA, and academic performance remains relatively consistent regardless of age.
 """)
 
@@ -603,16 +607,16 @@ if show_description_8:
 
 On this chart, each race becomes a character in a shared academic journey for bubble representing both achievement and presence.
 
-Across most groups, CGPA rises toward the upper end especially around the 3.8 midpoint. 
-The brightest hues and largest bubbles there belong mainly to Malay, Chinese and Indian students showing both stronger GPA and a larger number of students represented. 
-Their bubbles cluster like stars at the high end of the scale, signaling consistent academic strength.
+- Across most groups, CGPA rises toward the upper end especially around the 3.8 midpoint. 
+- The brightest hues and largest bubbles there belong mainly to Malay, Chinese and Indian students showing both stronger GPA and a larger number of students represented. 
+- Their bubbles cluster like stars at the high end of the scale, signaling consistent academic strength.
 
-Further up the chart, Kadazan-Dusun and Bidayuh tell a quieter story. 
-Though not as numerous, their bubbles show that those who are present perform steadily and often falling around the middle CGPA range of 3.4. 
-They may not dominate the numbers, but their performance reflects solid academic standing.
+- Further up the chart, Kadazan-Dusun and Bidayuh tell a quieter story. 
+- Though not as numerous, their bubbles show that those who are present perform steadily and often falling around the middle CGPA range of 3.4. 
+- They may not dominate the numbers, but their performance reflects solid academic standing.
 
-At the far left, one small single bubble stands out at a CGPA of about 2.8 for the Malay students again, but this variation hints that not all students within a race perform equally. 
-Some struggle, suggesting diversity of outcomes even within the same group.
+- At the far left, one small single bubble stands out at a CGPA of about 2.8 for the Malay students again, but this variation hints that not all students within a race perform equally. 
+- Some struggle, suggesting diversity of outcomes even within the same group.
 
 Overall, the visual speaks softly but clearly:
 Academic performance is less about background and more a constellation of individual effort.
