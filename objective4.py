@@ -1,4 +1,9 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
 
+# 1. Load the dataset
+# df = pd.read_csv('processed_data.csv')
 
 # --- CHART 1: Grouped Bar Chart ---
 # Average CGPA by Skill Development and Co-Curricular Participation
