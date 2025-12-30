@@ -31,9 +31,6 @@ st.plotly_chart(fig1, use_container_width=True)
 
 # --- CHART 2: Stacked Horizontal Bar ---
 
-# 1. Load the dataset
-df = pd.read_csv('processed_data.csv')
-
 # 2. Get the unique CGPA values actually present in your data
 # This avoids the "dash" character mismatch issue entirely
 actual_labels = df['CGPA'].unique().tolist()
