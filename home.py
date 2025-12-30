@@ -67,7 +67,10 @@ body {
 # ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
-st.image("logo.png", width=700)
+col1, col2, col3 = st.columns([1, 3, 1])
+
+with col2:
+    st.image("logo.png", width=500)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -80,6 +83,7 @@ st.markdown("""
     </p>
 </div>
 """, unsafe_allow_html=True)
+
 
 
 # ---------------------------------------
