@@ -24,7 +24,7 @@ st.set_page_config(
 # ---------------------------------------
 # TITLE & OVERVIEW SECTION
 # ---------------------------------------
-st.title("🎓 Learning Mode Preference, Demographic Factors & Academic Outcomes among UMK Students")
+st.title("🎓 Learning Mode Preference, Demographic Factors & Academic Outcomes Among UMK Students")
 
 st.markdown("### 📝 Overview")
 st.info("""
