@@ -550,16 +550,51 @@ if show_stats_7:
     st.dataframe(study_attendance_stats, use_container_width=True)
 
 # =====================================================
-# Distribution Description (Neutral Only)
+# Distribution Description (Dynamic Based On Selection)
 # =====================================================
 show_description_7 = st.checkbox("Distribution Description", value=True, key="desc7")
 if show_description_7:
-    st.markdown(""" 
-### 📈 Distribution Description
+    st.markdown("### 📈 Distribution Description")
 
-The heatmap shows average CGPA values for combinations of daily study hours and attendance percentages, filtered by living arrangement.  
+    if selected_living == "Friends":
+        st.markdown("""
+**Students living with friends show a clear, predictable pattern.**
+- Higher study hours combined with higher attendance generally lead to higher CGPA.
+- The strongest results appear around **5–6 hours of study with 81–100% attendance**.
+- There are no extreme highs or lows — outcomes remain stable, suggesting a balanced, supportive environment that encourages steady academic effort.
 
-Color intensity represents the distribution of CGPA values across these combinations, without implying causation or trends.
+**Overall conclusion:** More study + better attendance = reliably higher CGPA.
+""")
+
+    elif selected_living == "Family":
+        st.markdown("""
+**For students living with family, attendance is the defining factor.**
+- High attendance (81–100%) consistently produces strong CGPAs (~3.5), even among those studying **less than 1 hour per day**.
+- However, low attendance sharply reduces performance, even when study hours increase.
+
+**Overall conclusion:** Showing up matters most — attendance has stronger impact than study time.
+""")
+
+    elif selected_living == "In Hostel":
+        st.markdown("""
+**Hostel life shows the widest academic range — from highest to lowest CGPA.**
+- Low attendance and low study hours (e.g., <1 hour + 41–60%) correlate with the lowest scores (~2.75), while high attendance paired with 5–6 study hours produces **the highest CGPA in the dataset (3.85)**.
+- This suggests freedom and fewer constraints can boost success — or enable failure.
+
+**Overall conclusion:** High-risk, high-reward environment — outcomes are amplified.
+""")
+
+    elif selected_living == "Alone":
+        st.markdown("""
+**No usable pattern can be identified — the heatmap is empty for this group.**
+- This suggests either very few students live alone or the distribution is too scattered to create a meaningful aggregate view.
+
+**Overall conclusiont:** Lack of data = no identifiable trend (which itself is important).
+""")
+
+    else:
+        st.markdown("""
+No descriptive pattern available for this living arrangement.
 """)
 
 st.markdown("---")
