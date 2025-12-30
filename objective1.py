@@ -88,17 +88,6 @@ common_living = (
     if not filtered_df.empty else "N/A"
 )
 
-# Loop through each subheader and display in a styled box
-for sh in subheaders:
-    st.markdown(f"""
-    <div style="
-        {block_style}
-        margin-bottom: 15px;
-    ">
-        <h3>{sh}</h3>
-    </div>
-    """, unsafe_allow_html=True)
-
 # Define the block style as a string
 block_style = """
     background: linear-gradient(135deg, #5E35B1, #3949AB);
