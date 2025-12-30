@@ -67,9 +67,9 @@ body {
 # ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
-st.image("logo.png", width=350)
+st.image("logo.png", width=1000)
 
-st.markdown("<br><br>", unsafe_allow_html=True)
+st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class="hero" style="padding:20px; text-align:center;">
