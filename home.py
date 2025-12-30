@@ -67,18 +67,20 @@ body {
 # ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
-    st.image("logo.png", width=1000)  # make sure logo.png is in the same folder
-    st.markdown("<br><br>", unsafe_allow_html=True)
+st.image("logo.png", width=350)
 
-    st.markdown("""
-    <div class="hero" style="padding:20px; margin-bottom:0;">
-        <h1>🎓 EDUTRACK UMK</h1>
-        <p>
-            Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
-            Universiti Malaysia Kelantan
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+st.markdown("<br><br>", unsafe_allow_html=True)
+
+st.markdown("""
+<div class="hero" style="padding:20px; text-align:center;">
+    <h1>🎓 EDUTRACK UMK</h1>
+    <p>
+        Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
+        Universiti Malaysia Kelantan
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
 
 # ---------------------------------------
 # OVERVIEW CARDS
