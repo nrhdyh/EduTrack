@@ -30,28 +30,60 @@ st.plotly_chart(fig1, use_container_width=True)
 
 
 # --- CHART 2: Stacked Horizontal Bar ---
-# Percentage Distribution of CGPA Ranges by Skill Category
-cgpa_order = ['2.50 – 2.99', '3.00 – 3.69', '3.70 - 4.00']
+
+# 2. Define order (preserving your specific dash/hyphen characters)
+cgpa_order = [
+    '2.50 – 2.99',
+    '3.00 – 3.69',
+    '3.70 - 4.00'
+]
+
+# 3. Create cross-tabulation and filter/reorder
 cross_tab = pd.crosstab(df['Skills_Category'], df['CGPA'])
 available_order = [c for c in cgpa_order if c in cross_tab.columns]
 cross_tab = cross_tab[available_order]
 
-# Convert to long format for Plotly Express
+# 4. Convert to percentages
 percentage_dist = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
-percentage_dist = percentage_dist.reset_index().melt(id_vars='Skills_Category', var_name='CGPA Range', value_name='Percentage')
 
-fig2 = px.bar(
-    percentage_dist,
+# 5. Transform for Plotly (Reset index and melt to long format)
+df_plot = percentage_dist.reset_index().melt(
+    id_vars='Skills_Category', 
+    var_name='CGPA Range', 
+    value_name='Percentage'
+)
+
+# 6. Create Plotly Figure
+fig = px.bar(
+    df_plot,
     y='Skills_Category',
     x='Percentage',
     color='CGPA Range',
     orientation='h',
     title='Percentage Distribution of CGPA Ranges by Skill Category',
-    text_auto='.1f', # Adds percentage labels inside bars
-    color_discrete_map={'2.50 – 2.99': '#e74c3c', '3.00 – 3.69': '#f1c40f', '3.70 - 4.00': '#2ecc71'}
+    labels={'Percentage': 'Percentage of Students (%)', 'Skills_Category': 'Skills Category'},
+    # Map your exact colors
+    color_discrete_map={
+        '2.50 – 2.99': '#e74c3c', 
+        '3.00 – 3.69': '#f1c40f', 
+        '3.70 - 4.00': '#2ecc71'
+    },
+    category_orders={'CGPA Range': cgpa_order},
+    text_auto='.1f'  # This adds the % labels inside the bars automatically
 )
-fig2.update_layout(xaxis_title="Percentage (%)", yaxis_title="Skill Category")
-st.plotly_chart(fig2, use_container_width=True)
+
+# 7. Formatting updates
+fig.update_layout(
+    xaxis_range=[0, 100],
+    xaxis_ticksuffix="%",
+    legend_title_text='CGPA Range',
+    uniformtext_minsize=8, 
+    uniformtext_mode='hide',
+    margin=dict(l=50, r=50, t=80, b=50)
+)
+
+# 8. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 
 # --- CHART 3: Ranking Bar Chart ---
