@@ -126,7 +126,11 @@ st.markdown("---")
 # =====================================================
 # 1️⃣ Violin Plot: CGPA by Gender
 # =====================================================
-st.subheader("1️⃣ Violin Plot: CGPA Distribution by Gender")
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>1️⃣ Violin Plot: CGPA Distribution by Gender</h3>
+</div>
+""", unsafe_allow_html=True)
 
 fig_violin = px.violin(
     df,
