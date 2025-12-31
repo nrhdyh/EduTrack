@@ -102,7 +102,7 @@ if show_desc1:
     - Overall, this show that study habits are related to the academic performance of UMK students.
     """)
 
-st.markdown("<br><br>---", unsafe_allow_html=True)
+st.markdown("---")
 
 # =====================================================
 # 📈 VISUALIZATION 2: SOCIAL MEDIA
@@ -125,7 +125,7 @@ if show_desc2:
     the stability and consistency of academic performance.
     """)
 
-st.markdown("<br><br>---", unsafe_allow_html=True)
+st.markdown("---")
 
 # =====================================================
 # 📈 VISUALIZATION 3: HEALTH ISSUES
@@ -149,7 +149,7 @@ if show_desc3:
     - Overall, this finding supports that health factors are related to academic performance.
     """)
 
-st.markdown("<br><br>---", unsafe_allow_html=True)
+st.markdown("---")
 
 # =====================================================
 # 📈 VISUALIZATION 4: ATTENDANCE TREND
@@ -174,7 +174,7 @@ if show_desc4:
     not completely linear.
     """)
 
-st.markdown("<br><br>---", unsafe_allow_html=True)
+st.markdown("---")
 
 # =====================================================
 # 📈 VISUALIZATION 5: CORRELATION HEATMAP
