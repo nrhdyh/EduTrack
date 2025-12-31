@@ -19,16 +19,39 @@ def load_data():
 df = load_data()
 
 # --- VISUALIZATION 1: Performance Density (KDE Equivalent) ---
-st.header("1. Performance Density")
-# Plotly Express doesn't have a direct KDE, so we use Figure Factory's Distplot
-# We split the data by the hue category
-categories = df['Co_Curriculum_Activities_Text'].unique()
-hist_data = [df[df['Co_Curriculum_Activities_Text'] == cat]['CGPA_Midpoint'].dropna() for cat in categories]
-group_labels = [str(cat) for cat in categories]
+import plotly.figure_factory as ff
+import streamlit as st
 
-fig1 = ff.create_distplot(hist_data, group_labels, show_hist=False, show_rug=False)
-fig1.update_layout(title_text='Performance Density: Active vs Non-Active students', xaxis_title="CGPA Midpoint")
-st.plotly_chart(fig1, use_container_width=True)
+# 1. Prepare the data groups based on 'Co_Curriculum_Activities_Text'
+# We extract the 'CGPA_Midpoint' for each category to pass into the distplot
+active_students = df[df['Co_Curriculum_Activities_Text'] == 'Yes']['CGPA_Midpoint'].dropna()
+non_active_students = df[df['Co_Curriculum_Activities_Text'] == 'No']['CGPA_Midpoint'].dropna()
+
+hist_data = [active_students, non_active_students]
+group_labels = ['Active (Yes)', 'Non-Active (No)']
+colors = ['#3B738F', '#6BBBA1'] # Approximate 'crest' palette (teal/green)
+
+# 2. Create the Distplot
+# show_hist=False and show_rug=False replicate the pure KDE look
+fig = ff.create_distplot(
+    hist_data, 
+    group_labels, 
+    show_hist=False, 
+    show_rug=False, 
+    colors=colors
+)
+
+# 3. Add formatting
+fig.update_layout(
+    title='Performance Density: Active vs Non-Active students',
+    xaxis_title='CGPA Midpoint',
+    yaxis_title='Density',
+    template='plotly_white',
+    legend_title='Participation'
+)
+
+# 4. Display in Streamlit
+st.plotly_chart(fig, use_container_width=True)
 
 
 # --- VISUALIZATION 2: Average CGPA (Grouped Bar) ---
@@ -100,20 +123,66 @@ fig.update_traces(textposition='inside', textfont=dict(color='black', family='Ar
 
 st.plotly_chart(fig, use_container_width=True)
 
+# --- VISUALIZATION 4: CGPA Density : Skill Development Levels vs. Co-curricular Participation(Split Violin Plot) ---
 
-# --- VISUALIZATION 4: Academic Progression (Line Plot) ---
-st.header("4. Academic Progression Trends")
+# 1. Define the categories for the X-axis to maintain order
+categories = df['Skill_Development_Hours_Category'].unique()
 
-# Plotly's line chart automatically handles the grouping by 'hue' using the color parameter
-fig4 = px.line(
-    df, 
-    x='Year_of_Study', 
-    y='CGPA_Midpoint', 
+fig = go.Figure()
+
+# 2. Add the "Left" side of the violin (e.g., Co-curricular: No)
+fig.add_trace(go.Violin(
+    x=df['Skill_Development_Hours_Category'][df['Co_Curriculum_Activities_Text'] == 'No'],
+    y=df['CGPA_Midpoint'][df['Co_Curriculum_Activities_Text'] == 'No'],
+    legendgroup='No', name='No',
+    side='negative', # This puts it on the left
+    line_color='blue',
+    meanline_visible=True
+))
+
+# 3. Add the "Right" side of the violin (e.g., Co-curricular: Yes)
+fig.add_trace(go.Violin(
+    x=df['Skill_Development_Hours_Category'][df['Co_Curriculum_Activities_Text'] == 'Yes'],
+    y=df['CGPA_Midpoint'][df['Co_Curriculum_Activities_Text'] == 'Yes'],
+    legendgroup='Yes', name='Yes',
+    side='positive', # This puts it on the right
+    line_color='orange',
+    meanline_visible=True
+))
+
+# 4. Add the Horizontal Mean Line (Baseline)
+overall_mean = df['CGPA_Midpoint'].mean()
+fig.add_hline(y=overall_mean, line_dash="dash", line_color="red", 
+              annotation_text="Overall Average", annotation_position="bottom right")
+
+# 5. Formatting the layout
+fig.update_traces(box_visible=False, meanline_visible=True) # inner="quart" equivalent
+fig.update_layout(
+    title='CGPA Density: Skill Development Levels vs. Co-curricular Participation',
+    xaxis_title='Skill Development Hours Category',
+    yaxis_title='CGPA Midpoint',
+    violinmode='overlay', # This is crucial to merge the two sides into one violin
+    legend_title='Co-curricular Participation',
+    template='plotly_white'
+)
+
+fig.show()
+
+
+# --- VISUALIZATION 5: Academic Progression (Line Plot) ---
+
+# Academic Progression: CGPA Trends by Year of Study
+# We first aggregate to replicate sns.lineplot(errorbar=None)
+df_line = df.groupby(['Year_of_Study', 'Skill_Development_Hours_Category'])['CGPA_Midpoint'].mean().reset_index()
+
+fig5 = px.line(
+    df_line,
+    x='Year_of_Study',
+    y='CGPA_Midpoint',
     color='Skill_Development_Hours_Category',
     markers=True,
-    title='Academic Progression: CGPA Trends by Year of Study & Skill Dev Level',
-    # Plotly's line chart calculates the mean automatically if multiple points exist for one X
-    category_orders={"Year_of_Study": sorted(df['Year_of_Study'].unique())} 
+    title='Academic Progression: CGPA Trends by Year & Skill Dev Level',
+    category_orders={"Skill_Development_Hours_Category": ["Low", "Medium", "High"]}
 )
-fig4.update_layout(yaxis_title="CGPA Midpoint", xaxis_gridcolor='rgba(0,0,0,0.1)', yaxis_gridcolor='rgba(0,0,0,0.1)')
-st.plotly_chart(fig4, use_container_width=True)
+fig5.update_layout(yaxis_title="Mean CGPA", xaxis_title="Year of Study")
+st.plotly_chart(fig5, use_container_width=True
