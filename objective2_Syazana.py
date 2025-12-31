@@ -94,7 +94,12 @@ st.markdown("### 📈 Average GPA by Study Hours")
 show_desc1 = st.checkbox("Show Interpretation", value=True, key="desc1")
 if show_desc1:
     st.markdown("""
-    Interpretation.
+    The graph above shows the relationship between the study hours and academic performance of UMK students.
+    - The findings show that the average GPA increases with the increase in study hours category, where 
+    students who spend more time studying record a better academic performance.
+    - This pattern suggests that consistent study habits are one of the lifestyle factors that are 
+    related to students' academic achievement.
+    - Overall, this show that study habits are related to the academic performance of UMK students.
     """)
 
 st.markdown("<br><br>---", unsafe_allow_html=True)
@@ -113,7 +118,11 @@ st.markdown("### 📈 Social Media vs Academic Performance")
 show_desc2 = st.checkbox("Show Interpretation", value=True, key="desc2")
 if show_desc2:
     st.markdown("""
-    Interpretation
+    The boxplot above illustrates the distribution of GPA based on daily social media usage categories.
+    - The findings shows that the median GPA for most categories was nearly identical, but students with 
+    higher social media usage showed greater variation in academic performance.
+    - This suggests that social media usage as part of UMK students' lifestyle has the potential to influence
+    the stability and consistency of academic performance.
     """)
 
 st.markdown("<br><br>---", unsafe_allow_html=True)
@@ -133,7 +142,11 @@ st.markdown("### 📈 Health Issues vs Average GPA")
 show_desc3 = st.checkbox("Show Interpretation", value=True, key="desc3")
 if show_desc3:
     st.markdown("""
-    Interpretation.
+    The bar chart above compares the average GPAs between students with health issues and students who did not
+    have any health problems.
+    - This finding shows that students without health issues recorded a higher average GPAs than students with health issues.
+    - This suggest that health conditions can affect students' ability to maintain focus and effective study routines.
+    - Overall, this finding supports that health factors are related to academic performance.
     """)
 
 st.markdown("<br><br>---", unsafe_allow_html=True)
@@ -152,7 +165,13 @@ st.markdown("### 📈 Attendance vs Academic Performance")
 show_desc4 = st.checkbox("Show Interpretation", value=True, key="desc4")
 if show_desc4:
     st.markdown("""
-    Interpretation.
+    The graph above shows the overall of attendance and academic performance.
+    - The finding presents in general that increased attendance rate are associated with improves student
+    academic performance.
+    - However, students in the moderate attendance category recorded slightly lower average GPAs than the low
+    and high attendance categories.
+    - Overall, this pattern suggests that the relationship between attendance and academic performance is 
+    not completely linear.
     """)
 
 st.markdown("<br><br>---", unsafe_allow_html=True)
@@ -171,5 +190,9 @@ st.markdown("### 📈 Correlation Heatmap")
 show_desc5 = st.checkbox("Show Interpretation", value=True, key="desc5")
 if show_desc5:
     st.markdown("""
-    Interpretation.
+    The correlation heatmap above illustrates a comprehensive overview of the relationship between lifestyle factors
+    and academic performance of UMK students.
+    - The finding shows that daily study hours and attendance showed a significant positive correlation with GPA, while
+    social media use showed a weaker correlation with GPA.
+    - Overall, this suggests that academic performance can be influenced by a combination of several lifestyle factors.
     """)
