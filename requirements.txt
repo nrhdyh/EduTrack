@@ -3,3 +3,4 @@ pandas
 plotly.express
 numpy
 plotly.figure_factory
+plotly.graph_objects
