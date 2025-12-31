@@ -69,13 +69,13 @@ block_style = """
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.markdown(f'<div style="{block_style}"><h4>Average GPA</h4><p style="font-size:22px; font-weight:bold;">{avg_gpa:.2f}</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h4>🏆 Average GPA</h4><p style="font-size:22px; font-weight:bold;">{avg_gpa:.2f}</p></div>', unsafe_allow_html=True)
 with col2:
-    st.markdown(f'<div style="{block_style}"><h4>Avg Study Hours Daily</h4><p style="font-size:22px; font-weight:bold;">{avg_study:.1f} hrs</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h4>✍️ Avg Study Hours Daily</h4><p style="font-size:22px; font-weight:bold;">{avg_study:.1f} hrs</p></div>', unsafe_allow_html=True)
 with col3:
-    st.markdown(f'<div style="{block_style}"><h4>Avg Social Media Daily</h4><p style="font-size:22px; font-weight:bold;">{avg_social:.1f} hrs</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h4>🤳 Avg Social Media Daily</h4><p style="font-size:22px; font-weight:bold;">{avg_social:.1f} hrs</p></div>', unsafe_allow_html=True)
 with col4:
-    st.markdown(f'<div style="{block_style}"><h4>Avg Attendance</h4><p style="font-size:22px; font-weight:bold;">{avg_attendance:.1f}%</p></div>', unsafe_allow_html=True)
+    st.markdown(f'<div style="{block_style}"><h4>🎒 Avg Attendance</h4><p style="font-size:22px; font-weight:bold;">{avg_attendance:.1f}%</p></div>', unsafe_allow_html=True)
 
 st.markdown("---")
 
