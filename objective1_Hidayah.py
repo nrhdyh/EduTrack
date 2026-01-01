@@ -172,9 +172,11 @@ st.markdown("### 📈 Distribution Description")
 show_description = st.checkbox("Show distribution description", value=True, key="compact_desc")
 if show_description:
     st.markdown("""
-    Female students tend to achieve slightly higher CGPA scores, with results more concentrated
-    in the upper CGPA range, indicating greater consistency. Male students show a wider spread
-    of CGPA values, suggesting higher variability. Overall, the pattern indicates a moderate
+- Female students tend to achieve slightly higher CGPA scores, with results more concentrated
+    in the upper CGPA range, indicating greater consistency. 
+- Male students show a wider spread
+    of CGPA values, suggesting higher variability. 
+- Overall, the pattern indicates a moderate
     relationship between gender and academic performance.
     """)
 
