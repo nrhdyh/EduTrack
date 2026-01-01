@@ -4,11 +4,11 @@ import plotly.express as px
 import plotly.figure_factory as ff
 import numpy as np
 
-# Load the dataset
-@st.cache_data
-def load_data():
-    df = pd.read_csv('processed_data.csv')
-    return df
+# ---------------------------------------
+# LOAD DATA
+# ---------------------------------------
+url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
+df = pd.read_csv(url)
 
 df = load_data()
 
