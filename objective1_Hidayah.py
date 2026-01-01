@@ -212,11 +212,6 @@ fig_hist = px.histogram(
 
 st.plotly_chart(fig_hist, use_container_width=True)
 
-
-how to make y axis count dont use decimal number?
-
-
-
 # =====================================================
 # Summary Statistics (Descriptive)
 # =====================================================
