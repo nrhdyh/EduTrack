@@ -286,144 +286,11 @@ No distinct anomalies or separations are visually evident.
 st.markdown("---")
 
 # =====================================================
-# 3️⃣ Bar Chart: Average CGPA by Faculty
+# 3️⃣ Line Chart: CGPA vs GPA by Year of Study
 # =====================================================
 st.markdown(f"""
 <div style="{block_style}">
-    <h3>3️⃣ Bar Chart: Average CGPA by Faculty</h3>
-</div>
-""", unsafe_allow_html=True)
-
-
-fig_faculty = px.bar(
-    df,
-    x="Faculty_Short",
-    y="CGPA_Midpoint",
-    color="Faculty_Short",
-    title="Average CGPA Midpoint by Faculty"
-)
-
-fig_faculty.update_layout(xaxis_tickangle=-45)
-st.plotly_chart(fig_faculty, use_container_width=True)
-
-
-# =====================================================
-# Average CGPA Table (Descriptive)
-# =====================================================
-show_stats_3 = st.checkbox("Average CGPA Table", value=True, key="stats3")
-if show_stats_3:
-    st.markdown("### 📊 Average CGPA by Faculty")
-
-    faculty_avg = (
-        df.groupby("Faculty_Short")["CGPA_Midpoint"]
-        .mean()
-        .reset_index(name="Average_CGPA")
-    )
-
-    st.dataframe(faculty_avg, use_container_width=True)
-
-# =====================================================
-# Description (Neutral Only)
-# =====================================================
-show_description_3 = st.checkbox("Distribution Description", value=True, key="desc3")
-if show_description_3:
-    st.markdown("""
-### 📈 Distribution Description
-
-The chart tells a clear and slightly surprising story. 
-- One faculty, FSDK, stands far above the rest, creating a strong imbalance in the average CGPA midpoint. 
-- This sharp contrast because of the most questionnaire answers are from FSDK students. 
-- In contrast, the remaining faculties cluster at much lower and relatively similar levels, indicating more consistent academic performance across them. 
-- Faculties such as FPV and FAE show slightly higher midpoints within this cluster, while FBI and FSB sit at the lower end. 
-Overall, the dominant anomaly of FSDK overshadows any clear correlation among the other faculties, highlighting the need to analyze it separately to better understand underlying academic trends.
-""")
-
-st.markdown("---")
-
-# =====================================================
-# 4️⃣ Scatter Plot: CGPA vs Age (With Age Slider)
-# =====================================================
-
-st.markdown(f"""
-<div style="{block_style}">
-    <h3>4️⃣ Scatter Plot: Relationship Between CGPA and Age</h3>
-</div>
-""", unsafe_allow_html=True)
-
-# =====================================================
-# 🎚️ Age Slider Filter
-# =====================================================
-min_age = int(df["Age_Midpoint"].min())
-max_age = int(df["Age_Midpoint"].max())
-
-age_range = st.slider(
-    "🎚️ Select Age Range",
-    min_value=min_age,
-    max_value=max_age,
-    value=(min_age, max_age),
-    key="age_slider"
-)
-
-# Filter dataset based on selected age range
-filtered_df = df[
-    (df["Age_Midpoint"] >= age_range[0]) &
-    (df["Age_Midpoint"] <= age_range[1])
-]
-
-# =====================================================
-# 📌 Scatter Plot
-# =====================================================
-fig_age = px.scatter(
-    filtered_df,
-    x="CGPA_Midpoint",
-    y="Age_Midpoint",
-    trendline="ols",
-    title=f"Scatter Plot of CGPA vs Age (Age {age_range[0]}–{age_range[1]})",
-    labels={
-        "CGPA_Midpoint": "CGPA",
-        "Age_Midpoint": "Age"
-    }
-)
-
-st.plotly_chart(fig_age, use_container_width=True)
-
-# =====================================================
-# 📊 Summary Statistics (Descriptive)
-# =====================================================
-show_stats_4 = st.checkbox("Summary Statistics", value=True, key="stats4")
-if show_stats_4:
-    st.markdown("### 📊 Summary Statistics")
-
-    age_cgpa_stats = (
-        filtered_df[["CGPA_Midpoint", "Age_Midpoint"]]
-        .describe()
-        .reset_index()
-    )
-
-    st.dataframe(age_cgpa_stats, use_container_width=True)
-
-# =====================================================
-# 📈 Distribution Description (Neutral Only)
-# =====================================================
-show_description_4 = st.checkbox("Distribution Description", value=True, key="desc4")
-if show_description_4:
-    st.markdown("""
-### 📈 Distribution Description
-The scatter plot illustrates the relationship between CGPA and age across the selected age range. 
-- Data points are widely dispersed, indicating that students of different ages tend to achieve similar CGPA levels.
-- The regression trend line shows a weak and slightly negative association, suggesting that age has minimal influence on CGPA.
-- High and low CGPA values appear across multiple age groups, highlighting consistent academic performance regardless of age.
-Overall, age does not emerge as a strong predictor of CGPA within the selected range.
-""")
-
-st.markdown("---")
-
-# =====================================================
-# 5️⃣ Line Chart: CGPA vs GPA by Year of Study
-# =====================================================
-st.markdown(f"""
-<div style="{block_style}">
-    <h3>5️⃣ Line Chart: CGPA Trend by GPA and Year of Study</h3>
+    <h3>️3️⃣ Line Chart: CGPA Trend by GPA and Year of Study</h3>
 </div>
 """, unsafe_allow_html=True)
 
@@ -484,11 +351,11 @@ st.markdown("---")
 
 
 # =====================================================
-# 6️⃣ Bar Chart: CGPA by Income Category
+# 4️⃣ Bar Chart: CGPA by Income Category
 # =====================================================
 st.markdown(f"""
 <div style="{block_style}">
-    <h3>6️⃣ Bar Chart: Average CGPA by Income Category</h3>
+    <h3>️4️⃣ Bar Chart: Average CGPA by Income Category</h3>
 </div>
 """, unsafe_allow_html=True)
 
@@ -545,11 +412,11 @@ st.markdown("---")
 
 
 # =====================================================
-# 7️⃣ Heatmap: Study Hours vs Attendance (by Living With)
+# 5️⃣ Heatmap: Study Hours vs Attendance (by Living With)
 # =====================================================
 st.markdown(f"""
 <div style="{block_style}">
-    <h3>7️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement</h3>
+    <h3>5️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement</h3>
 </div>
 """, unsafe_allow_html=True)
 
@@ -658,6 +525,140 @@ No descriptive pattern available for this living arrangement.
 """)
 
 st.markdown("---")
+
+# =====================================================
+#  6️⃣ Bar Chart: Average CGPA by Faculty
+# =====================================================
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>6️⃣ Bar Chart: Average CGPA by Faculty</h3>
+</div>
+""", unsafe_allow_html=True)
+
+
+fig_faculty = px.bar(
+    df,
+    x="Faculty_Short",
+    y="CGPA_Midpoint",
+    color="Faculty_Short",
+    title="Average CGPA Midpoint by Faculty"
+)
+
+fig_faculty.update_layout(xaxis_tickangle=-45)
+st.plotly_chart(fig_faculty, use_container_width=True)
+
+
+# =====================================================
+# Average CGPA Table (Descriptive)
+# =====================================================
+show_stats_3 = st.checkbox("Average CGPA Table", value=True, key="stats3")
+if show_stats_3:
+    st.markdown("### 📊 Average CGPA by Faculty")
+
+    faculty_avg = (
+        df.groupby("Faculty_Short")["CGPA_Midpoint"]
+        .mean()
+        .reset_index(name="Average_CGPA")
+    )
+
+    st.dataframe(faculty_avg, use_container_width=True)
+
+# =====================================================
+# Description (Neutral Only)
+# =====================================================
+show_description_3 = st.checkbox("Distribution Description", value=True, key="desc3")
+if show_description_3:
+    st.markdown("""
+### 📈 Distribution Description
+
+The chart tells a clear and slightly surprising story. 
+- One faculty, FSDK, stands far above the rest, creating a strong imbalance in the average CGPA midpoint. 
+- This sharp contrast because of the most questionnaire answers are from FSDK students. 
+- In contrast, the remaining faculties cluster at much lower and relatively similar levels, indicating more consistent academic performance across them. 
+- Faculties such as FPV and FAE show slightly higher midpoints within this cluster, while FBI and FSB sit at the lower end. 
+Overall, the dominant anomaly of FSDK overshadows any clear correlation among the other faculties, highlighting the need to analyze it separately to better understand underlying academic trends.
+""")
+
+st.markdown("---")
+
+# =====================================================
+# 7️⃣ Scatter Plot: CGPA vs Age (With Age Slider)
+# =====================================================
+
+st.markdown(f"""
+<div style="{block_style}">
+    <h3>7️⃣ Scatter Plot: Relationship Between CGPA and Age</h3>
+</div>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# 🎚️ Age Slider Filter
+# =====================================================
+min_age = int(df["Age_Midpoint"].min())
+max_age = int(df["Age_Midpoint"].max())
+
+age_range = st.slider(
+    "🎚️ Select Age Range",
+    min_value=min_age,
+    max_value=max_age,
+    value=(min_age, max_age),
+    key="age_slider"
+)
+
+# Filter dataset based on selected age range
+filtered_df = df[
+    (df["Age_Midpoint"] >= age_range[0]) &
+    (df["Age_Midpoint"] <= age_range[1])
+]
+
+# =====================================================
+# 📌 Scatter Plot
+# =====================================================
+fig_age = px.scatter(
+    filtered_df,
+    x="CGPA_Midpoint",
+    y="Age_Midpoint",
+    trendline="ols",
+    title=f"Scatter Plot of CGPA vs Age (Age {age_range[0]}–{age_range[1]})",
+    labels={
+        "CGPA_Midpoint": "CGPA",
+        "Age_Midpoint": "Age"
+    }
+)
+
+st.plotly_chart(fig_age, use_container_width=True)
+
+# =====================================================
+# 📊 Summary Statistics (Descriptive)
+# =====================================================
+show_stats_4 = st.checkbox("Summary Statistics", value=True, key="stats4")
+if show_stats_4:
+    st.markdown("### 📊 Summary Statistics")
+
+    age_cgpa_stats = (
+        filtered_df[["CGPA_Midpoint", "Age_Midpoint"]]
+        .describe()
+        .reset_index()
+    )
+
+    st.dataframe(age_cgpa_stats, use_container_width=True)
+
+# =====================================================
+# 📈 Distribution Description (Neutral Only)
+# =====================================================
+show_description_4 = st.checkbox("Distribution Description", value=True, key="desc4")
+if show_description_4:
+    st.markdown("""
+### 📈 Distribution Description
+The scatter plot illustrates the relationship between CGPA and age across the selected age range. 
+- Data points are widely dispersed, indicating that students of different ages tend to achieve similar CGPA levels.
+- The regression trend line shows a weak and slightly negative association, suggesting that age has minimal influence on CGPA.
+- High and low CGPA values appear across multiple age groups, highlighting consistent academic performance regardless of age.
+Overall, age does not emerge as a strong predictor of CGPA within the selected range.
+""")
+
+st.markdown("---")
+
 
 # =====================================================
 # 8️⃣ Bubble Chart: GPA & CGPA by Race
