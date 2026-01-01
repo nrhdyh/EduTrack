@@ -21,11 +21,8 @@ st.markdown(
 # ----------------------------------
 # Load Dataset
 # ----------------------------------
-@st.cache_data
-def load_data():
-    return pd.read_csv("processed_data.csv")
-
-df = load_data()
+url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
+df = pd.read_csv(url)
 
 # ----------------------------------
 # Sidebar Filters
