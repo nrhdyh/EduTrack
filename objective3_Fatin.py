@@ -89,7 +89,7 @@ with c1:
     st.write(f"- **Offline:** {mode_counts.get('Offline', 0):.1f}%")
     st.write(f"- **Online:** {mode_counts.get('Online', 0):.1f}%")
 with c2:
-    st.write("**Interpretation:**")
+    st.write("**Analysis:**")
     st.write("""The pie chart illustrates a dominant preference for flexibility among UMK students. Hybrid Learning is the most popular choice, accounting for 54.4% of the student population, indicating a strong desire for a blended educational experience that combines digital convenience with campus interaction. Offline Learning follows significantly at 36.9%, showing that a substantial portion of students still values traditional classroom engagement. Conversely, Online Learning is the least preferred mode at only 8.7%. This distribution suggests that while students have moved away from fully remote models, they are not yet ready to return to entirely physical-only instruction.""")
 
 st.markdown("---")
@@ -110,7 +110,7 @@ with c1:
     for index, row in avg_cgpa_data.iterrows():
         st.write(f"- **{row['Learning_Mode']} Average:** {row['CGPA_Midpoint']:.2f}")
 with c2:
-    st.write("**Interpretation:**")
+    st.write("**Analysis:**")
     st.write("""This bar chart evaluates academic performance consistency across different instructional mediums. The results indicate that the learning environment has a minimal impact on overall academic success, as all three modes maintain a competitive average CGPA near the 3.40 mark. Offline Learning leads slightly with the highest average of approximately 3.48, which may reflect the benefits of immediate faculty feedback and peer collaboration. Hybrid and Online modes follow closely behind. This uniformity suggests that UMK students are highly adaptable, achieving high-quality academic outcomes regardless of whether their courses are delivered in person or digitally.""")
 
 st.markdown("---")
@@ -131,7 +131,7 @@ with c1:
     for mode, row in box_stats.iterrows():
         st.write(f"- **{mode}:** Median {row['50%']:.2f} (Range: {row['min']:.2f}-{row['max']:.2f})")
 with c2:
-    st.write("**Interpretation:**")
+    st.write("**Analysis:**")
     st.write("""The box plot provides deeper insight into the variability of student performance. While the median CGPA remains relatively stable across all groups, the Offline mode displays the greatest variance, represented by a much larger box and longer whiskers. This indicates that while Offline learning can lead to exceptionally high scores, it also carries a wider range of performance outcomes compared to the more "clustered" results seen in the Hybrid and Online groups. The Hybrid mode shows the most consistency, with fewer extremes, suggesting it provides a reliable and predictable environment for the majority of students to maintain their grades.""")
 
 st.markdown("---")
@@ -151,7 +151,7 @@ with c1:
     for year, val in counts.items():
         st.write(f"- **Year {year}:** {val} Students")
 with c2:
-    st.write("**Interpretation:**")
+    st.write("**Analysis:**")
     st.write("""This visualization highlights a clear shift in student needs as they progress through their academic journey. Year 1 students show a relatively higher reliance on Offline and Hybrid modes as they establish their academic foundation. As students reach Year 3 and Year 4, there is a massive surge in the total number of students preferring Hybrid learning. This trend likely reflects senior students' need for greater schedule flexibility to balance advanced coursework, final-year projects, or internships. Notably, the preference for purely Online learning remains a small but consistent niche across all four years.""")
 
 st.markdown("---")
@@ -171,7 +171,7 @@ with c1:
     st.write("- **Max Avg:** 3.72 (Year 1, Offline)")
     st.write("- **Min Avg:** 3.04 (Year 4, Online)")
 with c2:
-    st.write("**Interpretation:**")
+    st.write("**Analysis:**")
     st.write("""The heatmap identifies specific "performance corridors" where students excel most. The highest academic density is found among Year 1 Offline students (3.72), reinforcing the idea that physical presence is crucial for new students adapting to university standards. Another high-performing segment is Year 2 Hybrid and Online students, both averaging 3.68. However, a significant academic risk is identified in Year 4 Online students, where the average CGPA drops to its lowest point of 3.04. This suggests that senior-level complexity may require more direct supervision than a fully online environment can provide.""")
 
 # =====================================================
