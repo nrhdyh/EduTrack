@@ -1,17 +1,14 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 
-# ---------------------------------------
-# LOAD DATA
-# ---------------------------------------
+# 1. DEFINE the function first
 @st.cache_data
 def load_data():
     url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
-    df = pd.read_csv(url)
-    return df
+    return pd.read_csv(url)
 
+# 2. NOW you can call it
 df = load_data()
 
 st.title("Student Performance Analysis")
