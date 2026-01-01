@@ -176,32 +176,48 @@ st.markdown("---")
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>4️⃣ Academic Performance Density and Consistency</h3></div>', unsafe_allow_html=True)
 
-fig4 = go.Figure()
+# 1. Define the categories for the X-axis to maintain order
+categories = df['Skill_Development_Hours_Category'].unique()
 
-# "No" side
-fig4.add_trace(go.Violin(
+fig = go.Figure()
+
+# 2. Add the "Left" side of the violin (e.g., Co-curricular: No)
+fig.add_trace(go.Violin(
     x=df['Skill_Development_Hours_Category'][df['Co_Curriculum_Activities_Text'] == 'No'],
     y=df['CGPA_Midpoint'][df['Co_Curriculum_Activities_Text'] == 'No'],
-    legendgroup='No', name='Non-Active (No)', side='negative', line_color='blue', meanline_visible=True
+    legendgroup='No', name='No',
+    side='negative', # This puts it on the left
+    line_color='blue',
+    meanline_visible=True
 ))
 
-# "Yes" side
-fig4.add_trace(go.Violin(
+# 3. Add the "Right" side of the violin (e.g., Co-curricular: Yes)
+fig.add_trace(go.Violin(
     x=df['Skill_Development_Hours_Category'][df['Co_Curriculum_Activities_Text'] == 'Yes'],
     y=df['CGPA_Midpoint'][df['Co_Curriculum_Activities_Text'] == 'Yes'],
-    legendgroup='Yes', name='Active (Yes)', side='positive', line_color='orange', meanline_visible=True
+    legendgroup='Yes', name='Yes',
+    side='positive', # This puts it on the right
+    line_color='orange',
+    meanline_visible=True
 ))
 
+# 4. Add the Horizontal Mean Line (Baseline)
 overall_mean = df['CGPA_Midpoint'].mean()
-fig4.add_hline(y=overall_mean, line_dash="dash", line_color="red", annotation_text="Overall Average")
+fig.add_hline(y=overall_mean, line_dash="dash", line_color="red", 
+              annotation_text="Overall Average", annotation_position="bottom right")
 
-fig4.update_layout(
-    title='CGPA Density: Skill Development vs. Co-curricular Participation',
-    xaxis_title='Skill Development Hours Category', yaxis_title='CGPA Midpoint',
-    violinmode='overlay', template='plotly_white',
-    category_orders={"x": ["Low", "Medium", "High"]}
+# 5. Formatting the layout
+fig.update_traces(box_visible=False, meanline_visible=True) # inner="quart" equivalent
+fig.update_layout(
+    title='CGPA Density: Skill Development Levels vs. Co-curricular Participation',
+    xaxis_title='Skill Development Hours Category',
+    yaxis_title='CGPA Midpoint',
+    violinmode='overlay', # This is crucial to merge the two sides into one violin
+    legend_title='Co-curricular Participation',
+    template='plotly_white'
 )
-st.plotly_chart(fig4, use_container_width=True)
+
+fig.show()
 
 if st.checkbox("Show Summary Statistics", key="stats4"):
     st.dataframe(df.groupby(['Skill_Development_Hours_Category', 'Co_Curriculum_Activities_Text'])['CGPA_Midpoint'].describe(), use_container_width=True)
@@ -221,15 +237,21 @@ st.markdown("---")
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>5️⃣ CGPA Trends Over Four Years (Academic Progression)</h3></div>', unsafe_allow_html=True)
 
+# Academic Progression: CGPA Trends by Year of Study
+# We first aggregate to replicate sns.lineplot(errorbar=None)
 df_line = df.groupby(['Year_of_Study', 'Skill_Development_Hours_Category'])['CGPA_Midpoint'].mean().reset_index()
 
 fig5 = px.line(
-    df_line, x='Year_of_Study', y='CGPA_Midpoint', color='Skill_Development_Hours_Category',
-    markers=True, title='Academic Progression: CGPA Trends by Year & Skill Dev Level',
+    df_line,
+    x='Year_of_Study',
+    y='CGPA_Midpoint',
+    color='Skill_Development_Hours_Category',
+    markers=True,
+    title='Academic Progression: CGPA Trends by Year & Skill Dev Level',
     category_orders={"Skill_Development_Hours_Category": ["Low", "Medium", "High"]}
 )
-fig5.update_layout(yaxis_title="Mean CGPA", xaxis_title="Year of Study", template='plotly_white')
-st.plotly_chart(fig5, use_container_width=True)
+fig5.update_layout(yaxis_title="Mean CGPA", xaxis_title="Year of Study")
+st.plotly_chart(fig5, use_container_width=True
 
 if st.checkbox("Show Summary Statistics", key="stats5"):
     st.dataframe(df_line, use_container_width=True)
