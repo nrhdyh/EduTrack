@@ -210,7 +210,14 @@ fig_hist = px.histogram(
     title=f"GPA Distribution by Gender ({selected_relationship})"
 )
 
+# Force integer counts on Y-axis
+fig_hist.update_yaxes(
+    tickmode="linear",
+    dtick=1
+)
+
 st.plotly_chart(fig_hist, use_container_width=True)
+
 
 
 # =====================================================
