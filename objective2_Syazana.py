@@ -13,7 +13,7 @@ st.set_page_config(page_title="Academic Performance", layout="wide")
 # ---------------------------------------
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
+    url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance_ver2.csv"
     df = pd.read_csv(url)
     return df
 
