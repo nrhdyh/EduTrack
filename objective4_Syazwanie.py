@@ -1,14 +1,13 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import plotly.figure_factory as ff
 
 # ---------------------------------------
 # PAGE CONFIG
 # ---------------------------------------
 st.set_page_config(
-    page_title="EduTrack Performance Dashboard",
+    page_title="EduTrack Academic Performance Dashboard",
     layout="wide"
 )
 
@@ -23,51 +22,80 @@ def load_data():
 df = load_data()
 
 # ---------------------------------------
-# THEME STYLE (SOFT BLUE / PURPLE)
+# THEME STYLE (SOFT BLUE–PURPLE)
 # ---------------------------------------
 block_style = """
-    background: linear-gradient(135deg, #6A85B6, #B993D6);
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    text-align: center;
-    box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+background: linear-gradient(135deg, #667eea, #764ba2);
+color: white;
+padding: 22px;
+border-radius: 14px;
+text-align: center;
+box-shadow: 2px 4px 12px rgba(0,0,0,0.12);
+"""
+
+section_style = """
+background: #f6f7fb;
+padding: 22px;
+border-radius: 14px;
 """
 
 # ---------------------------------------
-# TITLE & OVERVIEW
+# TITLE
 # ---------------------------------------
-st.title("🎓 Student Performance & Skill Development Analytics")
-st.markdown("""
-This dashboard explores the relationship between students’ academic performance,
-skill development, and co-curricular involvement among UMK students.
-""")
+st.title("🎓 EduTrack: Academic Performance & Student Development Dashboard")
 st.markdown("---")
 
-# ---------------------------------------
-# FILTER SECTION
-# ---------------------------------------
+# =====================================================
+# 📌 PROBLEM STATEMENT
+# =====================================================
+st.markdown("## 📌 Problem Statement")
+st.markdown(f"""
+<div style="{section_style}">
+Despite consistent academic assessment through GPA and CGPA, the influence of 
+<b>skill development</b> and <b>co-curricular participation</b> on students’ academic 
+performance is not clearly understood. Without data-driven insights, universities 
+may struggle to identify effective strategies for supporting academic excellence 
+and early intervention for at-risk students.
+</div>
+""", unsafe_allow_html=True)
+
+# =====================================================
+# 🎯 OBJECTIVE
+# =====================================================
+st.markdown("## 🎯 Research Objective")
+st.markdown(f"""
+<div style="{section_style}">
+To analyze how <b>skill development levels</b> and <b>co-curricular participation</b> 
+influence students’ academic performance (CGPA) using visual analytics.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("---")
+
+# =====================================================
+# 🔍 FILTERS
+# =====================================================
 st.subheader("🔍 Dashboard Filters")
 
-f1, f2, f3 = st.columns(3)
-with f1:
-    year_filter = st.selectbox("Year of Study", ["All"] + sorted(df["Year_of_Study"].dropna().unique()))
-with f2:
-    skill_filter = st.selectbox("Skill Development Level", ["All"] + sorted(df["Skill_Development_Hours_Category"].dropna().unique()))
-with f3:
-    cocur_filter = st.selectbox("Co-Curricular Participation", ["All"] + sorted(df["Co_Curriculum_Activities_Text"].dropna().unique()))
+c1, c2, c3 = st.columns(3)
+with c1:
+    year = st.selectbox("Year of Study", ["All"] + sorted(df["Year_of_Study"].dropna().unique()))
+with c2:
+    skill = st.selectbox("Skill Development Level", ["All"] + sorted(df["Skill_Development_Hours_Category"].dropna().unique()))
+with c3:
+    cocur = st.selectbox("Co-Curricular Participation", ["All"] + sorted(df["Co_Curriculum_Activities_Text"].dropna().unique()))
 
 filtered_df = df.copy()
-if year_filter != "All":
-    filtered_df = filtered_df[filtered_df["Year_of_Study"] == year_filter]
-if skill_filter != "All":
-    filtered_df = filtered_df[filtered_df["Skill_Development_Hours_Category"] == skill_filter]
-if cocur_filter != "All":
-    filtered_df = filtered_df[filtered_df["Co_Curriculum_Activities_Text"] == cocur_filter]
+if year != "All":
+    filtered_df = filtered_df[filtered_df["Year_of_Study"] == year]
+if skill != "All":
+    filtered_df = filtered_df[filtered_df["Skill_Development_Hours_Category"] == skill]
+if cocur != "All":
+    filtered_df = filtered_df[filtered_df["Co_Curriculum_Activities_Text"] == cocur]
 
-# ---------------------------------------
-# KPI SUMMARY
-# ---------------------------------------
+# =====================================================
+# 📊 KPI SUMMARY
+# =====================================================
 avg_gpa = filtered_df["GPA_Midpoint"].mean()
 avg_cgpa = filtered_df["CGPA_Midpoint"].mean()
 total_students = len(filtered_df)
@@ -86,33 +114,42 @@ with k4:
 st.markdown("---")
 
 # =====================================================
-# 1️⃣ Performance Density (KDE)
+# 1️⃣ KDE – CGPA Density
 # =====================================================
-st.markdown(f'<div style="{block_style}"><h3>1️⃣ CGPA Density: Active vs Non-Active Students</h3></div>', unsafe_allow_html=True)
+st.subheader("1️⃣ CGPA Density: Active vs Non-Active Students")
 
 active = filtered_df[filtered_df['Co_Curriculum_Activities_Text'] == 'Yes']['CGPA_Midpoint'].dropna()
 inactive = filtered_df[filtered_df['Co_Curriculum_Activities_Text'] == 'No']['CGPA_Midpoint'].dropna()
 
 fig1 = ff.create_distplot(
     [active, inactive],
-    ['Active', 'Non-Active'],
+    ['Active Students', 'Non-Active Students'],
     show_hist=False,
     show_rug=False,
-    colors=['#6A85B6', '#B993D6']
+    colors=['#667eea', '#764ba2']
 )
 st.plotly_chart(fig1, use_container_width=True)
 
-# =====================================================
-# 2️⃣ Average CGPA by Skill & Co-Curricular
-# =====================================================
-st.markdown(f'<div style="{block_style}"><h3>2️⃣ Average CGPA by Skill Development & Co-Curricular</h3></div>', unsafe_allow_html=True)
+st.markdown("""
+**Interpretation & Analysis:**  
+The density plot reveals that students who actively participate in co-curricular activities 
+display a more concentrated CGPA distribution at higher values, indicating stronger academic 
+consistency. In contrast, non-active students show wider dispersion, suggesting greater 
+performance variability and academic risk. This highlights that co-curricular participation 
+supports not only higher achievement but also stability in academic outcomes.
+""")
 
-df_grouped = filtered_df.groupby(
+# =====================================================
+# 2️⃣ Grouped Bar – Avg CGPA
+# =====================================================
+st.subheader("2️⃣ Average CGPA by Skill Development & Co-Curricular Participation")
+
+grouped = filtered_df.groupby(
     ['Skill_Development_Hours_Category', 'Co_Curriculum_Activities_Text']
 )['CGPA_Midpoint'].mean().reset_index()
 
 fig2 = px.bar(
-    df_grouped,
+    grouped,
     x='Skill_Development_Hours_Category',
     y='CGPA_Midpoint',
     color='Co_Curriculum_Activities_Text',
@@ -121,83 +158,79 @@ fig2 = px.bar(
 )
 st.plotly_chart(fig2, use_container_width=True)
 
+st.markdown("""
+**Interpretation & Analysis:**  
+The visualization demonstrates a clear positive relationship between skill development 
+and CGPA. Across all skill categories, students who actively engage in co-curricular 
+activities consistently achieve higher academic performance. This suggests a reinforcement 
+effect, where skill development enhances academic capability, and co-curricular engagement 
+amplifies its impact.
+""")
+
 # =====================================================
-# 3️⃣ CGPA Percentage Distribution
+# 3️⃣ CGPA Distribution (Percentage-Based)
 # =====================================================
-st.markdown(f'<div style="{block_style}"><h3>3️⃣ CGPA Distribution by Skills Category</h3></div>', unsafe_allow_html=True)
+st.subheader("3️⃣ CGPA Distribution by Skill Category")
 
 cgpa_order = ['2.50 – 2.99', '3.00 – 3.69', '3.70 - 4.00']
 cross_tab = pd.crosstab(filtered_df['Skills_Category'], filtered_df['CGPA'])
 cross_tab = cross_tab[[c for c in cgpa_order if c in cross_tab.columns]]
-percentage_dist = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
-percentage_dist = percentage_dist.reset_index().melt(
+percentage = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
+percentage = percentage.reset_index().melt(
     id_vars='Skills_Category',
     var_name='CGPA_Range',
     value_name='Percentage'
 )
 
 fig3 = px.bar(
-    percentage_dist,
+    percentage,
     y='Skills_Category',
     x='Percentage',
     color='CGPA_Range',
     orientation='h',
-    text=percentage_dist['Percentage'].round(1),
+    text=percentage['Percentage'].round(1),
     color_discrete_sequence=px.colors.sequential.PuBu
 )
 st.plotly_chart(fig3, use_container_width=True)
 
-# =====================================================
-# 4️⃣ Split Violin Plot
-# =====================================================
-st.markdown(f'<div style="{block_style}"><h3>4️⃣ CGPA Distribution: Skill vs Co-Curricular</h3></div>', unsafe_allow_html=True)
-
-fig4 = go.Figure()
-
-fig4.add_trace(go.Violin(
-    x=filtered_df['Skill_Development_Hours_Category'][filtered_df['Co_Curriculum_Activities_Text'] == 'Yes'],
-    y=filtered_df['CGPA_Midpoint'][filtered_df['Co_Curriculum_Activities_Text'] == 'Yes'],
-    name='Active',
-    side='positive',
-    line_color='#6A85B6',
-    meanline_visible=True
-))
-
-fig4.add_trace(go.Violin(
-    x=filtered_df['Skill_Development_Hours_Category'][filtered_df['Co_Curriculum_Activities_Text'] == 'No'],
-    y=filtered_df['CGPA_Midpoint'][filtered_df['Co_Curriculum_Activities_Text'] == 'No'],
-    name='Non-Active',
-    side='negative',
-    line_color='#B993D6',
-    meanline_visible=True
-))
-
-fig4.update_layout(violinmode='overlay')
-st.plotly_chart(fig4, use_container_width=True)
+st.markdown("""
+**Interpretation & Analysis:**  
+High-skill students account for a significantly larger proportion of the top CGPA range 
+(3.70–4.00), while low-skill students are more concentrated in mid and lower CGPA bands. 
+This proportional view exposes academic risk concentration and clearly identifies skill 
+development as a critical factor in achieving academic excellence.
+""")
 
 # =====================================================
-# 5️⃣ CGPA Progression Line Chart
+# 4️⃣ Line Chart – Academic Progression
 # =====================================================
-st.markdown(f'<div style="{block_style}"><h3>5️⃣ CGPA Progression by Year & Skill Level</h3></div>', unsafe_allow_html=True)
+st.subheader("4️⃣ CGPA Progression by Year of Study")
 
-df_line = filtered_df.groupby(
+line_data = filtered_df.groupby(
     ['Year_of_Study', 'Skill_Development_Hours_Category']
 )['CGPA_Midpoint'].mean().reset_index()
 
-fig5 = px.line(
-    df_line,
+fig4 = px.line(
+    line_data,
     x='Year_of_Study',
     y='CGPA_Midpoint',
     color='Skill_Development_Hours_Category',
-    markers=True,
-    color_discrete_sequence=px.colors.qualitative.Safe
+    markers=True
 )
-st.plotly_chart(fig5, use_container_width=True)
+st.plotly_chart(fig4, use_container_width=True)
+
+st.markdown("""
+**Interpretation & Analysis:**  
+Students with medium and high skill development demonstrate more stable and improving CGPA 
+trends across academic years. In contrast, low-skill students show flatter or inconsistent 
+progression, indicating potential long-term academic sustainability issues as academic 
+demands increase.
+""")
 
 # =====================================================
-# 6️⃣ Heatmap
+# 5️⃣ Heatmap – Decision Matrix
 # =====================================================
-st.markdown(f'<div style="{block_style}"><h3>6️⃣ Average CGPA Heatmap</h3></div>', unsafe_allow_html=True)
+st.subheader("5️⃣ Average CGPA Heatmap: Skill Development × Co-Curricular Participation")
 
 heatmap_data = filtered_df.pivot_table(
     values='CGPA_Midpoint',
@@ -206,40 +239,25 @@ heatmap_data = filtered_df.pivot_table(
     aggfunc='mean'
 )
 
-fig6 = px.imshow(
+fig5 = px.imshow(
     heatmap_data,
     text_auto='.2f',
     color_continuous_scale='PuBu',
     aspect='auto'
 )
-st.plotly_chart(fig6, use_container_width=True)
+st.plotly_chart(fig5, use_container_width=True)
 
-# =====================================================
-# 7️⃣ Academic Consistency
-# =====================================================
-st.markdown(f'<div style="{block_style}"><h3>7️⃣ Academic Consistency: GPA vs CGPA</h3></div>', unsafe_allow_html=True)
+st.markdown("""
+**Interpretation & Analysis:**  
+The heatmap highlights a clear synergy between skill development and co-curricular 
+participation. The highest CGPA values occur among students with high skill development 
+who actively participate in co-curricular activities, while the lowest values are observed 
+in low-skill, non-active students. This visualization serves as a decision-support matrix 
+for identifying both high-performing and at-risk student profiles.
+""")
 
-df_melted = filtered_df.melt(
-    id_vars=['Co_Curriculum_Activities_Text'],
-    value_vars=['GPA_Midpoint', 'CGPA_Midpoint'],
-    var_name='Metric',
-    value_name='Score'
-)
-
-df_consistency = df_melted.groupby(
-    ['Co_Curriculum_Activities_Text', 'Metric']
-)['Score'].mean().reset_index()
-
-fig7 = px.bar(
-    df_consistency,
-    x='Co_Curriculum_Activities_Text',
-    y='Score',
-    color='Metric',
-    barmode='group',
-    text_auto='.2f',
-    color_discrete_sequence=px.colors.qualitative.Set2
-)
-fig7.update_layout(yaxis_range=[3.0, 3.7])
-st.plotly_chart(fig7, use_container_width=True)
-
-st.caption("🔵🟣 UMK EduTrack Analytics Dashboard")
+# ---------------------------------------
+# FOOTER
+# ---------------------------------------
+st.markdown("---")
+st.caption("🔵🟣 EduTrack Visual Analytics | UMK Student Performance")
