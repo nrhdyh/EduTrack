@@ -165,7 +165,7 @@ with tab2:
     st.markdown("### 👤 Demographics Snapshot")
     demo_col = st.selectbox(
         "Select a demographic variable:",
-        df.columns[:5]
+        df.columns[2:5]
     )
     demo_counts = df[demo_col].value_counts()
     st.bar_chart(demo_counts)
