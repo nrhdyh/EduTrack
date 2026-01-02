@@ -166,11 +166,42 @@ with tab2:
     # KPI METRICS
     # ---------------------------------------
     st.markdown("### 🔢 Key Statistics")
-    col1, col2, col3, col4 = st.columns(4)
-    col1.metric("👥 Total Students", total_responses)
-    col2.metric("📋 Survey Items", len(df.columns))
-    col3.metric("🎓 UMK Faculties", df.iloc[:, 1].nunique() if len(df.columns) > 1 else "-")
-    col4.metric("📅 Latest Response", "Live")
+col1, col2, col3, col4 = st.columns(4)
+
+# 1️⃣ Total Students
+total_responses = len(df)
+col1.metric("👥 Total Students", total_responses)
+
+# 2️⃣ Survey Items (number of columns)
+col2.metric("📋 Survey Items", len(df.columns))
+
+# 3️⃣ UMK Faculties (safe check)
+if "Faculty" in df.columns:
+    faculties_count = (
+        df["Faculty"]
+        .astype(str)
+        .str.strip()
+        .replace("nan", None)
+        .dropna()
+        .nunique()
+    )
+elif "Faculty_Short" in df.columns:
+    faculties_count = (
+        df["Faculty_Short"]
+        .astype(str)
+        .str.strip()
+        .replace("nan", None)
+        .dropna()
+        .nunique()
+    )
+else:
+    faculties_count = "-"
+
+col3.metric("🎓 UMK Faculties", faculties_count)
+
+# 4️⃣ Latest Response (static / placeholder)
+col4.metric("📅 Latest Response", "Live")
+
 
     st.progress(min(total_responses / 100, 1.0))
     st.caption("Progress: Target 100 UMK students")
