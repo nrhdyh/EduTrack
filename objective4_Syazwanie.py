@@ -167,3 +167,45 @@ fig_heatmap.update_layout(
 
 # 5. Display in Streamlit
 st.plotly_chart(fig_heatmap, use_container_width=True)
+
+
+# --- 2. Consistency: GPA vs CGPA ---
+st.header("Academic Consistency Analysis")
+
+# 1. Melt the dataframe (Same logic as your Matplotlib code)
+df_melted = df.melt(
+    id_vars=['Co_Curriculum_Activities_Text'],
+    value_vars=['GPA_Midpoint', 'CGPA_Midpoint'],
+    var_name='Metric', 
+    value_name='Score'
+)
+
+# 2. Pre-aggregate the data (Plotly performs best with aggregated data for bars)
+df_consistency = df_melted.groupby(['Co_Curriculum_Activities_Text', 'Metric'])['Score'].mean().reset_index()
+
+# 3. Create the Plotly Grouped Bar Chart
+fig_consistency = px.bar(
+    df_consistency,
+    x='Co_Curriculum_Activities_Text',
+    y='Score',
+    color='Metric',
+    barmode='group',
+    title='<b>Academic Consistency: GPA vs CGPA by Participation</b>',
+    color_discrete_sequence=px.colors.qualitative.Set2, # Matches 'Set2' palette
+    labels={
+        'Co_Curriculum_Activities_Text': 'Co-Curricular Participation',
+        'Score': 'Mean Score',
+        'Metric': 'Academic Metric'
+    },
+    text_auto='.2f' # Adds the average score labels on top of bars
+)
+
+# 4. Apply the Y-axis limits (equivalent to plt.ylim)
+fig_consistency.update_layout(
+    yaxis_range=[3.0, 3.6],
+    legend_title_text='Metric',
+    title_x=0.5
+)
+
+# 5. Display in Streamlit
+st.plotly_chart(fig_consistency, use_container_width=True)
