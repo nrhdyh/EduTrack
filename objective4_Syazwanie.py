@@ -195,10 +195,12 @@ st.plotly_chart(fig3, use_container_width=True)
 
 st.markdown("""
 **Interpretation & Analysis:**  
-High-skill students account for a significantly larger proportion of the top CGPA range 
-(3.70–4.00), while low-skill students are more concentrated in mid and lower CGPA bands. 
-This proportional view exposes academic risk concentration and clearly identifies skill 
-development as a critical factor in achieving academic excellence.
+The stacked percentage bar chart highlights a strong concentration of high-skill students
+within the top CGPA range (3.70–4.00), while low-skill groups are disproportionately 
+represented in mid and lower CGPA bands. Unlike average-based views, this proportional 
+analysis exposes academic risk concentration, clearly distinguishing between performance
+excellence and vulnerability. The visualization therefore provides a more strategic lens
+for identifying student groups that require targeted academic support.
 """)
 
 # =====================================================
@@ -221,10 +223,12 @@ st.plotly_chart(fig4, use_container_width=True)
 
 st.markdown("""
 **Interpretation & Analysis:**  
-Students with medium and high skill development demonstrate more stable and improving CGPA 
-trends across academic years. In contrast, low-skill students show flatter or inconsistent 
-progression, indicating potential long-term academic sustainability issues as academic 
-demands increase.
+The line chart illustrates that students with medium and high skill development maintain
+stable or improving CGPA trajectories across academic years, whereas low-skill students
+display flatter or more inconsistent patterns. This trend suggests that skill development
+contributes to long-term academic sustainability, particularly as coursework complexity
+increases in later years. Early investment in student skill development is therefore
+critical to preventing cumulative academic decline.
 """)
 
 # =====================================================
@@ -249,11 +253,13 @@ st.plotly_chart(fig5, use_container_width=True)
 
 st.markdown("""
 **Interpretation & Analysis:**  
-The heatmap highlights a clear synergy between skill development and co-curricular 
-participation. The highest CGPA values occur among students with high skill development 
-who actively participate in co-curricular activities, while the lowest values are observed 
-in low-skill, non-active students. This visualization serves as a decision-support matrix 
-for identifying both high-performing and at-risk student profiles.
+The heatmap shows that the highest average CGPA values are concentrated among students
+with high skill development who actively participate in co-curricular activities, while
+the lowest performance is observed in low-skill, non-active students. This pattern confirms
+a synergistic relationship between skill development and engagement, where optimal academic
+outcomes emerge only when both factors are present. As a result, the heatmap serves as an
+effective decision-support tool for identifying both high-performing and at-risk student
+profile
 """)
 
 # ---------------------------------------
