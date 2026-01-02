@@ -21,7 +21,7 @@ This dashboard analyzes **UMK students' academic performance** based on
 # ----------------------------------
 @st.cache_data
 def load_data():
-    url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/main/cleaned_student_performance.csv"
+    url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance_ver2.csv"
     return pd.read_csv(url)
 
 df = load_data()
