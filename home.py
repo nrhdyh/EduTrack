@@ -62,9 +62,6 @@ body {
 """, unsafe_allow_html=True)
 
 # ---------------------------------------
-# HERO SECTION
-# ---------------------------------------
-# ---------------------------------------
 # HERO SECTION WITH LOGO
 # ---------------------------------------
 col1, col2, col3 = st.columns([1, 3, 1])
@@ -83,45 +80,6 @@ st.markdown("""
     </p>
 </div>
 """, unsafe_allow_html=True)
-
-
-
-# ---------------------------------------
-# OVERVIEW CARDS
-# ---------------------------------------
-# col1, col2, col3, col4 = st.columns(4)
-
-# with col1:
-#     st.markdown("""
-#     <div class="card">
-#         <h3>👤 Demographics</h3>
-#         <p>Student background & profile</p>
-#     </div>
-#     """, unsafe_allow_html=True)
-
-# with col2:
-#     st.markdown("""
-#     <div class="card">
-#         <h3>📚 Study & Lifestyle</h3>
-#         <p>Study habits & daily routines</p>
-#     </div>
-#     """, unsafe_allow_html=True)
-
-# with col3:
-#     st.markdown("""
-#     <div class="card">
-#         <h3>💻 Learning Mode</h3>
-#         <p>Online & physical learning styles</p>
-#     </div>
-#     """, unsafe_allow_html=True)
-
-# with col4:
-#     st.markdown("""
-#     <div class="card">
-#         <h3>🛠️ Skills & Activities</h3>
-#         <p>Co-curricular & personal skills</p>
-#     </div>
-#     """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -165,20 +123,13 @@ with tab2:
     # ---------------------------------------
     # KPI METRICS
     # ---------------------------------------
-     # ---------------------------------------
-    # KPI METRICS
-    # ---------------------------------------
     st.markdown("### 🔢 Key Statistics")
 
     col1, col2, col3, col4 = st.columns(4)
 
-    # 1️⃣ Total Students
     col1.metric("👥 Total Students", total_responses)
-
-    # 2️⃣ Survey Items
     col2.metric("📋 Survey Items", len(df.columns))
 
-    # 3️⃣ UMK Faculties (FIX: use column name, not iloc)
     if "Faculty" in df.columns:
         faculties_count = (
             df["Faculty"]
@@ -201,13 +152,12 @@ with tab2:
         faculties_count = "-"
 
     col3.metric("🎓 UMK Faculties", faculties_count)
-
-    # 4️⃣ Latest Response
     col4.metric("📅 Latest Response", "Live")
 
     st.progress(min(total_responses / 100, 1.0))
     st.caption("Progress: Target 100 UMK students")
-   st.divider()
+
+    st.divider()
 
     # ---------------------------------------
     # DEMOGRAPHICS SNAPSHOT
@@ -215,7 +165,7 @@ with tab2:
     st.markdown("### 👤 Demographics Snapshot")
     demo_col = st.selectbox(
         "Select a demographic variable:",
-        df.columns[:5]   # assumes first few columns are demographics
+        df.columns[:5]
     )
     demo_counts = df[demo_col].value_counts()
     st.bar_chart(demo_counts)
@@ -238,15 +188,17 @@ with tab2:
     st.divider()
 
     # ---------------------------------------
-    # QUICK INSIGHTS (AUTO TEXT)
+    # QUICK INSIGHTS
     # ---------------------------------------
     st.markdown("### 💡 Quick Insights")
     most_common_demo = demo_counts.idxmax()
     most_common_demo_value = demo_counts.max()
+
     st.success(
         f"Most UMK students selected **{most_common_demo}** for **{demo_col}** "
         f"({most_common_demo_value} responses)."
     )
+
     st.info(
         "Students show diverse learning patterns. "
         "Detailed breakdowns are available in each objective section."
@@ -277,4 +229,3 @@ with tab2:
     and <b>Skills & Activities</b> for detailed insights
     </div>
     """, unsafe_allow_html=True)
-
