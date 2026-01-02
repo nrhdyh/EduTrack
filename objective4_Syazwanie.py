@@ -127,3 +127,43 @@ with col4:
     )
     fig5.update_layout(yaxis_title="Mean CGPA Midpoint", height=450)
     st.plotly_chart(fig5, use_container_width=True)
+
+
+# --- HEATMAP: Skill Dev vs Co-Curricular ---
+st.header("Average CGPA Heatmap")
+
+# 1. Create the pivot table (same logic as your Seaborn code)
+heatmap_data = df.pivot_table(
+    values='CGPA_Midpoint',
+    index='Skill_Development_Hours_Category',
+    columns='Co_Curriculum_Activities_Text',
+    aggfunc='mean'
+)
+
+# 2. Ensure logical ordering for the rows
+hour_order = ['Low', 'Medium', 'High']
+# intersection used to avoid errors if a category is missing in the data
+available_order = [h for h in hour_order if h in heatmap_data.index]
+heatmap_data = heatmap_data.reindex(index=available_order)
+
+# 3. Create the Plotly Heatmap
+fig_heatmap = px.imshow(
+    heatmap_data,
+    labels=dict(x="Co-Curricular Participation", y="Skill Development Hours", color="Avg CGPA"),
+    x=heatmap_data.columns,
+    y=heatmap_data.index,
+    text_auto='.2f',          # Equivalent to annot=True and fmt='.2f'
+    color_continuous_scale='Viridis', # Matches your cmap
+    aspect="auto"             # Ensures the heatmap fills the container properly
+)
+
+# 4. Styling adjustments
+fig_heatmap.update_layout(
+    title='<b>Average CGPA by Skill Development and Co-Curricular Participation</b>',
+    title_x=0.5, # Centers the title
+    xaxis_title='Co-Curricular Participation',
+    yaxis_title='Skill Development Hours Category'
+)
+
+# 5. Display in Streamlit
+st.plotly_chart(fig_heatmap, use_container_width=True)
