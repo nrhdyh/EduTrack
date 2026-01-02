@@ -3,8 +3,6 @@ pandas
 plotly.express
 plotly
 numpy
-plotly.graph_objects
-plotly.figure_factory
 scipy
 
 
