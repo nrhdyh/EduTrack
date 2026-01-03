@@ -67,7 +67,7 @@ body {
 col1, col2, col3 = st.columns([1, 3, 1])
 
 with col2:
-    st.image("logo.png", width=500)
+    st.image("logo.png", width=300)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
