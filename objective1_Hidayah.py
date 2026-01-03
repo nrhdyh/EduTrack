@@ -462,11 +462,11 @@ fig_heatmap = px.imshow(
 
 fig_heatmap.update_layout(
     xaxis_title="Attendance Percentage",
-    yaxis_title="Daily Study Hours",
-    paper_bgcolor="#f8fbff",
-    plot_bgcolor="#f8fbff",
-    font=dict(color="#0d47a1"),
-    title_font=dict(size=18)
+    yaxis_title="Daily Study Hours"
+    # paper_bgcolor="#f8fbff",
+    # plot_bgcolor="#f8fbff",
+    # font=dict(color="#0d47a1"),
+    # title_font=dict(size=18)
 )
 
 st.plotly_chart(fig_heatmap, use_container_width=True)
