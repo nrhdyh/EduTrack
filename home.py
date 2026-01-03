@@ -4,62 +4,53 @@ import pandas as pd
 # ---------------------------------------
 # CUSTOM CSS (UMK THEME)
 # ---------------------------------------
-st.markdown("""
+st.markdown(f"""
 <style>
-body {
+body {{
     background-color: #F6F4FA;
-}
+}}
 
-.hero {
+.hero {{
     background: linear-gradient(135deg, #5E35B1, #3949AB);
     padding: 40px;
     border-radius: 20px;
     color: white;
     text-align: center;
-}
+    animation: fadeIn 1.2s ease-in-out;
+}}
 
-.hero h1 {
+@keyframes fadeIn {{
+    from {{ opacity: 0; transform: translateY(20px); }}
+    to {{ opacity: 1; transform: translateY(0); }}
+}}
+
+.hero img {{
+    width: 280px;
+    margin-bottom: 20px;
+}}
+
+.hero h1 {{
     font-size: 42px;
-}
+}}
 
-.hero p {
+.hero p {{
     font-size: 20px;
     opacity: 0.95;
-}
-
-.card {
-    background-color: white;
-    padding: 25px;
-    border-radius: 18px;
-    box-shadow: 0px 6px 15px rgba(0,0,0,0.08);
-    text-align: center;
-    transition: 0.3s;
-}
-
-.card:hover {
-    transform: translateY(-6px);
-}
-
-.card h3 {
-    color: #5E35B1;
-}
-
-.cta {
-    background-color: #5E35B1;
-    color: white;
-    padding: 18px;
-    border-radius: 14px;
-    font-size: 18px;
-    text-align: center;
-}
-
-.section-title {
-    color: #3949AB;
-    font-size: 26px;
-    margin-top: 30px;
-}
+}}
 </style>
+
+<div class="hero">
+    <img src="data:image/png;base64,{logo_base64}">
+    <h1>🎓 EDUTRACK UMK</h1>
+    <p>
+        Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
+        Universiti Malaysia Kelantan
+    </p>
+</div>
 """, unsafe_allow_html=True)
+
+st.markdown("<br>", unsafe_allow_html=True)
+
 
 # ---------------------------------------
 # HERO SECTION WITH LOGO
