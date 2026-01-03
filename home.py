@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import base64
 
 # ---------------------------------------
 # CUSTOM CSS (UMK THEME)
@@ -73,7 +74,7 @@ st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class="hero" style="padding:20px; text-align:center;">
-<img src="logo.png" style="width:300px;">
+<img src="data:image/png;base64,{logo_base64}" style="width:300px;">
     <h1>🎓 EDUTRACK UMK</h1>
     <p>
         Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
