@@ -72,6 +72,12 @@ with col2:
 
 st.markdown("<br>", unsafe_allow_html=True)
 
+def get_base64_image(path):
+    with open(path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
+
+logo_base64 = get_base64_image("logo.png")
+
 st.markdown("""
 <div class="hero" style="padding:20px; text-align:center;">
 <img src="data:image/png;base64,{logo_base64}" style="width:300px;">
