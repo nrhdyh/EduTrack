@@ -414,12 +414,12 @@ st.markdown("---")
 # =====================================================
 # 5️⃣ Heatmap: Study Hours vs Attendance (by Living With)
 # =====================================================
+
 st.markdown(f"""
 <div style="{block_style}">
     <h3>5️⃣ Heatmap: Study Hours vs Attendance by Living Arrangement</h3>
 </div>
 """, unsafe_allow_html=True)
-
 
 study_order = sorted(
     df["Study_Hours_Daily"].dropna().unique(),
@@ -446,19 +446,27 @@ pivot = subset.pivot_table(
     aggfunc="mean"
 )
 
+# ENSURE CORRECT AXIS ORDER
 pivot = pivot.reindex(index=study_order, columns=attendance_order)
 
 fig_heatmap = px.imshow(
     pivot,
     text_auto=".2f",
-    color_continuous_scale="Viridis",
     aspect="auto",
+    color_continuous_scale=[
+        "#e3f2fd", "#bbdefb", "#90caf9",
+        "#64b5f6", "#42a5f5", "#1e88e5", "#0d47a1"
+    ],
     title=f"Average CGPA by Study Hours & Attendance ({selected_living})"
 )
 
 fig_heatmap.update_layout(
     xaxis_title="Attendance Percentage",
-    yaxis_title="Daily Study Hours"
+    yaxis_title="Daily Study Hours",
+    paper_bgcolor="#f8fbff",
+    plot_bgcolor="#f8fbff",
+    font=dict(color="#0d47a1"),
+    title_font=dict(size=18)
 )
 
 st.plotly_chart(fig_heatmap, use_container_width=True)
