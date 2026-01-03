@@ -66,11 +66,41 @@ body {
 # ---------------------------------------
 col1, col2, col3 = st.columns([1, 3, 1])
 
-st.markdown("<br>", unsafe_allow_html=True)
-
 st.markdown("""
-<div class="hero" style="padding:20px; text-align:center;">
- st.image("logo.png", width=300)
+<style>
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-box {
+    padding: 30px;
+    text-align: center;
+    background-color: #f8fbff;
+    border-radius: 16px;
+    animation: fadeInUp 1.2s ease-in-out;
+}
+.hero-box img {
+    width: 300px;
+    margin-bottom: 15px;
+}
+.hero-box h1 {
+    color: #0d47a1;
+    margin-bottom: 10px;
+}
+.hero-box p {
+    font-size: 16px;
+}
+</style>
+
+<div class="hero-box">
+    <img src="logo.png">
     <h1>🎓 EDUTRACK UMK</h1>
     <p>
         Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
@@ -80,6 +110,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
+
 
 # ---------------------------------------
 # TABS
