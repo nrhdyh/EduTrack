@@ -66,13 +66,11 @@ body {
 # ---------------------------------------
 col1, col2, col3 = st.columns([1, 3, 1])
 
-with col2:
-    st.image("logo.png", width=300)
-
 st.markdown("<br>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class="hero" style="padding:20px; text-align:center;">
+ st.image("logo.png", width=300)
     <h1>🎓 EDUTRACK UMK</h1>
     <p>
         Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
