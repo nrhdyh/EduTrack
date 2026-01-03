@@ -38,6 +38,14 @@ background: #f6f7fb;
 padding: 22px;
 border-radius: 14px;
 """
+interpretation_style = """
+background: linear-gradient(135deg, #f3e8ff, #ede9fe);
+padding: 20px;
+border-radius: 14px;
+margin-top: 12px;
+color: #2e1065;
+box-shadow: 1px 3px 10px rgba(0,0,0,0.08);
+"""
 
 # ---------------------------------------
 # TITLE
@@ -130,14 +138,25 @@ fig1 = ff.create_distplot(
 )
 st.plotly_chart(fig1, use_container_width=True)
 
-st.markdown("""
-**Interpretation & Analysis:**  
-The density plot reveals that students who actively participate in co-curricular activities 
-display a more concentrated CGPA distribution at higher values, indicating stronger academic 
-consistency. In contrast, non-active students show wider dispersion, suggesting greater 
-performance variability and academic risk. This highlights that co-curricular participation 
-supports not only higher achievement but also stability in academic outcomes.
-""")
+st.markdown(f"""
+<div style="{interpretation_style}">
+<b>🔍 What the Visual Shows</b><br>
+The KDE density plot compares the distribution and concentration of CGPA between students 
+who participate in co-curricular activities and those who do not.<br><br>
+
+<b>🧠 Critical Analysis</b><br>
+The density curve for active students is more concentrated around higher CGPA values, 
+indicating greater academic consistency. In contrast, non-active students exhibit a wider 
+spread, suggesting higher variability and academic instability. This indicates that 
+co-curricular participation does not merely increase average performance, but reduces 
+performance volatility, which is crucial for sustaining academic outcomes over time.<br><br>
+
+<b>🎯 Why This Matters</b><br>
+Rather than focusing only on mean CGPA, this visualization highlights risk dispersion. 
+Students who are not involved in structured activities may be more vulnerable to academic 
+fluctuation, even if their average CGPA appears acceptable.
+</div>
+""", unsafe_allow_html=True)
 
 # =====================================================
 # 2️⃣ Grouped Bar – Avg CGPA
@@ -158,14 +177,25 @@ fig2 = px.bar(
 )
 st.plotly_chart(fig2, use_container_width=True)
 
-st.markdown("""
-**Interpretation & Analysis:**  
-The visualization demonstrates a clear positive relationship between skill development 
-and CGPA. Across all skill categories, students who actively engage in co-curricular 
-activities consistently achieve higher academic performance. This suggests a reinforcement 
-effect, where skill development enhances academic capability, and co-curricular engagement 
-amplifies its impact.
-""")
+st.markdown(f"""
+<div style="{interpretation_style}">
+<b>🔍 What the Visual Shows</b><br>
+The grouped bar chart compares average CGPA across different skill development levels, 
+separated by co-curricular participation status.<br><br>
+
+<b>🧠 Critical Analysis</b><br>
+A clear upward trend is observed as skill development increases. More importantly, within 
+each skill category, students who actively participate in co-curricular activities 
+consistently outperform their non-active peers. This demonstrates a reinforcement effect: 
+skill development improves academic performance, but its impact is amplified when combined 
+with active engagement beyond the classroom.<br><br>
+
+<b>🎯 Why This Matters</b><br>
+This suggests that academic success is multidimensional. Universities focusing solely on 
+academic instruction may overlook the compounding benefits of experiential learning and 
+structured student engagement.
+</div>
+""", unsafe_allow_html=True)
 
 # =====================================================
 # 3️⃣ CGPA Distribution (Percentage-Based)
@@ -196,15 +226,24 @@ fig3 = px.bar(
 
 st.plotly_chart(fig3, use_container_width=True)
 
-st.markdown("""
-**Interpretation & Analysis:**  
-The stacked percentage bar chart highlights a strong concentration of high-skill students
-within the top CGPA range (3.70–4.00), while low-skill groups are disproportionately 
-represented in mid and lower CGPA bands. Unlike average-based views, this proportional 
-analysis exposes academic risk concentration, clearly distinguishing between performance
-excellence and vulnerability. The visualization therefore provides a more strategic lens
-for identifying student groups that require targeted academic support.
-""")
+st.markdown(f"""
+<div style="{interpretation_style}">
+<b>🔍 What the Visual Shows</b><br>
+This stacked percentage bar chart illustrates how students are distributed across CGPA 
+ranges within each skill category.<br><br>
+
+<b>🧠 Critical Analysis</b><br>
+High-skill students dominate the top CGPA range (3.70–4.00), while low-skill groups show a 
+higher concentration in mid and lower CGPA bands. This proportional view reveals academic 
+risk concentration, which is not visible through averages alone. The visualization clearly 
+distinguishes between performance excellence and performance vulnerability, highlighting 
+where academic support mechanisms should be targeted.<br><br>
+
+<b>🎯 Why This Matters</b><br>
+This chart shifts the focus from “how well students perform” to “how many students are at 
+risk”, enabling more strategic academic planning.
+</div>
+""", unsafe_allow_html=True)
 
 # =====================================================
 # 4️⃣ Line Chart – Academic Progression
@@ -224,15 +263,25 @@ fig4 = px.line(
 )
 st.plotly_chart(fig4, use_container_width=True)
 
-st.markdown("""
-**Interpretation & Analysis:**  
-The line chart illustrates that students with medium and high skill development maintain
-stable or improving CGPA trajectories across academic years, whereas low-skill students
-display flatter or more inconsistent patterns. This trend suggests that skill development
-contributes to long-term academic sustainability, particularly as coursework complexity
-increases in later years. Early investment in student skill development is therefore
-critical to preventing cumulative academic decline.
-""")
+st.markdown(f"""
+<div style="{interpretation_style}">
+<b>🔍 What the Visual Shows</b><br>
+The line chart tracks CGPA trends across academic years for different skill development 
+levels.<br><br>
+
+<b>🧠 Critical Analysis</b><br>
+Students with medium and high skill development exhibit stable or improving CGPA 
+trajectories, while low-skill students show flatter or inconsistent patterns. This suggests 
+that skill development contributes not only to short-term performance, but also to academic 
+sustainability over time. As academic complexity increases in higher years, students without 
+adequate skill development may struggle to maintain performance.<br><br>
+
+<b>🎯 Why This Matters</b><br>
+The visualization emphasizes the importance of early skill investment, particularly in 
+lower academic years, to prevent long-term academic decline.
+</div>
+""", unsafe_allow_html=True)
+
 
 # =====================================================
 # 5️⃣ Heatmap – Decision Matrix
@@ -254,16 +303,23 @@ fig5 = px.imshow(
 )
 st.plotly_chart(fig5, use_container_width=True)
 
-st.markdown("""
-**Interpretation & Analysis:**  
-The heatmap shows that the highest average CGPA values are concentrated among students
-with high skill development who actively participate in co-curricular activities, while
-the lowest performance is observed in low-skill, non-active students. This pattern confirms
-a synergistic relationship between skill development and engagement, where optimal academic
-outcomes emerge only when both factors are present. As a result, the heatmap serves as an
-effective decision-support tool for identifying both high-performing and at-risk student
-profile
-""")
+st.markdown(f"""
+<div style="{interpretation_style}">
+<b>🔍 What the Visual Shows</b><br>
+The heatmap presents average CGPA across combinations of skill development levels and 
+co-curricular participation.<br><br>
+
+<b>🧠 Critical Analysis</b><br>
+The highest CGPA values are concentrated in the high-skill & active participation quadrant, 
+while the lowest values appear in the low-skill & non-active group. This confirms a 
+synergistic relationship between skill development and co-curricular involvement, where 
+neither factor alone produces optimal academic outcomes.<br><br>
+
+<b>🎯 Why This Matters</b><br>
+The heatmap functions as a decision-support tool, clearly identifying student profiles that 
+are thriving versus those that require intervention.
+</div>
+""", unsafe_allow_html=True)
 
 # ---------------------------------------
 # FOOTER
