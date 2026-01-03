@@ -116,7 +116,7 @@ st.markdown("---")
 # =====================================================
 # 1️⃣ KDE – CGPA Density
 # =====================================================
-st.subheader("1️⃣ CGPA Density: Active vs Non-Active Students")
+st.markdown(f'<div style="{block_style}"><h3>1️⃣ CGPA Density: Active vs Non-Active Students</h3></div>', unsafe_allow_html=True)
 
 active = filtered_df[filtered_df['Co_Curriculum_Activities_Text'] == 'Yes']['CGPA_Midpoint'].dropna()
 inactive = filtered_df[filtered_df['Co_Curriculum_Activities_Text'] == 'No']['CGPA_Midpoint'].dropna()
@@ -142,7 +142,7 @@ supports not only higher achievement but also stability in academic outcomes.
 # =====================================================
 # 2️⃣ Grouped Bar – Avg CGPA
 # =====================================================
-st.subheader("2️⃣ Average CGPA by Skill Development & Co-Curricular Participation")
+st.markdown(f'<div style="{block_style}"><h3>2️⃣ Average CGPA by Skill Development & Co-Curricular</h3></div>', unsafe_allow_html=True)
 
 grouped = filtered_df.groupby(
     ['Skill_Development_Hours_Category', 'Co_Curriculum_Activities_Text']
@@ -170,7 +170,7 @@ amplifies its impact.
 # =====================================================
 # 3️⃣ CGPA Distribution (Percentage-Based)
 # =====================================================
-st.subheader("3️⃣ CGPA Distribution by Skill Category")
+st.markdown(f'<div style="{block_style}"><h3>3️⃣ CGPA Distribution by Skills Category</h3></div>', unsafe_allow_html=True)
 
 cgpa_order = ['2.50 – 2.99', '3.00 – 3.69', '3.70 - 4.00']
 cross_tab = pd.crosstab(filtered_df['Skills_Category'], filtered_df['CGPA'])
@@ -206,7 +206,7 @@ for identifying student groups that require targeted academic support.
 # =====================================================
 # 4️⃣ Line Chart – Academic Progression
 # =====================================================
-st.subheader("4️⃣ CGPA Progression by Year of Study")
+st.markdown(f'<div style="{block_style}"><h3>4️⃣ CGPA Progression by Year & Skill Level</h3></div>', unsafe_allow_html=True)
 
 line_data = filtered_df.groupby(
     ['Year_of_Study', 'Skill_Development_Hours_Category']
@@ -234,7 +234,7 @@ critical to preventing cumulative academic decline.
 # =====================================================
 # 5️⃣ Heatmap – Decision Matrix
 # =====================================================
-st.subheader("5️⃣ Average CGPA Heatmap: Skill Development × Co-Curricular Participation")
+st.markdown(f'<div style="{block_style}"><h3>5️⃣ Average CGPA Heatmap</h3></div>', unsafe_allow_html=True)
 
 heatmap_data = filtered_df.pivot_table(
     values='CGPA_Midpoint',
