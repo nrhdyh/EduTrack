@@ -1,46 +1,65 @@
 import streamlit as st
 import pandas as pd
+import base64
 
 # ---------------------------------------
-# HERO SECTION WITH LOGO
+# PAGE CONFIG
 # ---------------------------------------
-col1, col2, col3 = st.columns([1, 3, 1])
+st.set_page_config(page_title="EDUTRACK UMK", layout="wide")
 
-st.markdown("""
+# ---------------------------------------
+# BASE64 IMAGE LOADER
+# ---------------------------------------
+def get_base64_image(image_path):
+    with open(image_path, "rb") as img_file:
+        return base64.b64encode(img_file.read()).decode()
+
+logo_base64 = get_base64_image("logo.png")
+
+# ---------------------------------------
+# HERO SECTION WITH LOGO (FIXED)
+# ---------------------------------------
+st.markdown(f"""
 <style>
-@keyframes fadeInUp {
-    from {
+@keyframes fadeInUp {{
+    from {{
         opacity: 0;
         transform: translateY(20px);
-    }
-    to {
+    }}
+    to {{
         opacity: 1;
         transform: translateY(0);
-    }
-}
+    }}
+}}
 
-.hero-box {
+.hero-box {{
     padding: 30px;
     text-align: center;
     background-color: #f8fbff;
     border-radius: 16px;
     animation: fadeInUp 1.2s ease-in-out;
-}
-.hero-box img {
+}}
+
+.hero-box img {{
     width: 300px;
     margin-bottom: 15px;
-}
-.hero-box h1 {
+    background: white;
+    padding: 12px;
+    border-radius: 14px;
+}}
+
+.hero-box h1 {{
     color: #0d47a1;
     margin-bottom: 10px;
-}
-.hero-box p {
+}}
+
+.hero-box p {{
     font-size: 16px;
-}
+}}
 </style>
 
 <div class="hero-box">
-    <img src="logo.png">
+    <img src="data:image/png;base64,{logo_base64}">
     <h1>🎓 EDUTRACK UMK</h1>
     <p>
         Understanding <b>Students’ Demographics, Learning Behaviour & Skills</b><br>
@@ -50,7 +69,6 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
-
 
 # ---------------------------------------
 # TABS
@@ -81,7 +99,6 @@ with tab2:
     st.markdown('<h2 class="section-title">📊 Homepage Analytics Overview</h2>', unsafe_allow_html=True)
     st.caption("Automatically updated from Google Forms")
 
-    # Load Google Sheets CSV
     sheet_url = (
         "https://docs.google.com/spreadsheets/d/"
         "1IVXi1nQYuM_tQolHWv6asvttHkbDRWpSW20VuSptEvw/export?format=csv"
@@ -89,112 +106,12 @@ with tab2:
     df = pd.read_csv(sheet_url)
     total_responses = len(df)
 
-    # ---------------------------------------
-    # KPI METRICS
-    # ---------------------------------------
     st.markdown("### 🔢 Key Statistics")
-
-    col1, col2, col3, col4 = st.columns(4)
-
-    col1.metric("👥 Total Students", total_responses)
-    col2.metric("📋 Survey Items", len(df.columns))
-
-    if "Faculty" in df.columns:
-        faculties_count = (
-            df["Faculty"]
-            .astype(str)
-            .str.strip()
-            .replace("nan", None)
-            .dropna()
-            .nunique()
-        )
-    elif "Faculty_Short" in df.columns:
-        faculties_count = (
-            df["Faculty_Short"]
-            .astype(str)
-            .str.strip()
-            .replace("nan", None)
-            .dropna()
-            .nunique()
-        )
-    else:
-        faculties_count = "-"
-
-    col3.metric("🎓 UMK Faculties", faculties_count)
-    col4.metric("📅 Latest Response", "Live")
+    c1, c2, c3, c4 = st.columns(4)
+    c1.metric("👥 Total Students", total_responses)
+    c2.metric("📋 Survey Items", len(df.columns))
+    c3.metric("🎓 UMK Faculties", df.nunique().max())
+    c4.metric("📅 Latest Response", "Live")
 
     st.progress(min(total_responses / 100, 1.0))
     st.caption("Progress: Target 100 UMK students")
-
-    st.divider()
-
-    # ---------------------------------------
-    # DEMOGRAPHICS SNAPSHOT
-    # ---------------------------------------
-    st.markdown("### 👤 Demographics Snapshot")
-    demo_col = st.selectbox(
-        "Select a demographic variable:",
-        df.columns[2:5]
-    )
-    demo_counts = df[demo_col].value_counts()
-    st.bar_chart(demo_counts)
-    st.caption(f"Distribution of UMK students by **{demo_col}**")
-
-    st.divider()
-
-    # ---------------------------------------
-    # STUDY & LEARNING TREND
-    # ---------------------------------------
-    st.markdown("### 📚 Study & Learning Trends")
-    trend_col = st.selectbox(
-        "Select a learning-related question:",
-        df.columns[5:10] if len(df.columns) > 10 else df.columns
-    )
-    trend_counts = df[trend_col].value_counts()
-    st.line_chart(trend_counts)
-    st.caption(f"Trend analysis for **{trend_col}**")
-
-    st.divider()
-
-    # ---------------------------------------
-    # QUICK INSIGHTS
-    # ---------------------------------------
-    st.markdown("### 💡 Quick Insights")
-    most_common_demo = demo_counts.idxmax()
-    most_common_demo_value = demo_counts.max()
-
-    st.success(
-        f"Most UMK students selected **{most_common_demo}** for **{demo_col}** "
-        f"({most_common_demo_value} responses)."
-    )
-
-    st.info(
-        "Students show diverse learning patterns. "
-        "Detailed breakdowns are available in each objective section."
-    )
-
-    st.divider()
-
-    # ---------------------------------------
-    # DATA EXPLORER
-    # ---------------------------------------
-    with st.expander("📄 View Full Dataset"):
-        st.dataframe(df, use_container_width=True)
-
-    st.markdown("### 🔍 Explore by Question")
-    selected_column = st.selectbox("Choose a question:", df.columns)
-    st.dataframe(df[[selected_column]], use_container_width=True)
-
-    st.download_button(
-        "⬇️ Download Data (CSV)",
-        df.to_csv(index=False).encode("utf-8"),
-        "edutrack_umk_data.csv",
-        "text/csv"
-    )
-
-    st.markdown("""
-    <div class="cta">
-    👉 Use the sidebar to navigate <b>Demographics, Study & Lifestyle, Learning Mode,</b>
-    and <b>Skills & Activities</b> for detailed insights
-    </div>
-    """, unsafe_allow_html=True)
