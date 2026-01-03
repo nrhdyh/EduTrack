@@ -207,8 +207,8 @@ cgpa_order = ['2.50 – 2.99', '3.00 – 3.69', '3.70 - 4.00']
 cross_tab = pd.crosstab(filtered_df['Skills_Category'], filtered_df['CGPA'])
 cross_tab = cross_tab[[c for c in cgpa_order if c in cross_tab.columns]]
 
-percentage = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
-percentage = percentage.reset_index().melt(
+percentage_dist = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
+percentage_dist = percentage_dist.reset_index().melt(
     id_vars='Skills_Category',
     var_name='CGPA_Range',
     value_name='Percentage'
