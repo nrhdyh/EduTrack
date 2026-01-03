@@ -144,7 +144,7 @@ st.markdown(f"""
 The KDE density plot compares the distribution and concentration of CGPA between students 
 who participate in co-curricular activities and those who do not.<br><br>
 
-<b>🧠 Critical Analysis</b><br>
+<b>🧠 Analysis</b><br>
 The density curve for active students is more concentrated around higher CGPA values, 
 indicating greater academic consistency. In contrast, non-active students exhibit a wider 
 spread, suggesting higher variability and academic instability. This indicates that 
@@ -183,7 +183,7 @@ st.markdown(f"""
 The grouped bar chart compares average CGPA across different skill development levels, 
 separated by co-curricular participation status.<br><br>
 
-<b>🧠 Critical Analysis</b><br>
+<b>🧠 Analysis</b><br>
 A clear upward trend is observed as skill development increases. More importantly, within 
 each skill category, students who actively participate in co-curricular activities 
 consistently outperform their non-active peers. This demonstrates a reinforcement effect: 
@@ -232,7 +232,7 @@ st.markdown(f"""
 This stacked percentage bar chart illustrates how students are distributed across CGPA 
 ranges within each skill category.<br><br>
 
-<b>🧠 Critical Analysis</b><br>
+<b>🧠 Analysis</b><br>
 High-skill students dominate the top CGPA range (3.70–4.00), while low-skill groups show a 
 higher concentration in mid and lower CGPA bands. This proportional view reveals academic 
 risk concentration, which is not visible through averages alone. The visualization clearly 
@@ -269,7 +269,7 @@ st.markdown(f"""
 The line chart tracks CGPA trends across academic years for different skill development 
 levels.<br><br>
 
-<b>🧠 Critical Analysis</b><br>
+<b>🧠 Analysis</b><br>
 Students with medium and high skill development exhibit stable or improving CGPA 
 trajectories, while low-skill students show flatter or inconsistent patterns. This suggests 
 that skill development contributes not only to short-term performance, but also to academic 
@@ -309,7 +309,7 @@ st.markdown(f"""
 The heatmap presents average CGPA across combinations of skill development levels and 
 co-curricular participation.<br><br>
 
-<b>🧠 Critical Analysis</b><br>
+<b>🧠 Analysis</b><br>
 The highest CGPA values are concentrated in the high-skill & active participation quadrant, 
 while the lowest values appear in the low-skill & non-active group. This confirms a 
 synergistic relationship between skill development and co-curricular involvement, where 
