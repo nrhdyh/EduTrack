@@ -173,8 +173,10 @@ amplifies its impact.
 st.markdown(f'<div style="{block_style}"><h3>3️⃣ CGPA Distribution by Skills Category</h3></div>', unsafe_allow_html=True)
 
 cgpa_order = ['2.50 – 2.99', '3.00 – 3.69', '3.70 - 4.00']
+
 cross_tab = pd.crosstab(filtered_df['Skills_Category'], filtered_df['CGPA'])
 cross_tab = cross_tab[[c for c in cgpa_order if c in cross_tab.columns]]
+
 percentage = cross_tab.div(cross_tab.sum(axis=1), axis=0) * 100
 percentage = percentage.reset_index().melt(
     id_vars='Skills_Category',
@@ -189,8 +191,9 @@ fig3 = px.bar(
     color='CGPA_Range',
     orientation='h',
     text=percentage['Percentage'].round(1),
-    color_discrete_sequence=px.colors.sequential.PuBu
+    color_discrete_sequence=px.colors.qualitative.Bold
 )
+
 st.plotly_chart(fig3, use_container_width=True)
 
 st.markdown("""
