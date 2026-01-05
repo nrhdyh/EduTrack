@@ -33,11 +33,30 @@ to support informed academic planning and decision-making.
 """)
 st.markdown("---")
 
+import urllib.request
+
 # ---------------------------------------
-# LOAD DATA
+# LOAD DATA (REPLACEMENT SECTION)
 # ---------------------------------------
-url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/refs/heads/main/cleaned_student_performance.csv"
-df = pd.read_csv(url)
+@st.cache_data # Use caching to prevent hitting GitHub on every click
+def load_data():
+    url = "https://raw.githubusercontent.com/nrhdyh/EduTrack/main/cleaned_student_performance.csv"
+    
+    # Adding a User-Agent header to prevent HTTP 403/404 errors
+    req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
+    try:
+        with urllib.request.urlopen(req) as response:
+            return pd.read_csv(response)
+    except Exception as e:
+        st.error(f"Failed to load data from GitHub. Error: {e}")
+        # Fallback: create an empty dataframe so the rest of the app doesn't crash
+        return pd.DataFrame()
+
+df = load_data()
+
+if df.empty:
+    st.warning("⚠️ The dataset is empty or could not be loaded. Please check your GitHub URL.")
+    st.stop() # Stop the app here if data isn't found
 
 # =====================================================
 # 📊 SUMMARY INSIGHT BLOCK BOXES
