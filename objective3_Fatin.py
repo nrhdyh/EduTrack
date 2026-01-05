@@ -137,16 +137,16 @@ The pie chart illustrates a dominant preference for flexibility among UMK studen
 st.markdown("---")
 
 # =====================================================
-# 2️⃣ Bar Chart: Average CGPA by Mode
+# 2️⃣ Bar Chart: Average GPA by Mode
 # =====================================================
-st.markdown(f'<div style="{block_style}"><h3>2️⃣ Bar Chart: Average CGPA by Learning Mode</h3></div>', unsafe_allow_html=True)
+st.markdown(f'<div style="{block_style}"><h3>2️⃣ Bar Chart: Average GPA by Learning Mode</h3></div>', unsafe_allow_html=True)
 
-avg_cgpa_data = df.groupby('Learning_Mode')['CGPA_Midpoint'].mean().reset_index()
+avg_gpa_data = df.groupby('Learning_Mode')['GPA_Midpoint'].mean().reset_index()
 fig2 = px.bar(
-    avg_cgpa_data, x='Learning_Mode', y='CGPA_Midpoint', 
+    avg_gpa_data, x='Learning_Mode', y='GPA_Midpoint', 
     color='Learning_Mode', text_auto='.2f', 
     color_discrete_sequence=px.colors.sequential.Viridis,
-    title="Comparison of Mean CGPA Across Learning Modes"
+    title="Comparison of Mean GPA Across Learning Modes"
 )
 st.plotly_chart(fig2, use_container_width=True)
 
@@ -157,7 +157,7 @@ if st.checkbox("Show performance stats", value=True, key="stats2"):
 st.markdown("### 📈 Distribution Description")
 if st.checkbox("Show performance description", value=True, key="desc2"):
     st.markdown("""
-This bar chart evaluates academic performance consistency across different instructional mediums. The results indicate that the learning environment has a minimal impact on overall academic success, as all three modes maintain a competitive average CGPA near the 3.40 mark. Offline Learning leads slightly with the highest average of approximately 3.48, which may reflect the benefits of immediate faculty feedback and peer collaboration. Hybrid and Online modes follow closely behind. This uniformity suggests that UMK students are highly adaptable, achieving high-quality academic outcomes regardless of whether their courses are delivered in person or digitally.
+This bar chart evaluates academic performance consistency across different instructional mediums. The results indicate that the learning environment has a minimal impact on overall academic success, as all three modes maintain a competitive average GPA near the 3.40 mark. Offline Learning leads slightly with the highest average of approximately 3.48, which may reflect the benefits of immediate faculty feedback and peer collaboration. Hybrid and Online modes follow closely behind. This uniformity suggests that UMK students are highly adaptable, achieving high-quality academic outcomes regardless of whether their courses are delivered in person or digitally.
     """)
 
 st.markdown("---")
