@@ -137,11 +137,13 @@ The pie chart illustrates a dominant preference for flexibility among UMK studen
 st.markdown("---")
 
 # =====================================================
-# 2️⃣ Bar Chart: Average GPA by Mode
+# 2️⃣ Bar Chart: Average GPA by Learning Mode (UPDATED)
 # =====================================================
 st.markdown(f'<div style="{block_style}"><h3>2️⃣ Bar Chart: Average GPA by Learning Mode</h3></div>', unsafe_allow_html=True)
 
+# Calculation for GPA instead of CGPA
 avg_gpa_data = df.groupby('Learning_Mode')['GPA_Midpoint'].mean().reset_index()
+
 fig2 = px.bar(
     avg_gpa_data, x='Learning_Mode', y='GPA_Midpoint', 
     color='Learning_Mode', text_auto='.2f', 
@@ -152,7 +154,7 @@ st.plotly_chart(fig2, use_container_width=True)
 
 st.markdown("### 📊 Summary Statistics")
 if st.checkbox("Show performance stats", value=True, key="stats2"):
-    st.dataframe(avg_cgpa_data, use_container_width=True)
+    st.dataframe(avg_gpa_data, use_container_width=True)
 
 st.markdown("### 📈 Distribution Description")
 if st.checkbox("Show performance description", value=True, key="desc2"):
