@@ -101,6 +101,23 @@ if skill != "All":
 if cocur != "All":
     filtered_df = filtered_df[filtered_df["Co_Curriculum_Activities_Text"] == cocur]
 
+
+# =====================================================
+# 📂 DATASET PREVIEW
+# =====================================================
+st.markdown("## 📂 Dataset Preview")
+
+with st.expander("🔍 View Dataset & Summary"):
+    st.write("**Dataset Shape:**", filtered_df.shape)
+    st.write("**Columns:**", list(filtered_df.columns))
+    
+    st.markdown("### 🧮 Descriptive Statistics (Numerical)")
+    st.dataframe(filtered_df[['GPA_Midpoint', 'CGPA_Midpoint']].describe().round(2))
+
+    st.markdown("### 📄 Sample Records")
+    st.dataframe(filtered_df.head(10))
+
+
 # =====================================================
 # 📊 KPI SUMMARY
 # =====================================================
@@ -120,6 +137,14 @@ with k4:
     st.markdown(f'<div style="{block_style}"><h5>Active Participation</h5><h2>{active_rate:.1f}%</h2></div>', unsafe_allow_html=True)
 
 st.markdown("---")
+
+# --- Summary Statistics ---
+kde_summary = filtered_df.groupby(
+    'Co_Curriculum_Activities_Text'
+)['CGPA_Midpoint'].agg(['count', 'mean', 'std']).round(2)
+
+st.markdown("### 📊 Summary Statistics (CGPA)")
+st.dataframe(kde_summary)
 
 # =====================================================
 # 1️⃣ KDE – CGPA Density
@@ -157,6 +182,14 @@ Students who are not involved in structured activities may be more vulnerable to
 fluctuation, even if their average CGPA appears acceptable.
 </div>
 """, unsafe_allow_html=True)
+
+# --- Summary Statistics ---
+bar_summary = grouped.rename(columns={
+    'CGPA_Midpoint': 'Average_CGPA'
+}).round(2)
+
+st.markdown("### 📊 Average CGPA by Group")
+st.dataframe(bar_summary)
 
 # =====================================================
 # 2️⃣ Grouped Bar – Avg CGPA
@@ -196,6 +229,13 @@ academic instruction may overlook the compounding benefits of experiential learn
 structured student engagement.
 </div>
 """, unsafe_allow_html=True)
+
+# --- Summary Statistics ---
+dist_summary = cross_tab.copy()
+dist_summary['Total_Students'] = dist_summary.sum(axis=1)
+
+st.markdown("### 📊 CGPA Distribution Count by Skill Category")
+st.dataframe(dist_summary)
 
 # =====================================================
 # 3️⃣ CGPA Distribution (Percentage-Based)
@@ -245,6 +285,16 @@ risk”, enabling more strategic academic planning.
 </div>
 """, unsafe_allow_html=True)
 
+# --- Summary Statistics ---
+line_summary = line_data.pivot(
+    index='Year_of_Study',
+    columns='Skill_Development_Hours_Category',
+    values='CGPA_Midpoint'
+).round(2)
+
+st.markdown("### 📊 Average CGPA Progression by Year")
+st.dataframe(line_summary)
+
 # =====================================================
 # 4️⃣ Line Chart – Academic Progression
 # =====================================================
@@ -282,6 +332,9 @@ lower academic years, to prevent long-term academic decline.
 </div>
 """, unsafe_allow_html=True)
 
+# --- Summary Statistics ---
+st.markdown("### 📊 Average CGPA Matrix")
+st.dataframe(heatmap_data.round(2))
 
 # =====================================================
 # 5️⃣ Heatmap – Decision Matrix
