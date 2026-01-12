@@ -50,7 +50,7 @@ box-shadow: 1px 3px 10px rgba(0,0,0,0.08);
 # ---------------------------------------
 # TITLE
 # ---------------------------------------
-st.title("🎓 EduTrack: Academic Performance & Student Development Dashboard")
+st.title("🎓 EduTrack: The Impact of Skill Development and Co-curricular Engagement on Academic Performance")
 st.markdown("---")
 
 # =====================================================
