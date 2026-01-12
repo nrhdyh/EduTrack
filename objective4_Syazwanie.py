@@ -92,7 +92,7 @@ st.markdown("---")
 # 📄 DATASET PREVIEW (MATCH FRIEND STYLE)
 # ---------------------------------------
 st.subheader("📄 Dataset Preview")
-st.dataframe(df())
+st.dataframe(df.head())
 st.markdown("---")
 
 # ---------------------------------------
