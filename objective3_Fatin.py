@@ -190,10 +190,17 @@ if st.checkbox("Show variability stats", value=True, key="stats3"):
     variability_stats = df.groupby("Learning_Mode")["CGPA_Midpoint"].agg(["min", "median", "max", "std"]).reset_index()
     st.dataframe(variability_stats, use_container_width=True)
 
-st.markdown("### 📈 Distribution Description")
-if st.checkbox("Show variability description", value=True, key="desc3"):
+st.markdown("### 📈 Variability Interpretation")
+if st.checkbox("Show variability interpretation", value=True, key="desc3"):
     st.markdown("""
-The box plot provides deeper insight into the variability of student performance. While the median CGPA remains relatively stable across all groups, the Offline mode displays the greatest variance, represented by a much larger box and longer whiskers. This indicates that while Offline learning can lead to exceptionally high scores, it also carries a wider range of performance outcomes compared to the more "clustered" results seen in the Hybrid and Online groups. The Hybrid mode shows the most consistency, with fewer extremes, suggesting it provides a reliable and predictable environment for the majority of students to maintain their grades.
+**What the graph shows:**  
+The box plot displays the distribution and variability of CGPA across different learning modes, including Offline, Hybrid, and Online learning.
+
+**Analysis:**  
+The median CGPA remains relatively similar across all learning modes, indicating consistent overall performance. However, Offline learning shows a wider spread of CGPA values, suggesting greater variation in student performance. Hybrid and Online learning display more clustered results, with Hybrid learning showing the most consistent performance and fewer extreme values.
+
+**Why this matters:**  
+These results suggest that Hybrid learning offers a more stable and predictable environment for most students. Although Offline learning can lead to very high academic achievement for some students, its wider performance range may indicate uneven outcomes compared to the more consistent results seen in Hybrid learning.
     """)
 
 st.markdown("---")
@@ -216,12 +223,18 @@ fig4 = px.histogram(
 )
 st.plotly_chart(fig4, use_container_width=True)
 
-st.markdown("### 📈 Distribution Description")
-if st.checkbox("Show yearly description", value=True, key="desc4"):
+st.markdown("### 📈 Yearly Preference Interpretation")
+if st.checkbox("Show yearly interpretation", value=True, key="desc4"):
     st.markdown("""
-This visualization highlights a clear shift in student needs as they progress through their academic journey. Year 1 students show a relatively higher reliance on Offline and Hybrid modes as they establish their academic foundation. As students reach Year 3 and Year 4, there is a massive surge in the total number of students preferring Hybrid learning. This trend likely reflects senior students' need for greater schedule flexibility to balance advanced coursework, final-year projects, or internships. Notably, the preference for purely Online learning remains a small but consistent niche across all four years.
-    """)
+**What the graph shows:**  
+This stacked bar chart illustrates the distribution of learning mode preferences across different years of study at UMK.
 
+**Analysis:**  
+Year 1 students show a higher reliance on Offline and Hybrid learning as they establish their academic foundation and adapt to university life. As students progress to Year 3 and Year 4, there is a noticeable increase in preference for Hybrid learning. This likely reflects the need for greater flexibility to manage advanced coursework, final-year projects, and internships. Across all years, Online learning remains a smaller but consistent option.
+
+**Why this matters:**  
+These patterns highlight how students’ learning needs evolve over time. The findings suggest that hybrid learning models are particularly effective for senior students who require flexibility while still benefiting from structured academic support.
+    """)
 st.markdown("---")
 
 # =====================================================
@@ -243,10 +256,17 @@ st.markdown("### 📊 Summary Statistics")
 if st.checkbox("Show heatmap stats", value=True, key="stats5"):
     st.dataframe(heatmap_data, use_container_width=True)
 
-st.markdown("### 📈 Distribution Description")
-if st.checkbox("Show heatmap description", value=True, key="desc5"):
+st.markdown("### 📈 Performance Risk Interpretation")
+if st.checkbox("Show heatmap interpretation", value=True, key="desc5"):
     st.markdown("""
-The heatmap identifies specific "performance corridors" where students excel most. The highest academic density is found among Year 1 Offline students (3.72), reinforcing the idea that physical presence is crucial for new students adapting to university standards. Another high-performing segment is Year 2 Hybrid and Online students, both averaging 3.68. However, a significant academic risk is identified in Year 4 Online students, where the average CGPA drops to its lowest point of 3.04. This suggests that senior-level complexity may require more direct supervision than a fully online environment can provide.
+**What the graph shows:**  
+This heatmap displays the average CGPA across different learning modes and years of study, with colour intensity representing performance levels.
+
+**Analysis:**  
+The highest academic performance is observed among Year 1 students in Offline learning, highlighting the importance of physical classroom engagement for new students. Year 2 students in Hybrid and Online learning also show strong academic performance. In contrast, Year 4 students in Online learning record the lowest average CGPA, indicating a potential decline in performance at higher academic levels when learning is fully online.
+
+**Why this matters:**  
+These findings point to potential academic risks for senior students in fully online learning environments. As academic demands increase, students may require more structured guidance and interaction, suggesting that hybrid or offline learning models may better support academic success in later years.
     """)
 
 st.markdown("---")
