@@ -170,7 +170,7 @@ st.markdown("---")
 st.markdown(f'<div style="{block_style}"><h3>3️⃣ Box Plot: CGPA Distribution by Learning Mode</h3></div>', unsafe_allow_html=True)
 
 fig3 = px.box(
-    df, x='Learning_Mode', y='CGPA_Midpoint', color='Learning_Mode',
+    df, x='Learning_Mode', y='CGPA_Midpoint',
     color_discrete_sequence=px.colors.sequential.Viridis,
     title="CGPA Variability and Spread per Learning Mode"
 )
