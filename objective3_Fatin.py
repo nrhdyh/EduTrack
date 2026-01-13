@@ -158,10 +158,17 @@ st.markdown("### 📊 Summary Statistics")
 if st.checkbox("Show performance stats", value=True, key="stats2"):
     st.dataframe(avg_gpa_data, use_container_width=True)
 
-st.markdown("### 📈 Distribution Description")
-if st.checkbox("Show performance description", value=True, key="desc2"):
+st.markdown("### 📈 Performance Interpretation")
+if st.checkbox("Show performance interpretation", value=True, key="desc2"):
     st.markdown("""
-This bar chart evaluates academic performance consistency across different instructional mediums. The results indicate that the learning environment has a minimal impact on overall academic success, as all three modes maintain a competitive average GPA near the 3.40 mark. Offline Learning leads slightly with the highest average of approximately 3.48, which may reflect the benefits of immediate faculty feedback and peer collaboration. Hybrid and Online modes follow closely behind. This uniformity suggests that UMK students are highly adaptable, achieving high-quality academic outcomes regardless of whether their courses are delivered in person or digitally.
+**What the graph shows:**  
+The bar chart compares the average GPA of UMK students across different learning modes, namely Offline, Hybrid, and Online learning.
+
+**Analysis:**  
+The results indicate that the average GPA is very similar across all learning modes, remaining around 3.4. Offline learning shows a slightly higher average GPA, which may be due to direct interaction with lecturers and peers. However, the differences are minimal, suggesting that students can achieve comparable academic performance regardless of the learning mode.
+
+**Why this matters:**  
+This finding shows that learning mode alone does not significantly influence academic performance. It highlights students’ adaptability and supports the use of flexible learning approaches, such as hybrid learning, without negatively affecting academic outcomes.
     """)
 
 st.markdown("---")
