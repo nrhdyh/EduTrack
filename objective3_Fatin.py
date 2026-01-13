@@ -146,7 +146,7 @@ avg_gpa_data = df.groupby('Learning_Mode')['GPA_Midpoint'].mean().reset_index()
 
 fig2 = px.bar(
     avg_gpa_data, x='Learning_Mode', y='GPA_Midpoint', 
-    color='Learning_Mode', text_auto='.2f', 
+    text_auto='.2f', 
     color_discrete_sequence=px.colors.sequential.Viridis,
     title="Comparison of Mean GPA Across Learning Modes"
 )
