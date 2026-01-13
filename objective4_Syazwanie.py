@@ -189,20 +189,21 @@ st.plotly_chart(fig2, use_container_width=True)
 st.markdown(f"""
 <div style="{interpretation_style}">
 <b>🔍 What the Visual Shows</b><br>
-The grouped bar chart compares average CGPA across different skill development levels, 
-separated by co-curricular participation status.<br><br>
+The grouped bar chart compares average CGPA midpoints across different skill development levels, 
+separated by co-curricular participation status. serving to identify the interactive effect of
+ two distinct lifestyle factors on academic success<br><br>
 
 <b>🧠 Analysis</b><br>
-A clear upward trend is observed as skill development increases. More importantly, within 
-each skill category, students who actively participate in co-curricular activities 
-consistently outperform their non-active peers. This demonstrates a reinforcement effect: 
-skill development improves academic performance, but its impact is amplified when combined 
-with active engagement beyond the classroom.<br><br>
+The visual data shows that for the "High" skill category, participation in activities leads
+to a higher CGPA (~3.55), but for the "Medium" category, those involved in activities perform
+significantly worse than their non-active peers.This reveals a trend in which high-performing
+students have the stronger time-management ability to thrive under numerous responsibilities,
+whereas moderate-performers experience academic dilution when overcommitted.<br><br>
 
 <b>🎯 Why This Matters</b><br>
-This suggests that academic success is multidimensional. Universities focusing solely on 
-academic instruction may overlook the compounding benefits of experiential learning and 
-structured student engagement.
+This conclusion relates back to the original dilemma by showing that the benefits of a
+"active" lifestyle are dependent on a student's baseline academic efficiency and workload
+capacity
 </div>
 """, unsafe_allow_html=True)
 
@@ -238,19 +239,22 @@ st.plotly_chart(fig3, use_container_width=True)
 st.markdown(f"""
 <div style="{interpretation_style}">
 <b>🔍 What the Visual Shows</b><br>
-This stacked percentage bar chart illustrates how students are distributed across CGPA 
-ranges within each skill category.<br><br>
+A 100% stacked bar chart is utilized to analyze the proportional composition of CGPA ranges
+within various skill categories, allowing for a direct comparison of academic performance
+tiers across diverse learning interests.<br><br>
 
 <b>🧠 Analysis</b><br>
-High-skill students dominate the top CGPA range (3.70–4.00), while low-skill groups show a 
-higher concentration in mid and lower CGPA bands. This proportional view reveals academic 
-risk concentration, which is not visible through averages alone. The visualization clearly 
-distinguishes between performance excellence and performance vulnerability, highlighting 
-where academic support mechanisms should be targeted.<br><br>
+The visual evidence indicates a surprising anomaly: the "Hardware & Technical Support" group
+is entirely made up of students with the lowest CGPA (2.50-2.99), although "Soft Skills" and
+"Office & Engineering Tools" are dominated by high-tier students (44.4% and 50%, respectively).
+This pattern demonstrates a clear link between high academic standing and the pursuit of
+adaptable, professional skills, whereas lower-achieving students appear to prefer towards
+specialised, manual technical niches.<br><br>
 
 <b>🎯 Why This Matters</b><br>
-This chart shifts the focus from “how well students perform” to “how many students are at 
-risk”, enabling more strategic academic planning.
+This conclusion is relevant to the problem context because it suggests that academic capability
+influences the strategic selection of market-ready abilities, with higher-performing students
+emphasising leadership and tool-based competency.
 </div>
 """, unsafe_allow_html=True)
 
@@ -275,19 +279,21 @@ st.plotly_chart(fig4, use_container_width=True)
 st.markdown(f"""
 <div style="{interpretation_style}">
 <b>🔍 What the Visual Shows</b><br>
-The line chart tracks CGPA trends across academic years for different skill development 
-levels.<br><br>
+The multi-series line graph effectively tracks the progression of CGPA midpoints from Year 1
+to Year 4, categorized by skill development intensity to highlight longitudinal trends and
+performance sustainability<br><br>
 
 <b>🧠 Analysis</b><br>
-Students with medium and high skill development exhibit stable or improving CGPA 
-trajectories, while low-skill students show flatter or inconsistent patterns. This suggests 
-that skill development contributes not only to short-term performance, but also to academic 
-sustainability over time. As academic complexity increases in higher years, students without 
-adequate skill development may struggle to maintain performance.<br><br>
+A critical anomaly is noted in which students with "High" skill development hours begin at
+the highest midpoint of 3.85 in Year 1 but fall sharply and consistently to 3.45 by Year 4,
+whereas "Low" intensity students demonstrate a steady upward recovery. This decreasing trend
+indicates a "burnout" effect, in which the initial high-intensity investment in skill
+development becomes unsustainable when core academic rigour increases in the senior years. <br><br>
 
 <b>🎯 Why This Matters</b><br>
-The visualization emphasizes the importance of early skill investment, particularly in 
-lower academic years, to prevent long-term academic decline.
+ This finding addresses the original problem context of students' long-term academic stability,
+ implying that excessive early-stage commitment to external talents may later jeopardise degree
+ achievement.
 </div>
 """, unsafe_allow_html=True)
 
@@ -315,18 +321,21 @@ st.plotly_chart(fig5, use_container_width=True)
 st.markdown(f"""
 <div style="{interpretation_style}">
 <b>🔍 What the Visual Shows</b><br>
-The heatmap presents average CGPA across combinations of skill development levels and 
-co-curricular participation.<br><br>
+The correlation heatmap uses color-coded intensity to represent precise CGPA averages at
+the intersection of skill hours and co-curricular engagement, providing a clear visual
+matrix of performance "sweet spots" and risk zones.<br><br>
 
 <b>🧠 Analysis</b><br>
-The highest CGPA values are concentrated in the high-skill & active participation quadrant, 
-while the lowest values appear in the low-skill & non-active group. This confirms a 
-synergistic relationship between skill development and co-curricular involvement, where 
-neither factor alone produces optimal academic outcomes.<br><br>
+The data show a maximum average of 3.57 for the "High Skill/Yes Activity" cohort and
+a minimum of 3.37 for the "Medium Skill/Yes Activity" group, with the latter having
+the lowest academic yield across the entire dataset. This visual data demonstrates a
+robust relationship between focused, high-intensity involvement and peak academic results,
+while also highlighting "moderate" engagement as a unique risk factor for performance decreases.<br><br>
 
 <b>🎯 Why This Matters</b><br>
-The heatmap functions as a decision-support tool, clearly identifying student profiles that 
-are thriving versus those that require intervention.
+Finally, this supports the research context by demonstrating that academic performance
+at UMK is driven by the deliberate, high-level integration of lifestyle elements rather
+than simply the availability of activities themselves.
 </div>
 """, unsafe_allow_html=True)
 
