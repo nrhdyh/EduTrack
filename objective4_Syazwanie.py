@@ -152,11 +152,13 @@ The KDE density plot compares the distribution and concentration of CGPA between
 who participate in co-curricular activities and those who do not.<br><br>
 
 <b>🧠 Analysis</b><br>
-The density curve for active students is more concentrated around higher CGPA values, 
-indicating greater academic consistency. In contrast, non-active students exhibit a wider 
-spread, suggesting higher variability and academic instability. This indicates that 
-co-curricular participation does not merely increase average performance, but reduces 
-performance volatility, which is crucial for sustaining academic outcomes over time.<br><br>
+Visually, both groups display a normal distribution peaking at the 3.3 to 3.4 CGPA mark,
+but an anomaly emerges at the upper tail, where active students have a considerably higher
+concentration in the 3.8 to 4.0 range. This trend demonstrates that participation in campus activities
+has no negative effect on grades; rather, it suggests a link in which high-achieving students are more
+likely to be involved in their community.As a result, the case study's setting is reinforced, as an
+active lifestyle is frequently a trademark of disciplined, top-tier UMK students rather than a
+distraction from their academics.<br><br>
 
 <b>🎯 Why This Matters</b><br>
 Rather than focusing only on mean CGPA, this visualization highlights risk dispersion. 
