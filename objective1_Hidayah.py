@@ -137,7 +137,6 @@ fig_violin = px.violin(
     x="Gender",
     y="CGPA_Midpoint",
     box=True,
-    points="all",
     color="Gender",
     title="Violin Plot of CGPA Midpoint by Gender"
 )
