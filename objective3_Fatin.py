@@ -123,15 +123,17 @@ fig1 = px.pie(
 )
 st.plotly_chart(fig1, use_container_width=True)
 
-st.markdown("### 📊 Summary Statistics")
-if st.checkbox("Show distribution stats", value=True, key="stats1"):
-    mode_counts = df['Learning_Mode'].value_counts().reset_index()
-    st.dataframe(mode_counts, use_container_width=True)
-
-st.markdown("### 📈 Distribution Description")
-if st.checkbox("Show distribution description", value=True, key="desc1"):
+st.markdown("### 📌 Interpretation & Analysis")
+if st.checkbox("Show interpretation", value=True, key="interpret1"):
     st.markdown("""
-The pie chart illustrates a dominant preference for flexibility among UMK students. Hybrid Learning is the most popular choice, accounting for 54.4% of the student population, indicating a strong desire for a blended educational experience that combines digital convenience with campus interaction. Offline Learning follows significantly at 36.9%, showing that a substantial portion of students still values traditional classroom engagement. Conversely, Online Learning is the least preferred mode at only 8.7%. This distribution suggests that while students have moved away from fully remote models, they are not yet ready to return to entirely physical-only instruction.
+**What the graph shows:**  
+The pie chart shows how UMK students prefer different learning modes, namely Hybrid, Offline, and Online learning.
+
+**Analysis:**  
+The results indicate that Hybrid learning is the most preferred mode, with more than half of the students selecting this option. This suggests that students value the flexibility of online components while still appreciating face-to-face interaction. Offline learning remains the second most preferred mode, indicating that traditional classroom learning is still important. In contrast, Online learning is the least preferred option, showing that fully remote learning is less favoured among students.
+
+**Why this matters:**  
+These findings highlight students’ preference for a balanced learning approach rather than fully online or fully physical modes. This insight is important for academic planning, as it suggests that hybrid learning should be prioritised to better align with students’ learning needs and preferences.
     """)
 
 st.markdown("---")
