@@ -115,7 +115,7 @@ st.markdown(f'<div style="{block_style}"><h3>2️⃣ Box Plot: Social Media Usag
 
 fig2 = px.box(df, x='Social_Media_Hours_Daily', y='GPA_Midpoint', color='Social_Media_Hours_Daily',
              category_orders={'Social_Media_Hours_Daily': ['< 1 hours', '2 - 3 hours', '4 - 5 hours', '> 6 hours']},
-             points='all', color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white")
+             points=False, color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white")
 st.plotly_chart(fig2, use_container_width=True)
 
 st.markdown("### 📈 Social Media vs Academic Performance")
@@ -137,9 +137,13 @@ st.markdown("---")
 st.markdown(f'<div style="{block_style}"><h3>3️⃣ Bar Chart: Health Issues and Academic Outcomes</h3></div>', unsafe_allow_html=True)
 
 health_gpa = df.groupby('Health_Issues_Text')['GPA_Midpoint'].mean().reset_index()
+health_gpa["GPA_Midpoint"] = health_gpa["GPA_Midpoint"].round(2)
+
 fig3 = px.bar(health_gpa, x='Health_Issues_Text', y='GPA_Midpoint', color='Health_Issues_Text',
-             category_orders={'Health_Issues_Text': ['No', 'Yes']},
+             text="GPA_Midpoint", category_orders={'Health_Issues_Text': ['No', 'Yes']},
              color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white")
+fig3.update_traces(textposition="inside")
+fig3.update_layout(showlegend=False)
 st.plotly_chart(fig3, use_container_width=True)
 
 st.markdown("### 📈 Health Issues vs Average GPA")
