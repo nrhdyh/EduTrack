@@ -88,6 +88,8 @@ study_gpa = df.groupby('Study_Hours_Category')['GPA_Midpoint'].mean().reset_inde
 fig1 = px.bar(study_gpa, x='Study_Hours_Category', y='GPA_Midpoint', color='Study_Hours_Category',
              category_orders={'Study_Hours_Category': ['Low', 'Medium', 'High']},
              color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white")
+fig1.update_traces(texttemplate="%{text:.2f}", textposition="inside")
+fig1.update_layout(showlegend=False)
 st.plotly_chart(fig1, use_container_width=True)
 
 st.markdown("### 📈 Average GPA by Study Hours")
