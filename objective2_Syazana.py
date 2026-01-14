@@ -116,6 +116,7 @@ st.markdown(f'<div style="{block_style}"><h3>2️⃣ Box Plot: Social Media Usag
 fig2 = px.box(df, x='Social_Media_Hours_Daily', y='GPA_Midpoint', color='Social_Media_Hours_Daily',
              category_orders={'Social_Media_Hours_Daily': ['< 1 hours', '2 - 3 hours', '4 - 5 hours', '> 6 hours']},
              points=False, color_discrete_sequence=px.colors.qualitative.Pastel, template="simple_white")
+fig2.update_layout(showlegend=False)
 st.plotly_chart(fig2, use_container_width=True)
 
 st.markdown("### 📈 Social Media vs Academic Performance")
